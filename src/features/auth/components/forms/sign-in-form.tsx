@@ -6,7 +6,7 @@ import z from 'zod'
 import { signInSchema } from '../../schemas'
 import FormInput from './form-input'
 
-const SignInForm = () => {
+const SignInForm = ({ pending }: { pending: boolean }) => {
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -26,10 +26,10 @@ const SignInForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2.5'>
-        <FormInput control={form.control} name='email' placeholder='Email' type='email' />
-        <FormInput control={form.control} name='password' placeholder='Password' type='password' />
+        <FormInput disabled={pending} control={form.control} name='email' placeholder='Email' type='email' />
+        <FormInput disabled={pending} control={form.control} name='password' placeholder='Password' type='password' />
 
-        <Button type='submit' className='w-full' size='lg' disabled={false}>
+        <Button type='submit' className='w-full' size='lg' disabled={pending}>
           Continue
         </Button>
       </form>

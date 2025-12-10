@@ -7,10 +7,11 @@ interface FormInputProps {
   control: Control<any>
   name: string
   placeholder: string
+  disabled: boolean
   type?: string
 }
 
-const FormInput: React.FC<FormInputProps> = ({ control, name, placeholder, type = 'text' }) => {
+const FormInput: React.FC<FormInputProps> = ({ control, name, placeholder, disabled, type = 'text' }) => {
   return (
     <FormField
       control={control}
@@ -18,7 +19,7 @@ const FormInput: React.FC<FormInputProps> = ({ control, name, placeholder, type 
       render={({ field }) => (
         <FormItem>
           <FormControl>
-            <Input placeholder={placeholder} type={type} {...field} />
+            <Input disabled={disabled} placeholder={placeholder} type={type} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

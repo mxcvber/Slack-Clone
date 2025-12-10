@@ -3,12 +3,25 @@ import { Separator } from '@/components/ui/separator'
 import { SignInFlow } from '../types'
 import SignInForm from './forms/sign-in-form'
 import SocialAuthButtons from './social-auth-buttons'
+import { useState } from 'react'
+import { useAuthActions } from '@convex-dev/auth/react'
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void
 }
 
 const SignInCard: React.FC<SignInCardProps> = ({ setState }) => {
+  const { signIn } = useAuthActions()
+
+  const [pending, setPending] = useState(false)
+
+  const onProviderSignIn = (value: 'github' | 'google') => {
+    setPending(true)
+    signIn(value).finally(() => {
+      setPending(false)
+    })
+  }
+
   return (
     <Card className='w-full h-full p-8'>
       <CardHeader className='px-0 pt-0'>
@@ -16,9 +29,9 @@ const SignInCard: React.FC<SignInCardProps> = ({ setState }) => {
         <CardDescription>Use your email or another service to continue</CardDescription>
       </CardHeader>
       <CardContent className='space-y-5 px-0 pb-0'>
-        <SignInForm />
+        <SignInForm pending={pending} />
         <Separator />
-        <SocialAuthButtons />
+        <SocialAuthButtons onProviderSignIn={onProviderSignIn} pending={pending} />
 
         <p className='text-sm text-muted-foreground'>
           Don&apos;t have an account?{' '}
