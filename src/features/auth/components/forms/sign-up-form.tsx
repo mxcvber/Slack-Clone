@@ -3,7 +3,7 @@ import FormInput from './form-input'
 import { Button } from '@/components/ui/button'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
-import { signUpSchema } from '../../shemas'
+import { signUpSchema } from '../../schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 const SignUpForm = () => {
