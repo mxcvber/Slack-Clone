@@ -5,6 +5,7 @@ import SignInForm from './forms/sign-in-form'
 import SocialAuthButtons from './social-auth-buttons'
 import { useState } from 'react'
 import { useAuthActions } from '@convex-dev/auth/react'
+import AuthError from './auth-error'
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void
@@ -13,10 +14,12 @@ interface SignInCardProps {
 const SignInCard: React.FC<SignInCardProps> = ({ setState }) => {
   const { signIn } = useAuthActions()
 
+  const [authError, setAuthError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
 
   const onProviderSignIn = (value: 'github' | 'google') => {
     setPending(true)
+
     signIn(value).finally(() => {
       setPending(false)
     })
@@ -28,10 +31,11 @@ const SignInCard: React.FC<SignInCardProps> = ({ setState }) => {
         <CardTitle>Login to continue</CardTitle>
         <CardDescription>Use your email or another service to continue</CardDescription>
       </CardHeader>
+      {!!authError && <AuthError error={authError} />}
       <CardContent className='space-y-5 px-0 pb-0'>
-        <SignInForm pending={pending} />
+        <SignInForm pending={pending} setAuthError={setAuthError} />
         <Separator />
-        <SocialAuthButtons onProviderSignIn={onProviderSignIn} pending={pending} />
+        <SocialAuthButtons handleProviderAuth={onProviderSignIn} pending={pending} />
 
         <p className='text-sm text-muted-foreground'>
           Don&apos;t have an account?{' '}

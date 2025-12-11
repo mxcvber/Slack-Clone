@@ -5,15 +5,15 @@ import { FcGoogle } from 'react-icons/fc'
 
 interface SocialAuthButtonsProps {
   pending: boolean
-  onProviderSignIn: (value: 'github' | 'google') => void
+  handleProviderAuth: (value: 'github' | 'google') => void
 }
 
-const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ pending, onProviderSignIn }) => {
+const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ pending, handleProviderAuth }) => {
   return (
     <div className='flex flex-col gap-y-2.5'>
       <Button
         disabled={pending}
-        onClick={() => onProviderSignIn('google')}
+        onClick={() => handleProviderAuth('google')}
         variant='outline'
         size='lg'
         className='w-full relative'
@@ -23,7 +23,7 @@ const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ pending, onProvid
       </Button>
       <Button
         disabled={pending}
-        onClick={() => onProviderSignIn('github')}
+        onClick={() => handleProviderAuth('github')}
         variant='outline'
         size='lg'
         className='w-full relative'
