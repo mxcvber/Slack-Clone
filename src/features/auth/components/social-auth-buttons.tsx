@@ -21,6 +21,7 @@ const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ pending, handlePr
         <FcGoogle className='size-5 absolute top-1/2 -translate-y-1/2 left-2.5' />
         Continue with Google
       </Button>
+
       <Button
         disabled={pending}
         onClick={() => handleProviderAuth('github')}

@@ -6,6 +6,7 @@ import SocialAuthButtons from './social-auth-buttons'
 import { useState } from 'react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import AuthError from './auth-error'
+import Header from './header'
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void
@@ -26,12 +27,10 @@ const SignInCard: React.FC<SignInCardProps> = ({ setState }) => {
   }
 
   return (
-    <Card className='w-full h-full p-8'>
-      <CardHeader className='px-0 pt-0'>
-        <CardTitle>Login to continue</CardTitle>
-        <CardDescription>Use your email or another service to continue</CardDescription>
-      </CardHeader>
+    <Card className='md:h-auto md:w-[420px] p-8'>
+      <Header title='Login to continue' />
       {!!authError && <AuthError error={authError} />}
+
       <CardContent className='space-y-5 px-0 pb-0'>
         <SignInForm pending={pending} setAuthError={setAuthError} />
         <Separator />
