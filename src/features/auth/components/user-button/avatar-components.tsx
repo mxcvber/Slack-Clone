@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { useCurrentUser } from '../../hooks/use-current-user'
+import { useCurrentUser } from '../../api/use-current-user'
 import { Loader } from 'lucide-react'
 
 const AvatarComponents = () => {

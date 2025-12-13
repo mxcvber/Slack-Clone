@@ -1,5 +1,4 @@
 import { Form } from '@/components/ui/form'
-import FormInput from './form-input'
 import { Button } from '@/components/ui/button'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
@@ -8,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { AuthProps } from '../../types'
 import { useAuthActions } from '@convex-dev/auth/react'
+import FormInput from '@/components/form-input'
 
 const SignUpForm: React.FC<AuthProps> = ({ pending, setAuthError }) => {
   const { signIn } = useAuthActions()

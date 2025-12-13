@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 import { signInSchema } from '../../schemas'
-import FormInput from './form-input'
 import { useAuthActions } from '@convex-dev/auth/react'
 import React from 'react'
 import { AuthProps } from '../../types'
+import FormInput from '@/components/form-input'
 
 const SignInForm: React.FC<AuthProps> = ({ pending, setAuthError }) => {
   const { signIn } = useAuthActions()

@@ -8,10 +8,18 @@ interface FormInputProps {
   name: string
   placeholder: string
   disabled: boolean
+  autoFocus?: boolean
   type?: string
 }
 
-const FormInput: React.FC<FormInputProps> = ({ control, name, placeholder, disabled, type = 'text' }) => {
+const FormInput: React.FC<FormInputProps> = ({
+  control,
+  name,
+  placeholder,
+  disabled,
+  autoFocus = false,
+  type = 'text',
+}) => {
   return (
     <FormField
       control={control}
@@ -19,7 +27,7 @@ const FormInput: React.FC<FormInputProps> = ({ control, name, placeholder, disab
       render={({ field }) => (
         <FormItem>
           <FormControl>
-            <Input disabled={disabled} placeholder={placeholder} type={type} {...field} />
+            <Input autoFocus={autoFocus} disabled={disabled} placeholder={placeholder} type={type} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
