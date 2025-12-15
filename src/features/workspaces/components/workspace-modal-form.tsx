@@ -8,6 +8,7 @@ import FormInput from '@/components/form-input'
 import { useCreateWorkspaces } from '../api/use-create-workspaces'
 import { useRouter } from 'next/navigation'
 import { useCreateWorkspaceModal } from '../store/use-create-workspace-modal'
+import { toast } from 'sonner'
 
 const WorkspaceModalForm = () => {
   const router = useRouter()
@@ -30,6 +31,7 @@ const WorkspaceModalForm = () => {
         {
           onSuccess: (id) => {
             router.push(`/workspace/${id}`)
+            toast.success('Workspace created successfully')
             setOpen(false)
           },
         }
