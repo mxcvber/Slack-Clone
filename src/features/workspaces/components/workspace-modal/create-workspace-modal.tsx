@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useCreateWorkspaceModal } from '../store/use-create-workspace-modal'
 import WorkspaceModalForm from './workspace-modal-form'
+import { useCreateWorkspaceModal } from '../../store/use-create-workspace-modal'
 
 const CreateWorkspaceModal = () => {
   const { open, setOpen } = useCreateWorkspaceModal()

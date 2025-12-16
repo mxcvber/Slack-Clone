@@ -1,14 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { useForm } from 'react-hook-form'
-import { workspaceModalSchema } from '../schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import z from 'zod'
 import { Form } from '@/components/ui/form'
 import FormInput from '@/components/form-input'
-import { useCreateWorkspaces } from '../api/use-create-workspaces'
 import { useRouter } from 'next/navigation'
-import { useCreateWorkspaceModal } from '../store/use-create-workspace-modal'
 import { toast } from 'sonner'
+import { useCreateWorkspaceModal } from '../../store/use-create-workspace-modal'
+import { useCreateWorkspaces } from '../../api/use-create-workspaces'
+import { workspaceModalSchema } from '../../schemas'
 
 const WorkspaceModalForm = () => {
   const router = useRouter()

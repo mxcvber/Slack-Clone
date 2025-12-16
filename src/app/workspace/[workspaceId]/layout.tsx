@@ -1,6 +1,7 @@
 'use client'
 
-import Toolbar from './components/toolbar'
+import Toolbar from '@/features/workspaces/components/toolbar'
+import Sidebar from '../../../features/workspaces/components/sidebar'
 
 const WorkspaceLayout = ({
   children,
@@ -10,7 +11,10 @@ const WorkspaceLayout = ({
   return (
     <div className='h-full'>
       <Toolbar />
-      {children}
+      <div className='flex h-[calc(100vh-40px)]'>
+        <Sidebar />
+        {children}
+      </div>
     </div>
   )
 }
