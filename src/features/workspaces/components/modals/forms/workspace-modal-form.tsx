@@ -6,15 +6,15 @@ import { Form } from '@/components/ui/form'
 import FormInput from '@/components/form-input'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { useCreateWorkspaceModal } from '../../store/use-create-workspace-modal'
-import { useCreateWorkspaces } from '../../api/use-create-workspaces'
-import { workspaceModalSchema } from '../../schemas'
+import { useCreateWorkspaceModal } from '@/features/workspaces/store/use-create-workspace-modal'
+import { useCreateWorkspace } from '@/features/workspaces/api/use-create-workspace'
+import { workspaceModalSchema } from '@/features/workspaces/schemas'
 
 const WorkspaceModalForm = () => {
   const router = useRouter()
   const { setOpen } = useCreateWorkspaceModal()
 
-  const { mutate } = useCreateWorkspaces()
+  const { mutate } = useCreateWorkspace()
   const form = useForm<z.infer<typeof workspaceModalSchema>>({
     resolver: zodResolver(workspaceModalSchema),
     defaultValues: {

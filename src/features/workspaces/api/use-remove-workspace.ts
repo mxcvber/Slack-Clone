@@ -1,10 +1,9 @@
-import { useMutation, useQuery } from 'convex/react'
+import { useMutation } from 'convex/react'
 import { api } from '../../../../convex/_generated/api'
 import { useCallback, useMemo, useState } from 'react'
 import { Id } from '../../../../convex/_generated/dataModel'
-import { set } from 'zod'
 
-type RequestType = { name: string }
+type RequestType = { workspaceId: Id<'workspaces'> }
 type ResponseType = Id<'workspaces'> | null
 
 type Options = {
@@ -14,22 +13,17 @@ type Options = {
   throwError?: boolean
 }
 
-export const useCreateWorkspaces = () => {
+export const useRemoveWorkspace = () => {
   const [data, setData] = useState<ResponseType>(null)
   const [error, setError] = useState<Error | null>(null)
   const [status, setStatus] = useState<'idle' | 'pending' | 'success' | 'error' | 'settled'>('idle')
-
-  // const [isPending, setIsPending] = useState(false)
-  // const [isSuccess, setIsSuccess] = useState(false)
-  // const [isError, setIsError] = useState(false)
-  // const [isSettled, setIsSettled] = useState(false)
 
   const isPending = useMemo(() => status === 'pending', [status])
   const isSuccess = useMemo(() => status === 'success', [status])
   const isError = useMemo(() => status === 'error', [status])
   const isSettled = useMemo(() => status === 'settled', [status])
 
-  const mutation = useMutation(api.workspaces.create)
+  const mutation = useMutation(api.workspaces.remove)
 
   const mutate = useCallback(
     async (values: RequestType, options?: Options) => {
@@ -43,6 +37,7 @@ export const useCreateWorkspaces = () => {
         options?.onSuccess?.(response)
         return response
       } catch (error) {
+        setStatus('error')
         options?.onError?.(error as Error)
 
         if (options?.throwError) {
