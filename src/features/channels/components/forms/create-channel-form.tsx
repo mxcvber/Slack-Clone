@@ -4,17 +4,17 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import z from 'zod'
 import { Form } from '@/components/ui/form'
 import FormInput from '@/components/form-input'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { useCreateWorkspaceModal } from '@/features/workspaces/store/use-create-workspace-modal'
-import { useCreateWorkspace } from '@/features/workspaces/api/use-create-workspace'
 import { workspaceModalSchema } from '@/features/workspaces/schemas'
+import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
+import { useCreateChannelModal } from '../../store/use-create-channel-modal'
+import { useCreateChannel } from '../../api/use-create-channel'
 
-const WorkspaceModalForm = () => {
-  const router = useRouter()
-  const { setOpen } = useCreateWorkspaceModal()
+const CreateChannelForm = () => {
+  const { mutate, isPending } = useCreateChannel()
+  const { setOpen } = useCreateChannelModal()
+  const workspaceId = useWorkspaceId()
 
-  const { mutate } = useCreateWorkspace()
   const form = useForm<z.infer<typeof workspaceModalSchema>>({
     resolver: zodResolver(workspaceModalSchema),
     defaultValues: {
@@ -27,38 +27,42 @@ const WorkspaceModalForm = () => {
       mutate(
         {
           name: values.name,
+          workspaceId,
         },
         {
           onSuccess: (id) => {
-            router.push(`/workspace/${id}`)
-            toast.success('Workspace created successfully')
+            toast.success('Channel created successfully')
             setOpen(false)
             form.reset()
+          },
+          onError: () => {
+            toast.error('Failed to create channel')
           },
         }
       )
     } catch (error: any) {
-      console.error('WorkspaceModalForm Error:')
+      console.error('CreateChannelForm Error: ', error)
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormInput
-          autoFocus
-          disabled={false}
+          onChange
+          disabled={isPending}
           control={form.control}
           name='name'
-          placeholder="Workspace name e.g. 'Work', 'Personal', 'Home'"
+          autoFocus
+          placeholder='e.g. plan-budget'
         />
+
         <div className='flex justify-end'>
-          <Button type='submit' disabled={false}>
-            Create
-          </Button>
+          <Button disabled={isPending}>Create</Button>
         </div>
       </form>
     </Form>
   )
 }
 
-export default WorkspaceModalForm
+export default CreateChannelForm

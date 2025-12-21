@@ -39,14 +39,13 @@ const PreferencesEditForm: React.FC<PreferencesEditFormProps> = ({ setEditOpen, 
             toast.success('Workspace updated successfully')
             setValue(values.name)
             setEditOpen(false)
+            form.reset()
           },
           onError: () => {
             toast.error('Failed to update workspace')
           },
         }
       )
-
-      form.reset()
     } catch (error: any) {
       console.error('PreferencesEditForm Error: ', error)
     }

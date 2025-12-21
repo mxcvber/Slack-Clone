@@ -8,6 +8,7 @@ interface FormInputProps {
   name: string
   placeholder: string
   disabled: boolean
+  onChange?: boolean
   autoFocus?: boolean
   type?: string
 }
@@ -17,6 +18,7 @@ const FormInput: React.FC<FormInputProps> = ({
   name,
   placeholder,
   disabled,
+  onChange,
   autoFocus = false,
   type = 'text',
 }) => {
@@ -27,7 +29,22 @@ const FormInput: React.FC<FormInputProps> = ({
       render={({ field }) => (
         <FormItem>
           <FormControl>
-            <Input autoFocus={autoFocus} disabled={disabled} placeholder={placeholder} type={type} {...field} />
+            <Input
+              autoFocus={autoFocus}
+              disabled={disabled}
+              placeholder={placeholder}
+              type={type}
+              {...field}
+              //TODO: Change
+              onChange={
+                onChange
+                  ? (e) => {
+                      const value = e.target.value.replace(/\s+/g, '-').toLowerCase()
+                      field.onChange(value)
+                    }
+                  : field.onChange
+              }
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
