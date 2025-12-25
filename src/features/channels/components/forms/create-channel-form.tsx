@@ -9,8 +9,10 @@ import { workspaceModalSchema } from '@/features/workspaces/schemas'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useCreateChannelModal } from '../../store/use-create-channel-modal'
 import { useCreateChannel } from '../../api/use-create-channel'
+import { useRouter } from 'next/navigation'
 
 const CreateChannelForm = () => {
+  const router = useRouter()
   const { mutate, isPending } = useCreateChannel()
   const { setOpen } = useCreateChannelModal()
   const workspaceId = useWorkspaceId()
@@ -31,6 +33,7 @@ const CreateChannelForm = () => {
         },
         {
           onSuccess: (id) => {
+            router.push(`/workspace/${workspaceId}/channel/${id}`)
             toast.success('Channel created successfully')
             setOpen(false)
             form.reset()
