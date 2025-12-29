@@ -18,11 +18,18 @@ const SignUpCard: React.FC<SignUpCardProps> = ({ setState }) => {
   const [authError, setAuthError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
 
-  const onProviderSignUp = (value: 'github' | 'google') => {
+  const onProviderSignUp = async (value: 'github' | 'google') => {
+    if (pending) return
+
     setPending(true)
-    signIn(value).finally(() => {
+
+    try {
+      await signIn(value)
+    } catch (err) {
+      setAuthError('Authentication failed')
+      console.error('Authentication failed:', err)
       setPending(false)
-    })
+    }
   }
 
   return (
@@ -30,7 +37,7 @@ const SignUpCard: React.FC<SignUpCardProps> = ({ setState }) => {
       <Header title='Sign up to continue' />
       {!!authError && <AuthError error={authError} />}
       <CardContent className='space-y-5 px-0 pb-0'>
-        <SignUpForm pending={pending} setAuthError={setAuthError} />
+        <SignUpForm pending={pending} setPending={setPending} setAuthError={setAuthError} />
         <Separator />
         <SocialAuthButtons handleProviderAuth={onProviderSignUp} pending={pending} />
 

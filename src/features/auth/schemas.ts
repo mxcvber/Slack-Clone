@@ -9,11 +9,6 @@ export const signInSchema = z.object({
     .max(60, 'Password must be at most 60 characters'),
 })
 
-export const signUpSchema = signInSchema
-  .extend({
-    confirmPassword: z.string().nonempty('Confirm password is required'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  })
+export const signUpSchema = signInSchema.extend({
+  confirmPassword: z.string().nonempty('Confirm password is required'),
+})

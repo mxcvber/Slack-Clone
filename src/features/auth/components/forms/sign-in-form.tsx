@@ -9,7 +9,7 @@ import React from 'react'
 import { AuthProps } from '../../types'
 import FormInput from '@/components/form-input'
 
-const SignInForm: React.FC<AuthProps> = ({ pending, setAuthError }) => {
+const SignInForm: React.FC<AuthProps> = ({ pending, setAuthError, setPending }) => {
   const { signIn } = useAuthActions()
 
   const form = useForm<z.infer<typeof signInSchema>>({
@@ -23,23 +23,22 @@ const SignInForm: React.FC<AuthProps> = ({ pending, setAuthError }) => {
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     try {
       setAuthError(null)
+      setPending(true)
 
       await signIn('password', { email: values.email, password: values.password, flow: 'signIn' })
-      form.reset()
     } catch (error: any) {
       setAuthError('Invalide email or password')
+      setPending(false)
     }
   }
-
-  const disabled = pending || form.formState.isSubmitting
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2.5'>
-        <FormInput disabled={disabled} control={form.control} name='email' placeholder='Email' type='email' />
-        <FormInput disabled={disabled} control={form.control} name='password' placeholder='Password' type='password' />
+        <FormInput disabled={pending} control={form.control} name='email' placeholder='Email' type='email' />
+        <FormInput disabled={pending} control={form.control} name='password' placeholder='Password' type='password' />
 
-        <Button type='submit' className='w-full' size='lg' disabled={disabled}>
+        <Button type='submit' className='w-full' size='lg' disabled={pending}>
           Continue
         </Button>
       </form>
