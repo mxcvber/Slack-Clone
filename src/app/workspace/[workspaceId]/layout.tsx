@@ -15,12 +15,12 @@ const WorkspaceLayout = ({
       <Toolbar />
       <div className='flex h-[calc(100vh-40px)]'>
         <Sidebar />
-        <ResizablePanelGroup autoSaveId='workspace-sidebar' direction='horizontal'>
-          <ResizablePanel defaultSize={20} minSize={11} className='bg-[#5E2C5F]'>
+        <ResizablePanelGroup direction='horizontal'>
+          <ResizablePanel defaultSize={20} minSize={15} className='bg-[#5E2C5F]'>
             <WorkspaceSidebar />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={80} minSize={20}>
+          <ResizablePanel defaultSize={80} minSize={50}>
             {children}
           </ResizablePanel>
         </ResizablePanelGroup>
