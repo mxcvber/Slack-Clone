@@ -32,7 +32,15 @@ const useConfirm = (title: string, message: string): [() => JSX.Element, () => P
   }
 
   const ConfirmDialog = () => (
-    <Dialog open={promise !== null}>
+    <Dialog
+      open={promise !== null}
+      onOpenChange={(open) => {
+        if (!open) {
+          promise?.resolve(false)
+          handleClose()
+        }
+      }}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
