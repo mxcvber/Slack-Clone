@@ -1,6 +1,6 @@
+import { useCurrentUser } from '@/api/use-current-user'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Loader } from 'lucide-react'
-import { useCurrentUser } from '../../api/use-current-user'
 
 const AvatarComponents = () => {
   const { data, isLoading } = useCurrentUser()

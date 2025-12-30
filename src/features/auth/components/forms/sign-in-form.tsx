@@ -6,10 +6,10 @@ import z from 'zod'
 import { signInSchema } from '../../schemas'
 import { useAuthActions } from '@convex-dev/auth/react'
 import React from 'react'
-import { AuthProps } from '../../types'
+import { AuthFormProps } from '../../types'
 import FormInput from '@/components/form-input'
 
-const SignInForm: React.FC<AuthProps> = ({ pending, setAuthError, setPending }) => {
+const SignInForm: React.FC<AuthFormProps> = ({ pending, setAuthError, setPending }) => {
   const { signIn } = useAuthActions()
 
   const form = useForm<z.infer<typeof signInSchema>>({

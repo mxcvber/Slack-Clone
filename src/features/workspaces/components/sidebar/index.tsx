@@ -1,6 +1,6 @@
 import { usePathname } from 'next/navigation'
 import { SIDEBAR_BUTTON_INFOS } from '../../constants'
-import UserButton from '@/features/auth/components/user-button'
+import UserButton from '@/components/user-button'
 import SidebarButton from './sidebar-button'
 import WorkspaceSwitcher from './workspace-switcher'
 

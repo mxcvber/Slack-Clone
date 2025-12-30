@@ -1,37 +1,19 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { SignInFlow } from '../types'
+import { AuthCardProps } from '../types'
 import SignUpForm from './forms/sign-up-form'
 import SocialAuthButtons from './social-auth-buttons'
-import { useAuthActions } from '@convex-dev/auth/react'
-import { useState } from 'react'
 import AuthError from './auth-error'
 import Header from './header'
 
-interface SignUpCardProps {
-  setState: (state: SignInFlow) => void
-}
-
-const SignUpCard: React.FC<SignUpCardProps> = ({ setState }) => {
-  const { signIn } = useAuthActions()
-
-  const [authError, setAuthError] = useState<string | null>(null)
-  const [pending, setPending] = useState(false)
-
-  const onProviderSignUp = async (value: 'github' | 'google') => {
-    if (pending) return
-
-    setPending(true)
-
-    try {
-      await signIn(value)
-    } catch (err) {
-      setAuthError('Authentication failed')
-      console.error('Authentication failed:', err)
-      setPending(false)
-    }
-  }
-
+const SignUpCard: React.FC<AuthCardProps> = ({
+  setState,
+  authError,
+  setAuthError,
+  pending,
+  setPending,
+  handleProviderAuth,
+}) => {
   return (
     <Card className='md:h-auto md:w-[420px] p-8'>
       <Header title='Sign up to continue' />
@@ -39,7 +21,7 @@ const SignUpCard: React.FC<SignUpCardProps> = ({ setState }) => {
       <CardContent className='space-y-5 px-0 pb-0'>
         <SignUpForm pending={pending} setPending={setPending} setAuthError={setAuthError} />
         <Separator />
-        <SocialAuthButtons handleProviderAuth={onProviderSignUp} pending={pending} />
+        <SocialAuthButtons handleProviderAuth={handleProviderAuth} pending={pending} />
 
         <p className='text-sm text-muted-foreground'>
           Already have an account?{' '}

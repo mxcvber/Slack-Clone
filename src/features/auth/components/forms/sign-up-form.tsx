@@ -5,11 +5,11 @@ import z from 'zod'
 import { signUpSchema } from '../../schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
-import { AuthProps } from '../../types'
+import { AuthFormProps } from '../../types'
 import { useAuthActions } from '@convex-dev/auth/react'
 import FormInput from '@/components/form-input'
 
-const SignUpForm: React.FC<AuthProps> = ({ pending, setAuthError, setPending }) => {
+const SignUpForm: React.FC<AuthFormProps> = ({ pending, setAuthError, setPending }) => {
   const { signIn } = useAuthActions()
 
   const form = useForm<z.infer<typeof signUpSchema>>({
