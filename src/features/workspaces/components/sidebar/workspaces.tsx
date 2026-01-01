@@ -21,7 +21,7 @@ const Workspaces = () => {
         {workspace.name.charAt(0).toUpperCase()}
       </div>
 
-      <p className='truncate'>{workspace.name}</p>
+      <span className='truncate'>{workspace.name}</span>
     </DropdownMenuItem>
   ))
 }

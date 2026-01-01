@@ -7,9 +7,9 @@ const CreateWorkspace = () => {
 
   return (
     <DropdownMenuItem className='cursor-pointer' onClick={() => setOpen(true)}>
-      <div className='size-9 relative overflow-hidden bg-[#F2F2F2] text-slate-800 font-semibold text-xl rounded-md flex items-center justify-center mr-2'>
+      <span className='size-9 overflow-hidden bg-[#F2F2F2] text-slate-800 font-semibold text-xl rounded-md flex items-center justify-center mr-2'>
         <Plus />
-      </div>
+      </span>
       Create a new workspace
     </DropdownMenuItem>
   )

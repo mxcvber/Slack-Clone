@@ -11,12 +11,13 @@ import { useEffect, useMemo } from 'react'
 
 const WorkspaceIdPage = () => {
   const workspaceId = useWorkspaceId()
-  const router = useRouter()
   const { open, setOpen } = useCreateChannelModal()
 
-  const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({ workspaceId })
+  const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({ id: workspaceId })
   const { data: channels, isLoading: channelsLoading } = useGetChannels({ workspaceId })
   const { data: member, isLoading: memberLoading } = useCurrentMember({ workspaceId })
+
+  const router = useRouter()
 
   const channelId = useMemo(() => channels?.[0]?._id, [channels])
   const isAdmin = useMemo(() => member?.role === 'admin', [member?.role])
@@ -45,7 +46,7 @@ const WorkspaceIdPage = () => {
 
   if (workspaceLoading || channelsLoading || memberLoading) {
     return (
-      <div className='h-full flex-1 flex items-center justify-center flex-col gap-2'>
+      <div className='h-full flex-1 flex items-center justify-center'>
         <Loader className='size-6 animate-spin text-muted-foreground' />
       </div>
     )

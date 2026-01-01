@@ -12,8 +12,8 @@ const sidebarItemVariants = cva(
   {
     variants: {
       variant: {
-        default: 'text-[#f9edffcc]',
-        active: 'bg-white/90 hover:bg-white/90 text-[#481349]',
+        default: 'text-light-gray',
+        active: 'bg-white/90 hover:bg-white/90 text-dark-purple',
       },
     },
     defaultVariants: {

@@ -5,11 +5,11 @@ import z from 'zod'
 import { Form } from '@/components/ui/form'
 import FormInput from '@/components/form-input'
 import { toast } from 'sonner'
-import { workspaceModalSchema } from '@/features/workspaces/schemas'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useUpdateWorkspace } from '@/features/workspaces/api/use-update-workspace'
 import React from 'react'
+import { defaultFormSchema } from '@/schemas'
 
 interface PreferencesEditFormProps {
   setEditOpen: (value: boolean) => void
@@ -20,14 +20,14 @@ const PreferencesEditForm: React.FC<PreferencesEditFormProps> = ({ setEditOpen, 
   const { mutate, isPending } = useUpdateWorkspace()
   const workspaceId = useWorkspaceId()
 
-  const form = useForm<z.infer<typeof workspaceModalSchema>>({
-    resolver: zodResolver(workspaceModalSchema),
+  const form = useForm<z.infer<typeof defaultFormSchema>>({
+    resolver: zodResolver(defaultFormSchema),
     defaultValues: {
       name: '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof workspaceModalSchema>) {
+  async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
       mutate(
         {

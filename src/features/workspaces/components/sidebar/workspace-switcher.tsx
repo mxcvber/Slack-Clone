@@ -9,7 +9,7 @@ import CreateWorkspace from './create-workspace'
 
 const WorkspaceSwitcher = () => {
   const workspaceId = useWorkspaceId()
-  const { data, isLoading } = useGetWorkspace({ workspaceId })
+  const { data, isLoading } = useGetWorkspace({ id: workspaceId })
 
   return (
     <DropdownMenu>
@@ -20,7 +20,7 @@ const WorkspaceSwitcher = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent side='bottom' align='start' className='w-64'>
-        <ActiveWorkspace workspaceId={workspaceId} workspaceName={data?.name} />
+        <ActiveWorkspace id={workspaceId} name={data?.name} />
         <Workspaces />
         <CreateWorkspace />
       </DropdownMenuContent>

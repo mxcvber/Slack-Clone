@@ -5,11 +5,11 @@ import z from 'zod'
 import { Form } from '@/components/ui/form'
 import FormInput from '@/components/form-input'
 import { toast } from 'sonner'
-import { workspaceModalSchema } from '@/features/workspaces/schemas'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useCreateChannelModal } from '../../store/use-create-channel-modal'
 import { useCreateChannel } from '../../api/use-create-channel'
 import { useRouter } from 'next/navigation'
+import { defaultFormSchema } from '@/schemas'
 
 const CreateChannelForm = () => {
   const router = useRouter()
@@ -17,14 +17,14 @@ const CreateChannelForm = () => {
   const { setOpen } = useCreateChannelModal()
   const workspaceId = useWorkspaceId()
 
-  const form = useForm<z.infer<typeof workspaceModalSchema>>({
-    resolver: zodResolver(workspaceModalSchema),
+  const form = useForm<z.infer<typeof defaultFormSchema>>({
+    resolver: zodResolver(defaultFormSchema),
     defaultValues: {
       name: '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof workspaceModalSchema>) {
+  async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
       mutate(
         {

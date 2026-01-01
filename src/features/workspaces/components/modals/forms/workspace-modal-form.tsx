@@ -8,21 +8,22 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { useCreateWorkspaceModal } from '@/features/workspaces/store/use-create-workspace-modal'
 import { useCreateWorkspace } from '@/features/workspaces/api/use-create-workspace'
-import { workspaceModalSchema } from '@/features/workspaces/schemas'
+import { defaultFormSchema } from '@/schemas'
 
 const WorkspaceModalForm = () => {
-  const router = useRouter()
   const { setOpen } = useCreateWorkspaceModal()
-
   const { mutate } = useCreateWorkspace()
-  const form = useForm<z.infer<typeof workspaceModalSchema>>({
-    resolver: zodResolver(workspaceModalSchema),
+
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof defaultFormSchema>>({
+    resolver: zodResolver(defaultFormSchema),
     defaultValues: {
       name: '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof workspaceModalSchema>) {
+  async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
       mutate(
         {
@@ -33,11 +34,11 @@ const WorkspaceModalForm = () => {
             router.push(`/workspace/${id}`)
             toast.success('Workspace created successfully')
             setOpen(false)
-            form.reset()
           },
         }
       )
     } catch (error: any) {
+      toast.error('Failed to create workspace.')
       console.error('WorkspaceModalForm Error:')
     }
   }
@@ -51,6 +52,7 @@ const WorkspaceModalForm = () => {
           name='name'
           placeholder="Workspace name e.g. 'Work', 'Personal', 'Home'"
         />
+
         <div className='flex justify-end'>
           <Button type='submit' disabled={false}>
             Create

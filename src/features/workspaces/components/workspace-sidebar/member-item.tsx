@@ -10,8 +10,8 @@ import { useWorkspaceId } from '../../hooks/use-workspace-id'
 const memberItemVariants = cva('flex items-center justify-start gap-1.5 font-normal text-sm h-7 px-4 overflow-hidden', {
   variants: {
     variant: {
-      default: 'text-[#f9edffcc]',
-      active: 'bg-white/90 hover:bg-white/90 text-[#481349]',
+      default: 'text-light-gray',
+      active: 'bg-white/90 hover:bg-white/90 text-dark-purple',
     },
   },
   defaultVariants: {

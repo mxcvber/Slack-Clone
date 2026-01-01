@@ -1,3 +1,5 @@
+'use client'
+
 import { useCurrentMember } from '@/features/members/api/use-current-member'
 import { useWorkspaceId } from '../../hooks/use-workspace-id'
 import { useGetWorkspace } from '../../api/use-get-workspace'
@@ -15,12 +17,15 @@ const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId()
   const channelId = useChannelId()
   const { setOpen } = useCreateChannelModal()
+
   const { data: memberData, isLoading: memberLoading } = useCurrentMember({ workspaceId })
-  const { data: workspaceData, isLoading: workspaceLoading } = useGetWorkspace({ workspaceId })
+  const { data: workspaceData, isLoading: workspaceLoading } = useGetWorkspace({ id: workspaceId })
   const { data: channelsData, isLoading: channelsLoading } = useGetChannels({ workspaceId })
   const { data: membersData, isLoading: membersLoading } = useGetMembers({ workspaceId })
 
-  if (memberLoading || workspaceLoading) {
+  const loading = memberLoading || workspaceLoading || channelsLoading || membersLoading
+
+  if (loading) {
     return (
       <div className='flex h-full items-center justify-center'>
         <Loader className='size-5 animate-spin text-white' />

@@ -18,15 +18,11 @@ const WorkspaceSection: React.FC<WorkspaceSectionProps> = ({ children, hint, lab
   return (
     <div className='flex flex-col mt-3 px-2'>
       <div className='flex items-center px-3.5 group'>
-        <Button onClick={toggle} variant='transparent' className='p-0.5 text-sm text-[#f9edffcc] shrink-0 size-6'>
-          <FaCaretDown className={cn('size-4 transition-transform', on && '-rotate-90')} />
+        <Button onClick={toggle} variant='transparent' className='p-0.5 text-sm text-light-gray shrink-0 size-6'>
+          <FaCaretDown className={cn('size-4 transition-transform -rotate-90', on && 'rotate-0')} />
         </Button>
 
-        <Button
-          variant='transparent'
-          size='sm'
-          className='group px-1.5 text-sm text-[#f9edffcc] h-7 justify-start overflow-hidden items-center'
-        >
+        <Button variant='transparent' size='sm' className='group px-1.5 text-sm text-light-gray h-7 overflow-hidden'>
           <span className='truncate'>{label}</span>
         </Button>
 
@@ -36,7 +32,7 @@ const WorkspaceSection: React.FC<WorkspaceSectionProps> = ({ children, hint, lab
               onClick={onNew}
               variant='transparent'
               size='icon-sm'
-              className='opacity-0 group-hover:opacity-100 transition-opacity ml-auto p-0.5 text-sm text-[#f9edffcc] size-6 shrink-0'
+              className='opacity-0 group-hover:opacity-100 transition-opacity ml-auto p-0.5 text-sm text-light-gray size-6 shrink-0'
             >
               <PlusIcon className='size-5' />
             </Button>

@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const workspaceModalSchema = z.object({
+export const defaultFormSchema = z.object({
   name: z
     .string()
     .nonempty('Workspace name is required')

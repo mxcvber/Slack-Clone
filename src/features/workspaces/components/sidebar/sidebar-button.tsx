@@ -12,7 +12,10 @@ interface SidebarButtonProps {
 const SidebarButton: React.FC<SidebarButtonProps> = ({ icon: Icon, label, isActive }) => {
   return (
     <div className='flex flex-col items-center justify-center gap-y-0.5 cursor-pointer group'>
-      <Button variant='transparent' className={cn('size-9 p-2 group-hover:bg-accent/20', isActive && 'bg-accent/20')}>
+      <Button
+        variant='transparent'
+        className={cn('size-9 p-2 group-hover:bg-accent/20 cursor-pointer', isActive && 'bg-accent/20')}
+      >
         <Icon className='size-5 text-white group-hover:scale-110 transition-all' />
       </Button>
 

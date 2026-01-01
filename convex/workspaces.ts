@@ -164,7 +164,7 @@ export const getInfoById = query({
 
 export const getById = query({
   args: {
-    workspaceId: v.id('workspaces'),
+    id: v.id('workspaces'),
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx)
@@ -172,14 +172,14 @@ export const getById = query({
       throw new Error('Unauthorized')
     }
 
-    const workspace = await ctx.db.get(args.workspaceId)
+    const workspace = await ctx.db.get(args.id)
     if (!workspace) {
       throw new Error('Workspace not found')
     }
 
     const member = await ctx.db
       .query('members')
-      .withIndex('by_user_and_workspace', (q) => q.eq('workspaceId', args.workspaceId).eq('userId', userId))
+      .withIndex('by_user_and_workspace', (q) => q.eq('workspaceId', args.id).eq('userId', userId))
       .unique()
 
     if (!member) {

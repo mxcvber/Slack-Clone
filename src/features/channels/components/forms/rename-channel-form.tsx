@@ -5,23 +5,23 @@ import z from 'zod'
 import { Form } from '@/components/ui/form'
 import FormInput from '@/components/form-input'
 import { toast } from 'sonner'
-import { workspaceModalSchema } from '@/features/workspaces/schemas'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import { useChannelId } from '@/features/workspaces/hooks/use-channel-id'
 import { useUpdateChannel } from '../../api/use-update-channel'
+import { defaultFormSchema } from '@/schemas'
 
 const RenameChannelForm = ({ setEditOpen, title }: { setEditOpen: (value: boolean) => void; title: string }) => {
   const channelId = useChannelId()
   const { mutate: updateChannel, isPending: isUpdatingChannel } = useUpdateChannel()
 
-  const form = useForm<z.infer<typeof workspaceModalSchema>>({
-    resolver: zodResolver(workspaceModalSchema),
+  const form = useForm<z.infer<typeof defaultFormSchema>>({
+    resolver: zodResolver(defaultFormSchema),
     defaultValues: {
       name: title,
     },
   })
 
-  async function onSubmit(values: z.infer<typeof workspaceModalSchema>) {
+  async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
       updateChannel(
         {
