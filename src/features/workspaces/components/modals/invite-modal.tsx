@@ -12,7 +12,7 @@ import React from 'react'
 import { useWorkspaceId } from '../../hooks/use-workspace-id'
 import { toast } from 'sonner'
 import { useNewJoinCode } from '../../api/use-new-join-code'
-import useConfirm from '../../hooks/use-confirm'
+import useConfirm from '@/hooks/use-confirm'
 
 interface InviteModalProps {
   open: boolean

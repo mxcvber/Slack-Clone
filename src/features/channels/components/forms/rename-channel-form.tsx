@@ -6,13 +6,20 @@ import { Form } from '@/components/ui/form'
 import FormInput from '@/components/form-input'
 import { toast } from 'sonner'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
-import { useChannelId } from '@/features/workspaces/hooks/use-channel-id'
 import { useUpdateChannel } from '../../api/use-update-channel'
 import { defaultFormSchema } from '@/schemas'
+import { useChannelId } from '../../hooks/use-channel-id'
+import React, { Dispatch, SetStateAction } from 'react'
 
-const RenameChannelForm = ({ setEditOpen, title }: { setEditOpen: (value: boolean) => void; title: string }) => {
+interface RenameChannelFormProps {
+  onModalClose: () => void
+  setEditOpen: Dispatch<SetStateAction<boolean>>
+  title: string
+}
+
+const RenameChannelForm: React.FC<RenameChannelFormProps> = ({ setEditOpen, title, onModalClose }) => {
   const channelId = useChannelId()
-  const { mutate: updateChannel, isPending: isUpdatingChannel } = useUpdateChannel()
+  const { mutate, isPending } = useUpdateChannel()
 
   const form = useForm<z.infer<typeof defaultFormSchema>>({
     resolver: zodResolver(defaultFormSchema),
@@ -23,7 +30,7 @@ const RenameChannelForm = ({ setEditOpen, title }: { setEditOpen: (value: boolea
 
   async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
-      updateChannel(
+      mutate(
         {
           id: channelId,
           name: values.name,
@@ -32,6 +39,7 @@ const RenameChannelForm = ({ setEditOpen, title }: { setEditOpen: (value: boolea
           onSuccess: () => {
             toast.success('Channel updated successfully')
             setEditOpen(false)
+            onModalClose()
           },
           onError: () => {
             toast.error('Failed to update channel')
@@ -48,7 +56,7 @@ const RenameChannelForm = ({ setEditOpen, title }: { setEditOpen: (value: boolea
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormInput
           onChange
-          disabled={isUpdatingChannel}
+          disabled={isPending}
           control={form.control}
           name='name'
           autoFocus
@@ -57,11 +65,11 @@ const RenameChannelForm = ({ setEditOpen, title }: { setEditOpen: (value: boolea
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant='outline' disabled={isUpdatingChannel}>
+            <Button variant='outline' disabled={isPending}>
               Cancel
             </Button>
           </DialogClose>
-          <Button disabled={isUpdatingChannel}>Save</Button>
+          <Button disabled={isPending}>Save</Button>
         </DialogFooter>
       </form>
     </Form>

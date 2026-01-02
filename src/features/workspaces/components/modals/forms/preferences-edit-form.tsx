@@ -8,15 +8,16 @@ import { toast } from 'sonner'
 import { DialogClose, DialogFooter } from '@/components/ui/dialog'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useUpdateWorkspace } from '@/features/workspaces/api/use-update-workspace'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { defaultFormSchema } from '@/schemas'
 
 interface PreferencesEditFormProps {
-  setEditOpen: (value: boolean) => void
-  setValue: (value: string) => void
+  setEditOpen: Dispatch<SetStateAction<boolean>>
+  setValue: Dispatch<SetStateAction<string>>
+  onModalClose: () => void
 }
 
-const PreferencesEditForm: React.FC<PreferencesEditFormProps> = ({ setEditOpen, setValue }) => {
+const PreferencesEditForm: React.FC<PreferencesEditFormProps> = ({ setEditOpen, setValue, onModalClose }) => {
   const { mutate, isPending } = useUpdateWorkspace()
   const workspaceId = useWorkspaceId()
 
@@ -39,7 +40,7 @@ const PreferencesEditForm: React.FC<PreferencesEditFormProps> = ({ setEditOpen, 
             toast.success('Workspace updated successfully')
             setValue(values.name)
             setEditOpen(false)
-            form.reset()
+            onModalClose()
           },
           onError: () => {
             toast.error('Failed to update workspace')

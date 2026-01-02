@@ -5,8 +5,10 @@ import { useRemoveWorkspace } from '../../api/use-remove-workspace'
 import { useWorkspaceId } from '../../hooks/use-workspace-id'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import PreferencesEditModal from './preferences-edit-modal'
-import useConfirm from '../../hooks/use-confirm'
+import useConfirm from '@/hooks/use-confirm'
+import EditModal from '@/components/edit-modal'
+import PreferencesEditForm from './forms/preferences-edit-form'
+import DeleteButton from '@/components/delete-button'
 
 interface PreferencesModalProps {
   open: boolean
@@ -15,12 +17,14 @@ interface PreferencesModalProps {
 }
 
 const PreferencesModal: React.FC<PreferencesModalProps> = ({ open, setOpen, initialValue }) => {
-  const router = useRouter()
-  const [value, setValue] = useState(initialValue)
+  const workspaceId = useWorkspaceId()
 
   const [ConfirmDialog, confirm] = useConfirm('Are you sure?', 'This action is irreversible.')
-  const workspaceId = useWorkspaceId()
   const { mutate, isPending } = useRemoveWorkspace()
+
+  const [editOpen, setEditOpen] = useState(false)
+  const [value, setValue] = useState(initialValue)
+  const router = useRouter()
 
   const handleRemove = async () => {
     const ok = await confirm()
@@ -53,16 +57,17 @@ const PreferencesModal: React.FC<PreferencesModalProps> = ({ open, setOpen, init
           </DialogHeader>
 
           <div className='px-4 pb-4 flex flex-col gap-y-2'>
-            <PreferencesEditModal value={value} setValue={setValue} />
-
-            <button
-              disabled={isPending}
-              onClick={handleRemove}
-              className='flex items-center gap-x-2 px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-50 text-rose-600'
+            <EditModal
+              editOpen={editOpen}
+              handleEditOpen={() => setEditOpen((value) => !value)}
+              label='Workspace name'
+              name={value}
+              title='Rename this workspace'
             >
-              <TrashIcon className='size-4' />
-              <p className='text-sm font-semibold'>Delete workspace</p>
-            </button>
+              <PreferencesEditForm onModalClose={() => setOpen(false)} setEditOpen={setEditOpen} setValue={setValue} />
+            </EditModal>
+
+            <DeleteButton disabled={isPending} handleRemove={handleRemove} title='Delete workspace' />
           </div>
         </DialogContent>
       </Dialog>

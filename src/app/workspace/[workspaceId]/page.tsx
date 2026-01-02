@@ -1,5 +1,7 @@
 'use client'
 
+import Loading from '@/components/loading'
+import NotFoundComponent from '@/components/not-found-component'
 import { useGetChannels } from '@/features/channels/api/use-get-channels'
 import { useCreateChannelModal } from '@/features/channels/store/use-create-channel-modal'
 import { useCurrentMember } from '@/features/members/api/use-current-member'
@@ -45,28 +47,14 @@ const WorkspaceIdPage = () => {
   ])
 
   if (workspaceLoading || channelsLoading || memberLoading) {
-    return (
-      <div className='h-full flex-1 flex items-center justify-center'>
-        <Loader className='size-6 animate-spin text-muted-foreground' />
-      </div>
-    )
+    return <Loading />
   }
 
   if (!workspace || !member) {
-    return (
-      <div className='h-full flex-1 flex items-center justify-center flex-col gap-2'>
-        <TriangleAlert className='size-6 text-muted-foreground' />
-        <span className='text-sm text-muted-foreground'>Workspace not found</span>
-      </div>
-    )
+    return <NotFoundComponent label='Workspace not found' />
   }
 
-  return (
-    <div className='h-full flex-1 flex items-center justify-center flex-col gap-2'>
-      <TriangleAlert className='size-6 text-muted-foreground' />
-      <span className='text-sm text-muted-foreground'>No channel found</span>
-    </div>
-  )
+  return <NotFoundComponent label='No channel found' />
 }
 
 export default WorkspaceIdPage

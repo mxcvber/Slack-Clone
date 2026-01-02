@@ -10,6 +10,7 @@ interface ChatInputProps {
 
 const ChatInput: React.FC<ChatInputProps> = ({ placeholder }) => {
   const editorRef = useRef<Quill | null>(null)
+
   return (
     <div className='px-5 w-full'>
       <Editor placeholder={placeholder} onSubmit={() => {}} disabled={false} innerRef={editorRef} />

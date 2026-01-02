@@ -11,7 +11,7 @@ import WorkspaceSection from './workspace-section'
 import { useGetMembers } from '@/features/members/api/use-get-members'
 import MemberItem from './member-item'
 import { useCreateChannelModal } from '@/features/channels/store/use-create-channel-modal'
-import { useChannelId } from '../../hooks/use-channel-id'
+import { useChannelId } from '@/features/channels/hooks/use-channel-id'
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId()

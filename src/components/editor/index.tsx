@@ -1,14 +1,10 @@
 'use client'
 
 import Quill, { Delta, Op, type QuillOptions } from 'quill'
-import { PiTextAa } from 'react-icons/pi'
-import { MdSend } from 'react-icons/md'
 import 'quill/dist/quill.snow.css'
-import React, { forwardRef, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Button } from './ui/button'
-import { ImageIcon, Smile } from 'lucide-react'
-import Hint from './hint'
-import { cn } from '@/lib/utils'
+import React, { RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import EditorFooter from './editor-footer'
+import EditorInfo from './editor-info'
 
 type EditorValue = {
   image: File | null
@@ -35,7 +31,6 @@ const Editor: React.FC<EditorProps> = ({
   variant = 'create',
 }) => {
   const [text, setText] = useState('')
-  const [isToolbarVisible, setIsToolbarVisible] = useState(true)
 
   const submitRef = useRef(onSubmit)
   const placeholderRef = useRef(placeholder)
@@ -113,81 +108,15 @@ const Editor: React.FC<EditorProps> = ({
     }
   }, [innerRef])
 
-  const toggleToolbar = () => {
-    setIsToolbarVisible((current) => !current)
-
-    const toolbarElement = containerRef.current?.querySelector('.ql-toolbar')
-
-    if (toolbarElement) {
-      toolbarElement.classList.toggle('hidden')
-    }
-  }
-
-  const isEmpty = text.replace(/<(.|\n)*?>/g, '').trim().length === 0
-
   return (
     <div className='flex flex-col'>
       <div className='flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white'>
         <div ref={containerRef} className='ql-custom' />
-        <div className='flex px-2 pb-2 z-5'>
-          <Hint label={isToolbarVisible ? 'Hide formatting' : 'Show formatting'}>
-            <Button disabled={disabled} size='icon-sm' variant='ghost' onClick={toggleToolbar}>
-              <PiTextAa className='size-4' />
-            </Button>
-          </Hint>
 
-          <Hint label='Emoji'>
-            <Button disabled={disabled} size='icon-sm' variant='ghost' onClick={() => {}}>
-              <Smile className='size-4' />
-            </Button>
-          </Hint>
-
-          {variant === 'create' && (
-            <Hint label='Image'>
-              <Button disabled={disabled} size='icon-sm' variant='ghost' onClick={() => {}}>
-                <ImageIcon className='size-4' />
-              </Button>
-            </Hint>
-          )}
-
-          {variant === 'update' && (
-            <div className='ml-auto flex items-center gap-x-2'>
-              <Button variant='outline' size='sm' onClick={() => {}} disabled={disabled}>
-                Cancel
-              </Button>
-              <Button
-                className='bg-[#007a5a] hover:bg-[#007a5a]/80 text-white'
-                size='sm'
-                onClick={() => {}}
-                disabled={disabled || isEmpty}
-              >
-                Save
-              </Button>
-            </div>
-          )}
-
-          {variant === 'create' && (
-            <Button
-              disabled={disabled || isEmpty}
-              size='icon-sm'
-              className={cn(
-                'ml-auto',
-                isEmpty
-                  ? 'bg-white hover:bg-white text-muted-foreground'
-                  : 'bg-[#007a5a] hover:bg-[#007a5a]/80 text-white'
-              )}
-              onClick={() => {}}
-            >
-              <MdSend className='size-4' />
-            </Button>
-          )}
-        </div>
+        <EditorFooter text={text} containerRef={containerRef} disabled={disabled} variant={variant} />
       </div>
-      <div className='p-2 text-[10px] text-muted-foreground flex justify-end'>
-        <p>
-          <strong>Shift + Return</strong> to add a new line
-        </p>
-      </div>
+
+      <EditorInfo />
     </div>
   )
 }
