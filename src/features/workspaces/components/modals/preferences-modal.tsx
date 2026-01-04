@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { TrashIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import { useRemoveWorkspace } from '../../api/use-remove-workspace'
 import { useWorkspaceId } from '../../hooks/use-workspace-id'
@@ -53,7 +52,7 @@ const PreferencesModal: React.FC<PreferencesModalProps> = ({ open, setOpen, init
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className='p-0 bg-gray-50 overflow-hidden'>
           <DialogHeader className='p-4 border-b bg-white'>
-            <DialogTitle>{value}</DialogTitle>
+            <DialogTitle className='truncate w-60'>{value}</DialogTitle>
           </DialogHeader>
 
           <div className='px-4 pb-4 flex flex-col gap-y-2'>
