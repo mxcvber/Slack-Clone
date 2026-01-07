@@ -46,7 +46,7 @@ const RenameChannelForm: React.FC<RenameChannelFormProps> = ({ setEditOpen, titl
           },
         }
       )
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('RenameChannelForm Error: ', error)
     }
   }

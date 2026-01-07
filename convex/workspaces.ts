@@ -61,7 +61,7 @@ export const newJoinCode = mutation({
       .unique()
 
     if (!member || member.role !== 'admin') {
-      throw new Error('Unauthorized')
+      throw new Error('No access')
     }
 
     const joinCode = generateCode()
@@ -169,12 +169,12 @@ export const getById = query({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx)
     if (!userId) {
-      throw new Error('Unauthorized')
+      return null
     }
 
     const workspace = await ctx.db.get(args.id)
     if (!workspace) {
-      throw new Error('Workspace not found')
+      return null
     }
 
     const member = await ctx.db
@@ -183,7 +183,7 @@ export const getById = query({
       .unique()
 
     if (!member) {
-      null
+      return null
     }
 
     return workspace
@@ -208,7 +208,7 @@ export const update = mutation({
       .unique()
 
     if (!member || member.role !== 'admin') {
-      throw new Error('Forbidden')
+      throw new Error('No access')
     }
 
     await ctx.db.patch(args.workspaceId, {

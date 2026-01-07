@@ -26,7 +26,7 @@ const SignInForm: React.FC<AuthFormProps> = ({ pending, setAuthError, setPending
       setPending(true)
 
       await signIn('password', { email: values.email, password: values.password, flow: 'signIn' })
-    } catch (error: any) {
+    } catch (error: unknown) {
       setAuthError('Invalide email or password')
       setPending(false)
     }

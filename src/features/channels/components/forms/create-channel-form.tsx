@@ -43,7 +43,7 @@ const CreateChannelForm = () => {
           },
         }
       )
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('CreateChannelForm Error: ', error)
     }
   }

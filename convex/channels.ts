@@ -22,7 +22,7 @@ export const remove = mutation({
       .unique()
 
     if (!member || member.role !== 'admin') {
-      throw new Error('Unauthorized')
+      throw new Error('No access')
     }
 
     //TODO: Remove associated messages
@@ -53,7 +53,7 @@ export const update = mutation({
       .unique()
 
     if (!member || member.role !== 'admin') {
-      throw new Error('Unauthorized')
+      throw new Error('No access')
     }
 
     await ctx.db.patch(args.id, {
@@ -82,7 +82,7 @@ export const create = mutation({
       .unique()
 
     if (!member || member.role !== 'admin') {
-      throw new Error('Unauthorized')
+      throw new Error('No access')
     }
 
     const parsedName = args.name.replace(/\s+/g, '-').toLowerCase()

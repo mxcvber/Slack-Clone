@@ -3,7 +3,7 @@ import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/di
 const Header = ({ workspaceName }: { workspaceName: string }) => {
   return (
     <DialogHeader>
-      <DialogTitle className='break-all'>Invite people to your {workspaceName}</DialogTitle>
+      <DialogTitle className='break-all mt-3'>Invite people to your {workspaceName}</DialogTitle>
       <DialogDescription>Use the code below to invite people to your workspace</DialogDescription>
     </DialogHeader>
   )

@@ -37,9 +37,9 @@ const WorkspaceModalForm = () => {
           },
         }
       )
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error('Failed to create workspace.')
-      console.error('WorkspaceModalForm Error:')
+      console.error('WorkspaceModalForm Error:', error)
     }
   }
   return (

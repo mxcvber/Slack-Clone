@@ -144,7 +144,7 @@ body,
 }
 
 .ql-editor {
-  @apply leading-[22px]! px-2! py-3! text-[#1d1c1d]! font-normal! font-[Lato]! text-sm!;
+  @apply leading-[22px]! px-2! py-3! text-[#1d1c1d]! font-normal! font-[Lato]! text-sm! overflow-y-scroll! max-h-40;
 }
 
 .ql-editor a {
@@ -156,5 +156,23 @@ body,
 }
 
 .ql-editor:before {
-  @apply left-3! font-[Lato]! text-[#8d8d8d]! not-italic! text-sm! font-normal! truncate!;
+  @apply left-2! font-[Lato]! text-[#8d8d8d]! not-italic! text-sm! font-normal! truncate!;
+}
+
+.ql-editor::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ql-editor::-webkit-scrollbar-track {
+  border-radius: 6px;
+  background: #fff;
+}
+
+.ql-editor::-webkit-scrollbar-thumb {
+  background: #dbdadd;
+  border-radius: 6px;
+}
+
+.ql-editor::-webkit-scrollbar-thumb:hover {
+  background: #dbdadd;
 }

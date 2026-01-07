@@ -15,7 +15,7 @@ const AvatarComponents = () => {
 
   const { image, name } = data
 
-  const avatarFallback = name!.charAt(0).toUpperCase()
+  const avatarFallback = name?.charAt(0).toUpperCase()
 
   return (
     <Avatar className='rounded-md size-10 hover:opacity-75 transition'>

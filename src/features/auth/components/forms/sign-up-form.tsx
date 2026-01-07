@@ -33,7 +33,7 @@ const SignUpForm: React.FC<AuthFormProps> = ({ pending, setAuthError, setPending
       }
 
       await signIn('password', { email: values.email, password: values.password, flow: 'signUp' })
-    } catch (error: any) {
+    } catch (error: unknown) {
       setAuthError('Something went wrong')
       setPending(false)
     }

@@ -17,7 +17,7 @@ const Toolbar = () => {
         <div className='min-w-[280px] max-w-[642px] grow-2 shrink-0'>
           <Button size='sm' className='text-white bg-accent/25 hover:bg-accent/25 w-full justify-start h-7 px-2'>
             <Search className='size-4 mr-2' />
-            <span className='text-xs'>Search {data?.name}</span>
+            <span className='text-xs truncate'>Search {data?.name}</span>
           </Button>
         </div>
 

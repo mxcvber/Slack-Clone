@@ -1,11 +1,10 @@
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import React from 'react'
-import { Control } from 'react-hook-form'
+import { Control, FieldPath, FieldValues } from 'react-hook-form'
 
-interface FormInputProps {
-  control: Control<any>
-  name: string
+interface FormInputProps<TFieldValues extends FieldValues> {
+  control: Control<TFieldValues>
+  name: FieldPath<TFieldValues>
   placeholder: string
   disabled: boolean
   onChange?: boolean
@@ -13,7 +12,7 @@ interface FormInputProps {
   type?: string
 }
 
-const FormInput: React.FC<FormInputProps> = ({
+const FormInput = <TFieldValues extends FieldValues>({
   control,
   name,
   placeholder,
@@ -21,7 +20,7 @@ const FormInput: React.FC<FormInputProps> = ({
   onChange,
   autoFocus = false,
   type = 'text',
-}) => {
+}: FormInputProps<TFieldValues>) => {
   return (
     <FormField
       control={control}

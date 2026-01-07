@@ -10,14 +10,14 @@ import { ChevronDown } from 'lucide-react'
 import { Doc } from '../../../../../../convex/_generated/dataModel'
 import React, { Dispatch, SetStateAction } from 'react'
 
-interface WorkspaceHeaderProps {
+interface DropdownProps {
   workspace: Doc<'workspaces'>
   isAdmin: boolean
   setPreferencesOpen: Dispatch<SetStateAction<boolean>>
   setInviteOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const Dropdown: React.FC<WorkspaceHeaderProps> = ({ workspace, isAdmin, setInviteOpen, setPreferencesOpen }) => {
+const Dropdown: React.FC<DropdownProps> = ({ workspace, isAdmin, setInviteOpen, setPreferencesOpen }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

@@ -1,6 +1,7 @@
 'use client'
 
 import Loading from '@/components/loading'
+import NotFoundComponent from '@/components/not-found-component'
 import JoinScreen from '@/features/join/components/join-screen'
 import { useGetWorkspaceInfo } from '@/features/workspaces/api/use-get-workspace-info'
 import { useJoin } from '@/features/workspaces/api/use-join'
@@ -44,7 +45,7 @@ const JoinPage = () => {
     return <Loading />
   }
 
-  if (!data) return
+  if (!data) return <NotFoundComponent label='Workspace not found' />
 
   return <JoinScreen handleComplete={handleComplete} loading={isPending} workspaceName={data.name} />
 }

@@ -47,7 +47,7 @@ const PreferencesEditForm: React.FC<PreferencesEditFormProps> = ({ setEditOpen, 
           },
         }
       )
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('PreferencesEditForm Error: ', error)
     }
   }
