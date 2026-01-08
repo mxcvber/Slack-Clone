@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as CustomPassword from "../CustomPassword.js";
 import type * as auth from "../auth.js";
 import type * as channels from "../channels.js";
 import type * as http from "../http.js";
@@ -22,6 +23,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  CustomPassword: typeof CustomPassword;
   auth: typeof auth;
   channels: typeof channels;
   http: typeof http;

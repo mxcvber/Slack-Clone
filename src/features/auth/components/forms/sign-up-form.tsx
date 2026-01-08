@@ -15,6 +15,7 @@ const SignUpForm: React.FC<AuthFormProps> = ({ pending, setAuthError, setPending
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -32,9 +33,9 @@ const SignUpForm: React.FC<AuthFormProps> = ({ pending, setAuthError, setPending
         return
       }
 
-      await signIn('password', { email: values.email, password: values.password, flow: 'signUp' })
+      await signIn('password', { name: values.name, email: values.email, password: values.password, flow: 'signUp' })
     } catch (error: unknown) {
-      setAuthError('Something went wrong')
+      setAuthError('Password must be at least 6 characters and contain at least one letter.')
       setPending(false)
     }
   }
@@ -42,6 +43,7 @@ const SignUpForm: React.FC<AuthFormProps> = ({ pending, setAuthError, setPending
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2.5'>
+        <FormInput disabled={pending} control={form.control} name='name' placeholder='Full Name' />
         <FormInput disabled={pending} control={form.control} name='email' placeholder='Email' type='email' />
         <FormInput disabled={pending} control={form.control} name='password' placeholder='Password' type='password' />
         <FormInput
