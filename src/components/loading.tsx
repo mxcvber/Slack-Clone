@@ -1,9 +1,10 @@
+import { cn } from '@/lib/utils'
 import { Loader } from 'lucide-react'
 
-const Loading = () => {
+const Loading = ({ className }: { className?: string }) => {
   return (
-    <div className='h-full flex-1 flex items-center justify-center'>
-      <Loader className='animate-spin size-6 text-muted-foreground' />
+    <div className={cn('h-full flex-1 flex items-center justify-center text-muted-foreground', className)}>
+      <Loader className='animate-spin size-6' />
     </div>
   )
 }

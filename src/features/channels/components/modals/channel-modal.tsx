@@ -27,6 +27,8 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ name, confirm }) => {
   const router = useRouter()
 
   const handleDetete = async () => {
+    if (!channelId || !workspaceId) return
+
     const ok = await confirm()
 
     if (!ok) return

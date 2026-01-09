@@ -26,6 +26,8 @@ const PreferencesModal: React.FC<PreferencesModalProps> = ({ open, setOpen, init
   const router = useRouter()
 
   const handleRemove = async () => {
+    if (!workspaceId) return
+
     const ok = await confirm()
     if (!ok) return
 

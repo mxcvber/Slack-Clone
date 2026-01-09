@@ -1,8 +1,15 @@
 import { useParams } from 'next/navigation'
-import { Id } from '../../../../convex/_generated/dataModel'
+import { isConvexId } from '@/lib/utils'
 
 export const useChannelId = () => {
   const params = useParams()
 
-  return params.channelId as Id<'channels'>
+  const id = params.channelId
+  const workspaceId = params.workspaceId
+
+  if (!isConvexId<'channels'>(id) || !isConvexId<'workspaces'>(workspaceId)) {
+    return null
+  }
+
+  return id
 }

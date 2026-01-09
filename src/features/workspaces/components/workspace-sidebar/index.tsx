@@ -3,7 +3,7 @@
 import { useCurrentMember } from '@/features/members/api/use-current-member'
 import { useWorkspaceId } from '../../hooks/use-workspace-id'
 import { useGetWorkspace } from '../../api/use-get-workspace'
-import { AlertTriangle, HashIcon, Loader, MessageSquareText, SendHorizonal } from 'lucide-react'
+import { HashIcon, MessageSquareText, SendHorizonal } from 'lucide-react'
 import WorkspaceHeader from './workspace-header'
 import SidebarItem from './sidebar-item'
 import { useGetChannels } from '@/features/channels/api/use-get-channels'
@@ -12,6 +12,8 @@ import { useGetMembers } from '@/features/members/api/use-get-members'
 import MemberItem from './member-item'
 import { useCreateChannelModal } from '@/features/channels/store/use-create-channel-modal'
 import { useChannelId } from '@/features/channels/hooks/use-channel-id'
+import NotFoundComponent from '@/components/not-found-component'
+import Loading from '@/components/loading'
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId()
@@ -26,20 +28,11 @@ const WorkspaceSidebar = () => {
   const loading = memberLoading || workspaceLoading || channelsLoading || membersLoading
 
   if (loading) {
-    return (
-      <div className='flex h-full items-center justify-center'>
-        <Loader className='size-5 animate-spin text-white' />
-      </div>
-    )
+    return <Loading className='text-white' />
   }
 
   if (!memberData || !workspaceData) {
-    return (
-      <div className='flex flex-col h-full gap-y-2 items-center justify-center'>
-        <AlertTriangle className='size-5 text-white' />
-        <p className='text-white text-sm'>Workspace not found</p>
-      </div>
-    )
+    return <NotFoundComponent className='text-white' label='Workspace not found' />
   }
 
   return (

@@ -2,9 +2,9 @@
 
 import Loading from '@/components/loading'
 import NotFoundComponent from '@/components/not-found-component'
+import { useJoin } from '@/features/join/api/use-join'
 import JoinScreen from '@/features/join/components/join-screen'
 import { useGetWorkspaceInfo } from '@/features/workspaces/api/use-get-workspace-info'
-import { useJoin } from '@/features/workspaces/api/use-join'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
@@ -13,7 +13,7 @@ import { toast } from 'sonner'
 const JoinPage = () => {
   const workspaceId = useWorkspaceId()
 
-  const { data, isLoading } = useGetWorkspaceInfo({ workspaceId })
+  const { data, isLoading } = useGetWorkspaceInfo({ id: workspaceId })
   const { mutate, isPending } = useJoin()
 
   const router = useRouter()
@@ -27,6 +27,8 @@ const JoinPage = () => {
   }, [isMember, router, workspaceId])
 
   const handleComplete = (value: string) => {
+    if (!workspaceId) return
+
     mutate(
       { workspaceId, joinCode: value },
       {

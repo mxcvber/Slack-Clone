@@ -2,7 +2,7 @@ import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { useRouter } from 'next/navigation'
 
 interface ActiveWorkspaceProps {
-  id: string
+  id: string | null
   name: string | undefined
 }
 

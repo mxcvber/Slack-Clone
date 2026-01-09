@@ -30,6 +30,8 @@ const RenameChannelForm: React.FC<RenameChannelFormProps> = ({ setEditOpen, titl
 
   async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
+      if (!channelId) return
+
       mutate(
         {
           id: channelId,

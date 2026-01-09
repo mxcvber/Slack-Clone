@@ -138,7 +138,7 @@ export const get = query({
 })
 
 export const getInfoById = query({
-  args: { workspaceId: v.id('workspaces') },
+  args: { id: v.id('workspaces') },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx)
     if (!userId) {
@@ -147,10 +147,10 @@ export const getInfoById = query({
 
     const member = await ctx.db
       .query('members')
-      .withIndex('by_user_and_workspace', (q) => q.eq('workspaceId', args.workspaceId).eq('userId', userId))
+      .withIndex('by_user_and_workspace', (q) => q.eq('workspaceId', args.id).eq('userId', userId))
       .unique()
 
-    const workspace = await ctx.db.get(args.workspaceId)
+    const workspace = await ctx.db.get(args.id)
     if (!workspace) {
       return null
     }

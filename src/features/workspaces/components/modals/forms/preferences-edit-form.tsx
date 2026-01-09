@@ -30,6 +30,8 @@ const PreferencesEditForm: React.FC<PreferencesEditFormProps> = ({ setEditOpen, 
 
   async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
+      if (!workspaceId) return
+
       mutate(
         {
           workspaceId,

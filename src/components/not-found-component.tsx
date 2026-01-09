@@ -1,10 +1,13 @@
-import { Triangle } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { AlertTriangle } from 'lucide-react'
 
-const NotFoundComponent = ({ label }: { label: string }) => {
+const NotFoundComponent = ({ label, className }: { label: string; className?: string }) => {
   return (
-    <div className='h-full flex-1 flex flex-col gap-y-2 items-center justify-center'>
-      <Triangle className='size-6 text-muted-foreground' />
-      <span className='text-sm text-muted-foreground'>{label}</span>
+    <div
+      className={cn('h-full flex-1 flex flex-col gap-y-2 items-center justify-center text-muted-foreground', className)}
+    >
+      <AlertTriangle className='size-6' />
+      <span className='text-sm'>{label}</span>
     </div>
   )
 }

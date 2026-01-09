@@ -26,6 +26,8 @@ const CreateChannelForm = () => {
 
   async function onSubmit(values: z.infer<typeof defaultFormSchema>) {
     try {
+      if (!workspaceId) return
+
       mutate(
         {
           name: values.name,
