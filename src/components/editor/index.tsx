@@ -34,7 +34,7 @@ const Editor: React.FC<EditorProps> = ({
 
   const submitRef = useRef(onSubmit)
   const placeholderRef = useRef(placeholder)
-  const quilRef = useRef<Quill | null>(null)
+  const quillRef = useRef<Quill | null>(null)
   const defaultValueRef = useRef(defaultValue)
   const containerRef = useRef<HTMLDivElement>(null)
   const disabledRef = useRef(disabled)
@@ -80,8 +80,8 @@ const Editor: React.FC<EditorProps> = ({
 
     const quill = new Quill(editorContainer, options)
 
-    quilRef.current = quill
-    quilRef.current.focus()
+    quillRef.current = quill
+    quillRef.current.focus()
 
     if (innerRef) {
       innerRef.current = quill
@@ -99,8 +99,8 @@ const Editor: React.FC<EditorProps> = ({
       if (container) {
         container.innerHTML = ''
       }
-      if (quilRef) {
-        quilRef.current = null
+      if (quillRef) {
+        quillRef.current = null
       }
       if (innerRef) {
         innerRef.current = null
@@ -113,10 +113,16 @@ const Editor: React.FC<EditorProps> = ({
       <div className='flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white'>
         <div ref={containerRef} className='ql-custom' />
 
-        <EditorFooter text={text} containerRef={containerRef} disabled={disabled} variant={variant} />
+        <EditorFooter
+          quillRef={quillRef}
+          text={text}
+          containerRef={containerRef}
+          disabled={disabled}
+          variant={variant}
+        />
       </div>
 
-      <EditorInfo />
+      <EditorInfo variant={variant} />
     </div>
   )
 }
