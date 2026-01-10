@@ -57,12 +57,12 @@ const RenameChannelForm: React.FC<RenameChannelFormProps> = ({ setEditOpen, titl
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormInput
-          onChange
           disabled={isPending}
           control={form.control}
           name='name'
           autoFocus
           placeholder='e.g. plan-budget'
+          transform={(value) => value.replace(/\s+/g, '-').toLowerCase()}
         />
 
         <DialogFooter>

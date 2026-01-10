@@ -7,7 +7,7 @@ interface FormInputProps<TFieldValues extends FieldValues> {
   name: FieldPath<TFieldValues>
   placeholder: string
   disabled: boolean
-  onChange?: boolean
+  transform?: (value: string) => string
   autoFocus?: boolean
   type?: string
 }
@@ -17,7 +17,7 @@ const FormInput = <TFieldValues extends FieldValues>({
   name,
   placeholder,
   disabled,
-  onChange,
+  transform,
   autoFocus = false,
   type = 'text',
 }: FormInputProps<TFieldValues>) => {
@@ -34,15 +34,10 @@ const FormInput = <TFieldValues extends FieldValues>({
               placeholder={placeholder}
               type={type}
               {...field}
-              //TODO: Change
-              onChange={
-                onChange
-                  ? (e) => {
-                      const value = e.target.value.replace(/\s+/g, '-').toLowerCase()
-                      field.onChange(value)
-                    }
-                  : field.onChange
-              }
+              onChange={(e) => {
+                const value = transform ? transform(e.target.value) : e.target.value
+                field.onChange(value)
+              }}
             />
           </FormControl>
           <FormMessage />

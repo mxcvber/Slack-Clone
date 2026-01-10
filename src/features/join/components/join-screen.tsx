@@ -26,9 +26,9 @@ const JoinScreen: React.FC<JoinScreenProps> = ({ handleComplete, loading, worksp
           classNames={{
             container: cn('flex gap-x-2', loading && 'opacity-50 cursor-not-allowed'),
             character:
-              'uppercase h-auto rounded-md border border-gray-300 flex items-center justify-center text-lg font-medium text-gray-500',
-            characterInactive: 'bg-muted',
-            characterSelected: 'bg-white text-black',
+              'uppercase h-auto rounded-md border border-gray-300! flex items-center justify-center text-lg font-medium',
+            characterInactive: 'bg-muted! text-gray-500!',
+            characterSelected: 'bg-white text-black! outline-black! outline-1! border-black!',
             characterFilled: 'bg-white text-black',
           }}
           autoFocus
