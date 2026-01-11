@@ -4,6 +4,7 @@ import EditorButton from './editor-button'
 import EmojiPickerButton from './emoji-picker-button'
 import FormattingToggleButton from './formatting-toggle-button'
 import ImageUploadButton from './image-upload-button'
+import { EditorValue } from '@/types'
 
 interface EditorFooterProps {
   text: string
@@ -12,6 +13,9 @@ interface EditorFooterProps {
   quillRef: React.RefObject<Quill | null>
   disabled: boolean
   variant: 'create' | 'update'
+  onCancel: (() => void) | undefined
+  onSubmit: ({ image, body }: EditorValue) => void
+  image: File | null
 }
 
 const EditorFooter: React.FC<EditorFooterProps> = ({
@@ -21,6 +25,9 @@ const EditorFooter: React.FC<EditorFooterProps> = ({
   quillRef,
   disabled,
   variant,
+  onCancel,
+  onSubmit,
+  image,
 }) => {
   return (
     <div className='flex px-2 pb-2 z-5'>
@@ -28,7 +35,15 @@ const EditorFooter: React.FC<EditorFooterProps> = ({
       <EmojiPickerButton quillRef={quillRef} disabled={disabled} />
       <ImageUploadButton imageElementRef={imageElementRef} variant={variant} disabled={disabled} />
 
-      <EditorButton text={text} disabled={disabled} variant={variant} />
+      <EditorButton
+        image={image}
+        quillRef={quillRef}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        text={text}
+        disabled={disabled}
+        variant={variant}
+      />
     </div>
   )
 }

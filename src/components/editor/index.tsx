@@ -6,15 +6,9 @@ import React, { RefObject, useEffect, useLayoutEffect, useRef, useState } from '
 import EditorFooter from './editor-footer'
 import EditorInfo from './editor-info'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { XIcon } from 'lucide-react'
-import Image from 'next/image'
 import UploadImage from './upload-image'
-
-type EditorValue = {
-  image: File | null
-  body: string
-}
+import { EditorValue } from '@/types'
+import { cn } from '@/lib/utils'
 
 interface EditorProps {
   onSubmit: ({ image, body }: EditorValue) => void
@@ -69,8 +63,15 @@ const Editor: React.FC<EditorProps> = ({
             enter: {
               key: 'Enter',
               handler: () => {
-                // TODO Submit form
-                return
+                const text = quill.getText()
+                const addedImage = imageElementRef.current?.files?.[0] || null
+
+                const isEmpty = !addedImage && text.replace(/<(.|\n)*?>/g, '').trim().length === 0
+
+                if (!isEmpty) return
+
+                const body = JSON.stringify(quill.getContents())
+                submitRef.current?.({ body, image: addedImage })
               },
             },
             shift_enter: {
@@ -124,17 +125,25 @@ const Editor: React.FC<EditorProps> = ({
         onChange={(event) => setImage(event.target.files![0])}
         className='hidden'
       />
-      <div className='flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white'>
+      <div
+        className={cn(
+          'flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white',
+          disabled && 'opacity-50'
+        )}
+      >
         <div ref={containerRef} className='ql-custom' />
         <UploadImage image={image} setImage={setImage} imageElementRef={imageElementRef} />
 
         <EditorFooter
+          image={image}
           quillRef={quillRef}
           text={text}
           containerRef={containerRef}
           imageElementRef={imageElementRef}
           disabled={disabled}
           variant={variant}
+          onCancel={onCancel}
+          onSubmit={onSubmit}
         />
       </div>
 
