@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
 import { MdSend } from 'react-icons/md'
+import { Button } from '@/components/ui/button'
 
 interface EditorButtonProps {
   text: string
