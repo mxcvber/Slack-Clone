@@ -144,7 +144,7 @@ body,
 }
 
 .ql-editor {
-  @apply leading-[22px]! px-2! py-3! text-[#1d1c1d]! font-normal! font-[Lato]! text-sm! overflow-y-scroll! max-h-40;
+  @apply leading-[22px]! px-2! py-3! text-[#1d1c1d]! font-normal! font-[Lato]! text-sm! max-h-40;
 }
 
 .ql-editor a {
@@ -175,4 +175,9 @@ body,
 
 .ql-editor::-webkit-scrollbar-thumb:hover {
   background: #dbdadd;
+}
+
+.messages-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #dcdcdc #f8f8f8;
 }

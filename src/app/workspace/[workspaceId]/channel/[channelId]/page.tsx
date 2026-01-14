@@ -1,6 +1,7 @@
 'use client'
 
 import Loading from '@/components/loading'
+import MessageList from '@/components/message-list'
 import NotFoundComponent from '@/components/not-found-component'
 import { useGetChannel } from '@/features/channels/api/use-get-channel'
 import ChatInput from '@/features/channels/components/chat-input'
@@ -12,9 +13,9 @@ const ChannelIdPage = () => {
   const channelId = useChannelId()
 
   const { data: channel, isLoading: channelLoading } = useGetChannel({ id: channelId })
-  const { results } = useGetMessages({ channelId })
+  const { results, status, loadMore } = useGetMessages({ channelId })
 
-  if (channelLoading) {
+  if (channelLoading || status === 'LoadingFirstPage') {
     return <Loading />
   }
 
@@ -25,7 +26,14 @@ const ChannelIdPage = () => {
   return (
     <div className='flex flex-col h-full'>
       <Header name={channel.name} />
-      <div className='flex-1' />
+      <MessageList
+        channelName={channel.name}
+        channelCreationTime={channel._creationTime}
+        data={results}
+        loadMore={loadMore}
+        isLoadingMore={status === 'LoadingMore'}
+        canLoadMore={status === 'CanLoadMore'}
+      />
       <ChatInput placeholder={`Message # ${channel.name}`} />
     </div>
   )
