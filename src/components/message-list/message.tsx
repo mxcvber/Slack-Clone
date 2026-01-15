@@ -62,6 +62,11 @@ const Message: React.FC<MessageProps> = ({
     />
   ) : (
     <NonCompactMessage
+      id={id}
+      isAuthor={isAuthor}
+      setEditingId={setEditingId}
+      hideThreadButton={hideThreadButton}
+      isEditing={isEditing}
       authorImage={authorImage}
       authorName={authorName}
       body={body}
