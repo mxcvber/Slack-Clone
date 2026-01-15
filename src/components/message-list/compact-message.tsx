@@ -3,12 +3,14 @@ import Hint from '../hint'
 import Thumbnail from './thumbnail'
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { Id } from '../../../convex/_generated/dataModel'
+import { Doc, Id } from '../../../convex/_generated/dataModel'
+import Reactions from './reactions'
 
 const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
 interface CompactMessageProps {
+  handleReaction: (value: string) => void
   setEditingId: (id: Id<'messages'> | null) => void
   formatFullTime: (date: Date) => string
   createdAt: number
@@ -18,9 +20,16 @@ interface CompactMessageProps {
   isEditing: boolean
   isPending: boolean
   handleUpdate: ({ body }: { body: string }) => void
+  reactions: Array<
+    Omit<Doc<'reactions'>, 'memberId'> & {
+      count: number
+      memberIds: Id<'members'>[]
+    }
+  >
 }
 
 const CompactMessage: React.FC<CompactMessageProps> = ({
+  handleReaction,
   setEditingId,
   handleUpdate,
   isPending,
@@ -30,6 +39,7 @@ const CompactMessage: React.FC<CompactMessageProps> = ({
   formatFullTime,
   image,
   isEditing,
+  reactions,
 }) => {
   return (
     <div className='flex items-start gap-2'>
@@ -54,6 +64,7 @@ const CompactMessage: React.FC<CompactMessageProps> = ({
           <Renderer value={body} />
           <Thumbnail url={image} />
           {updatedAt ? <span className='text-xs text-muted-foreground'>(edited)</span> : null}
+          <Reactions data={reactions} onChange={handleReaction} />
         </div>
       )}
     </div>

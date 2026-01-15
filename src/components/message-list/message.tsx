@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { useRemoveMessage } from '@/features/messages/api/use-remove-message'
 import useConfirm from '@/hooks/use-confirm'
+import { useToggleReaction } from '@/features/reactions/api/use-toggle-reaction'
 
 interface MessageProps {
   id: Id<'messages'>
@@ -56,12 +57,24 @@ const Message: React.FC<MessageProps> = ({
 }) => {
   const { mutate: updateMessage, isPending: isUpdatingMessage } = useUpdateMessage()
   const { mutate: removeMessage, isPending: isRemovingMessage } = useRemoveMessage()
+  const { mutate: toggleReaction, isPending: isTogglingReaction } = useToggleReaction()
   const [ConfirmDialog, confirm] = useConfirm(
     'Delete message',
     'Are you sure you want to delete this message? This cannot be undone.'
   )
 
-  const isPending = isUpdatingMessage || isRemovingMessage
+  const isPending = isUpdatingMessage || isRemovingMessage || isTogglingReaction
+
+  const handleReaction = (value: string) => {
+    toggleReaction(
+      { messageId: id, value },
+      {
+        onError: () => {
+          toast.error('Failed to toggle reaction')
+        },
+      }
+    )
+  }
 
   const handleRemove = async () => {
     const ok = await confirm()
@@ -113,6 +126,7 @@ const Message: React.FC<MessageProps> = ({
       >
         {isCompact ? (
           <CompactMessage
+            reactions={reactions}
             setEditingId={setEditingId}
             isPending={isPending}
             handleUpdate={handleUpdate}
@@ -122,9 +136,11 @@ const Message: React.FC<MessageProps> = ({
             formatFullTime={formatFullTime}
             image={image}
             isEditing={isEditing}
+            handleReaction={handleReaction}
           />
         ) : (
           <NonCompactMessage
+            reactions={reactions}
             setEditingId={setEditingId}
             isPending={isPending}
             handleUpdate={handleUpdate}
@@ -136,6 +152,7 @@ const Message: React.FC<MessageProps> = ({
             formatFullTime={formatFullTime}
             image={image}
             updatedAt={updatedAt}
+            handleReaction={handleReaction}
           />
         )}
 
@@ -146,7 +163,7 @@ const Message: React.FC<MessageProps> = ({
             handleEdit={() => setEditingId(id)}
             handleThread={() => {}}
             handleDelete={handleRemove}
-            handleReaction={() => {}}
+            handleReaction={handleReaction}
             hideThreadButton={hideThreadButton}
           />
         )}

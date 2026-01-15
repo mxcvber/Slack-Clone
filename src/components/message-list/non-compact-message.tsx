@@ -5,12 +5,14 @@ import { Button } from '../ui/button'
 import Thumbnail from './thumbnail'
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { Id } from '../../../convex/_generated/dataModel'
+import { Doc, Id } from '../../../convex/_generated/dataModel'
+import Reactions from './reactions'
 
 const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
 interface NonCompactMessageProps {
+  handleReaction: (value: string) => void
   setEditingId: (id: Id<'messages'> | null) => void
   isPending: boolean
   handleUpdate: ({ body }: { body: string }) => void
@@ -22,9 +24,16 @@ interface NonCompactMessageProps {
   formatFullTime: (date: Date) => string
   createdAt: number
   updatedAt: number | undefined
+  reactions: Array<
+    Omit<Doc<'reactions'>, 'memberId'> & {
+      count: number
+      memberIds: Id<'members'>[]
+    }
+  >
 }
 
 const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
+  handleReaction,
   isPending,
   authorImage,
   authorName,
@@ -36,6 +45,7 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
   isEditing,
   handleUpdate,
   setEditingId,
+  reactions,
 }) => {
   const avatarFallback = authorName.charAt(0).toUpperCase()
 
@@ -78,6 +88,7 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
           <Renderer value={body} />
           <Thumbnail url={image} />
           {updatedAt ? <span className='text-xs text-muted-foreground'>(edited)</span> : null}
+          <Reactions data={reactions} onChange={handleReaction} />
         </div>
       )}
     </div>
