@@ -7,6 +7,7 @@ import ChannelHero from './channel-hero'
 import { Id } from '../../../convex/_generated/dataModel'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useCurrentMember } from '@/features/members/api/use-current-member'
+import MessageLoader from './message-loader'
 
 interface MessageListProps {
   data: GetMessageReturnType | undefined
@@ -104,6 +105,8 @@ const MessageList: React.FC<MessageListProps> = ({
           })}
         </div>
       ))}
+
+      <MessageLoader canLoadMore={canLoadMore} isLoadingMore={isLoadingMore} loadMore={loadMore} />
 
       {variant === 'channel' && channelName && channelCreationTime && (
         <ChannelHero name={channelName} creatinTime={channelCreationTime} />
