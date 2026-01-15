@@ -3,6 +3,12 @@ import { Doc, Id } from '../../../convex/_generated/dataModel'
 import { format, isToday, isYesterday } from 'date-fns'
 import CompactMessage from './compact-message'
 import NonCompactMessage from './non-compact-message'
+import Toolbar from './toolbar'
+import { useUpdateMessage } from '@/features/messages/api/use-update-message'
+import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
+import { useRemoveMessage } from '@/features/messages/api/use-remove-message'
+import useConfirm from '@/hooks/use-confirm'
 
 interface MessageProps {
   id: Id<'messages'>
@@ -48,33 +54,104 @@ const Message: React.FC<MessageProps> = ({
   authorImage,
   authorName = 'Member',
 }) => {
+  const { mutate: updateMessage, isPending: isUpdatingMessage } = useUpdateMessage()
+  const { mutate: removeMessage, isPending: isRemovingMessage } = useRemoveMessage()
+  const [ConfirmDialog, confirm] = useConfirm(
+    'Delete message',
+    'Are you sure you want to delete this message? This cannot be undone.'
+  )
+
+  const isPending = isUpdatingMessage || isRemovingMessage
+
+  const handleRemove = async () => {
+    const ok = await confirm()
+
+    if (!ok) return
+
+    removeMessage(
+      { id },
+      {
+        onSuccess: () => {
+          toast.success('Message deleted')
+        },
+        onError: () => {
+          toast.error('Failed to delete message')
+        },
+      }
+    )
+  }
+
+  const handleUpdate = ({ body }: { body: string }) => {
+    updateMessage(
+      { id, body },
+      {
+        onSuccess: () => {
+          toast.success('Message updated')
+          setEditingId(null)
+        },
+        onError: () => {
+          toast.error('Failed to update message')
+        },
+      }
+    )
+  }
+
   const formatFullTime = (date: Date) => {
     return `${isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : format(date, 'MMM d, yyyy')} at ${format(date, 'h:mm:ss a')}`
   }
 
-  return isCompact ? (
-    <CompactMessage
-      body={body}
-      createdAt={createdAt}
-      updatedAt={updatedAt}
-      formatFullTime={formatFullTime}
-      image={image}
-    />
-  ) : (
-    <NonCompactMessage
-      id={id}
-      isAuthor={isAuthor}
-      setEditingId={setEditingId}
-      hideThreadButton={hideThreadButton}
-      isEditing={isEditing}
-      authorImage={authorImage}
-      authorName={authorName}
-      body={body}
-      createdAt={createdAt}
-      formatFullTime={formatFullTime}
-      image={image}
-      updatedAt={updatedAt}
-    />
+  return (
+    <>
+      <ConfirmDialog />
+
+      <div
+        className={cn(
+          'flex py-1.5 px-5 hover:bg-gray-100/60 group relative',
+          isEditing && 'bg-[#f2c74433] hover:bg-[#f2c74433]',
+          isRemovingMessage && 'bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200'
+        )}
+      >
+        {isCompact ? (
+          <CompactMessage
+            setEditingId={setEditingId}
+            isPending={isPending}
+            handleUpdate={handleUpdate}
+            body={body}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+            formatFullTime={formatFullTime}
+            image={image}
+            isEditing={isEditing}
+          />
+        ) : (
+          <NonCompactMessage
+            setEditingId={setEditingId}
+            isPending={isPending}
+            handleUpdate={handleUpdate}
+            isEditing={isEditing}
+            authorImage={authorImage}
+            authorName={authorName}
+            body={body}
+            createdAt={createdAt}
+            formatFullTime={formatFullTime}
+            image={image}
+            updatedAt={updatedAt}
+          />
+        )}
+
+        {!isEditing && (
+          <Toolbar
+            isAuthor={isAuthor}
+            isPending={isPending}
+            handleEdit={() => setEditingId(id)}
+            handleThread={() => {}}
+            handleDelete={handleRemove}
+            handleReaction={() => {}}
+            hideThreadButton={hideThreadButton}
+          />
+        )}
+      </div>
+    </>
   )
 }
 

@@ -6,15 +6,14 @@ import Thumbnail from './thumbnail'
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { Id } from '../../../convex/_generated/dataModel'
-import Toolbar from './toolbar'
 
 const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
+const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
 interface NonCompactMessageProps {
-  id: Id<'messages'>
-  hideThreadButton: boolean | undefined
   setEditingId: (id: Id<'messages'> | null) => void
-  isAuthor: boolean
+  isPending: boolean
+  handleUpdate: ({ body }: { body: string }) => void
   isEditing: boolean
   authorImage: string | undefined
   authorName: string
@@ -26,6 +25,7 @@ interface NonCompactMessageProps {
 }
 
 const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
+  isPending,
   authorImage,
   authorName,
   body,
@@ -34,21 +34,29 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
   image,
   updatedAt,
   isEditing,
-  hideThreadButton,
-  isAuthor,
+  handleUpdate,
   setEditingId,
-  id,
 }) => {
   const avatarFallback = authorName.charAt(0).toUpperCase()
 
   return (
-    <div className='flex py-1.5 px-5 hover:bg-gray-100/60 group relative'>
-      <div className='flex items-start gap-2'>
-        <Avatar>
-          <AvatarImage src={authorImage} />
-          <AvatarFallback>{avatarFallback}</AvatarFallback>
-        </Avatar>
+    <div className='flex items-start gap-2'>
+      <Avatar>
+        <AvatarImage src={authorImage} />
+        <AvatarFallback>{avatarFallback}</AvatarFallback>
+      </Avatar>
 
+      {isEditing ? (
+        <div className='w-full h-full'>
+          <Editor
+            onSubmit={handleUpdate}
+            disabled={isPending}
+            defaultValue={JSON.parse(body)}
+            onCancel={() => setEditingId(null)}
+            variant='update'
+          />
+        </div>
+      ) : (
         <div className='flex flex-col w-full overflow-hidden'>
           <div className='text-sm'>
             <Button
@@ -71,18 +79,6 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
           <Thumbnail url={image} />
           {updatedAt ? <span className='text-xs text-muted-foreground'>(edited)</span> : null}
         </div>
-      </div>
-
-      {!isEditing && (
-        <Toolbar
-          isAuthor={isAuthor}
-          isPending={false}
-          handleEdit={() => setEditingId(id)}
-          handleThread={() => {}}
-          handleDelete={() => {}}
-          handleReaction={() => {}}
-          hideThreadButton={hideThreadButton}
-        />
       )}
     </div>
   )

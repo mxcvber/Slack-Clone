@@ -33,7 +33,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
       {!hideThreadButton && (
         <Hint label='Reply in thread'>
-          <Button variant='ghost' size='icon-sm' disabled={isPending}>
+          <Button onClick={handleThread} variant='ghost' size='icon-sm' disabled={isPending}>
             <MessageSquareTextIcon className='size-4' />
           </Button>
         </Hint>
@@ -41,7 +41,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
       {isAuthor && (
         <Hint label='Edit message'>
-          <Button variant='ghost' size='icon-sm' disabled={isPending}>
+          <Button onClick={handleEdit} variant='ghost' size='icon-sm' disabled={isPending}>
             <Pencil className='size-4' />
           </Button>
         </Hint>
@@ -49,7 +49,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
       {isAuthor && (
         <Hint label='Delete message'>
-          <Button variant='ghost' size='icon-sm' disabled={isPending}>
+          <Button onClick={handleDelete} variant='ghost' size='icon-sm' disabled={isPending}>
             <Trash className='size-4' />
           </Button>
         </Hint>
