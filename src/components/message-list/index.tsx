@@ -1,8 +1,12 @@
 import { GetMessageReturnType } from '@/features/messages/api/use-get-messages'
-import React from 'react'
+import React, { useState } from 'react'
 import { differenceInMinutes, format, isToday, isYesterday } from 'date-fns'
 import Message from './message'
 import { TIME_TRESHOLD } from '@/constants'
+import ChannelHero from './channel-hero'
+import { Id } from '../../../convex/_generated/dataModel'
+import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
+import { useCurrentMember } from '@/features/members/api/use-current-member'
 
 interface MessageListProps {
   data: GetMessageReturnType | undefined
@@ -27,6 +31,12 @@ const MessageList: React.FC<MessageListProps> = ({
   channelName,
   variant,
 }) => {
+  const workspaceId = useWorkspaceId()
+
+  const { data: currentMember } = useCurrentMember({ workspaceId })
+
+  const [editingId, setEditingId] = useState<Id<'messages'> | null>(null)
+
   const formatDateLabel = (dateStr: string) => {
     const date = new Date(dateStr)
 
@@ -76,16 +86,16 @@ const MessageList: React.FC<MessageListProps> = ({
                 memberId={message.memberId}
                 authorImage={message.user.image}
                 authorName={message.user.name}
-                isAuthor={false}
+                isAuthor={message.memberId === currentMember?._id}
                 reactions={message.reactions}
                 body={message.body}
                 image={message.image}
                 updatedAt={message.updatedAt}
                 createdAt={message._creationTime}
-                isEditing={false}
-                setEditingId={() => {}}
+                isEditing={editingId === message._id}
+                setEditingId={setEditingId}
                 isCompact={isCompact}
-                hideThreadButton={false}
+                hideThreadButton={variant === 'thread'}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
                 threadTimestapm={message.threadTimestamp}
@@ -94,6 +104,10 @@ const MessageList: React.FC<MessageListProps> = ({
           })}
         </div>
       ))}
+
+      {variant === 'channel' && channelName && channelCreationTime && (
+        <ChannelHero name={channelName} creatinTime={channelCreationTime} />
+      )}
     </div>
   )
 }
