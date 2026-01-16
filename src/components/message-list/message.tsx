@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { useRemoveMessage } from '@/features/messages/api/use-remove-message'
 import useConfirm from '@/hooks/use-confirm'
 import { useToggleReaction } from '@/features/reactions/api/use-toggle-reaction'
+import { usePanel } from '@/hooks/use-panel'
 
 interface MessageProps {
   id: Id<'messages'>
@@ -48,13 +49,15 @@ const Message: React.FC<MessageProps> = ({
   setEditingId,
   updatedAt,
   hideThreadButton,
-  isCompact,
   threadCount,
   threadImage,
   threadTimestapm,
   authorImage,
+  isCompact,
   authorName = 'Member',
 }) => {
+  const { parentMessageId, onOpenMessage, onClose } = usePanel()
+
   const { mutate: updateMessage, isPending: isUpdatingMessage } = useUpdateMessage()
   const { mutate: removeMessage, isPending: isRemovingMessage } = useRemoveMessage()
   const { mutate: toggleReaction, isPending: isTogglingReaction } = useToggleReaction()
@@ -86,6 +89,10 @@ const Message: React.FC<MessageProps> = ({
       {
         onSuccess: () => {
           toast.success('Message deleted')
+
+          if (parentMessageId === id) {
+            onClose()
+          }
         },
         onError: () => {
           toast.error('Failed to delete message')
@@ -161,7 +168,7 @@ const Message: React.FC<MessageProps> = ({
             isAuthor={isAuthor}
             isPending={isPending}
             handleEdit={() => setEditingId(id)}
-            handleThread={() => {}}
+            handleThread={() => onOpenMessage(id)}
             handleDelete={handleRemove}
             handleReaction={handleReaction}
             hideThreadButton={hideThreadButton}
