@@ -14,10 +14,12 @@ import { useCreateChannelModal } from '@/features/channels/store/use-create-chan
 import { useChannelId } from '@/features/channels/hooks/use-channel-id'
 import NotFoundComponent from '@/components/not-found-component'
 import Loading from '@/components/loading'
+import { useMemberId } from '@/features/members/hooks/use-member-id'
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId()
   const channelId = useChannelId()
+  const memberId = useMemberId()
   const { setOpen } = useCreateChannelModal()
 
   const { data: memberData, isLoading: memberLoading } = useCurrentMember({ workspaceId })
@@ -62,7 +64,13 @@ const WorkspaceSidebar = () => {
 
       <WorkspaceSection label='Direct Messages' hint='New direct message' onNew={() => {}}>
         {membersData?.map((item) => (
-          <MemberItem key={item._id} id={item._id} label={item.user.name} image={item.user.image} />
+          <MemberItem
+            key={item._id}
+            id={item._id}
+            label={item.user.name}
+            image={item.user.image}
+            variant={item._id === memberId ? 'active' : 'default'}
+          />
         ))}
       </WorkspaceSection>
     </div>

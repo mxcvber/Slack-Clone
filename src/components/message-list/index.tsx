@@ -8,6 +8,7 @@ import { Id } from '../../../convex/_generated/dataModel'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useCurrentMember } from '@/features/members/api/use-current-member'
 import MessageLoader from './message-loader'
+import ConversationHero from './conversation-hero'
 
 interface MessageListProps {
   data: GetMessageReturnType | undefined
@@ -58,7 +59,7 @@ const MessageList: React.FC<MessageListProps> = ({
 
       return groups
     },
-    {} as Record<string, typeof data>
+    {} as Record<string, typeof data>,
   )
 
   return (
@@ -111,6 +112,8 @@ const MessageList: React.FC<MessageListProps> = ({
       {variant === 'channel' && channelName && channelCreationTime && (
         <ChannelHero name={channelName} creatinTime={channelCreationTime} />
       )}
+
+      {variant === 'conversation' && <ConversationHero name={memberName} image={memberImage} />}
     </div>
   )
 }
