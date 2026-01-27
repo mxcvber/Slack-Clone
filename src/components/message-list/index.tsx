@@ -100,7 +100,8 @@ const MessageList: React.FC<MessageListProps> = ({
                 hideThreadButton={variant === 'thread'}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
-                threadTimestapm={message.threadTimestamp}
+                threadName={message.threadName}
+                threadTimestamp={message.threadTimestamp}
               />
             )
           })}

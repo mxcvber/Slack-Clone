@@ -182,7 +182,8 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
                   hideThreadButton
                   threadCount={message.threadCount}
                   threadImage={message.threadImage}
-                  threadTimestapm={message.threadTimestamp}
+                  threadName={message.threadName}
+                  threadTimestamp={message.threadTimestamp}
                 />
               )
             })}

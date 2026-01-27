@@ -30,6 +30,7 @@ const populateThread = async (ctx: QueryCtx, messageId: Id<'messages'>) => {
       count: 0,
       image: undefined,
       timestamp: 0,
+      name: '',
     }
   }
 
@@ -41,6 +42,7 @@ const populateThread = async (ctx: QueryCtx, messageId: Id<'messages'>) => {
       count: 0,
       image: undefined,
       timestamp: 0,
+      name: '',
     }
   }
 
@@ -50,6 +52,7 @@ const populateThread = async (ctx: QueryCtx, messageId: Id<'messages'>) => {
     count: messages.length,
     image: lastMessageUser?.image,
     timestamp: lastMessageUser?._creationTime,
+    name: lastMessageUser?.name || 'Member',
   }
 }
 
@@ -181,7 +184,7 @@ export const getById = query({
       [] as (Doc<'reactions'> & {
         count: number
         memberIds: Id<'members'>[]
-      })[]
+      })[],
     )
 
     const reactionsWithoutMemberIdProperty = dedupedReactions.map(({ memberId, ...rest }) => rest)
@@ -228,7 +231,7 @@ export const get = query({
         q
           .eq('channelId', args.channelId)
           .eq('parentMessageId', args.parentMessageId)
-          .eq('conversationId', _conversationId)
+          .eq('conversationId', _conversationId),
       )
       .order('desc')
       .paginate(args.paginationOpts)
@@ -271,7 +274,7 @@ export const get = query({
               [] as (Doc<'reactions'> & {
                 count: number
                 memberIds: Id<'members'>[]
-              })[]
+              })[],
             )
 
             const reactionsWithoutMemberIdProperty = dedupedReactions.map(({ memberId, ...rest }) => rest)
@@ -284,9 +287,10 @@ export const get = query({
               reactions: reactionsWithoutMemberIdProperty,
               threadCount: thread.count,
               threadImage: thread.image,
+              threadName: thread.name,
               threadTimestamp: thread.timestamp,
             }
-          })
+          }),
         )
       ).filter((message): message is NonNullable<typeof message> => message !== null),
     }

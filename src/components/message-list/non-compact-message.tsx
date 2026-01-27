@@ -7,11 +7,13 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { Doc, Id } from '../../../convex/_generated/dataModel'
 import Reactions from './reactions'
+import ThreadBar from './thread-bar'
 
 const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
 interface NonCompactMessageProps {
+  handleThread: () => void
   handleReaction: (value: string) => void
   setEditingId: (id: Id<'messages'> | null) => void
   isPending: boolean
@@ -30,9 +32,18 @@ interface NonCompactMessageProps {
       memberIds: Id<'members'>[]
     }
   >
+  threadCount?: number
+  threadImage?: string
+  threadName?: string
+  threadTimestamp?: number
 }
 
 const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
+  handleThread,
+  threadCount,
+  threadImage,
+  threadName,
+  threadTimestamp,
   handleReaction,
   isPending,
   authorImage,
@@ -89,6 +100,13 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
           <Thumbnail url={image} />
           {updatedAt ? <span className='text-xs text-muted-foreground'>(edited)</span> : null}
           <Reactions data={reactions} onChange={handleReaction} />
+          <ThreadBar
+            count={threadCount}
+            image={threadImage}
+            name={threadName}
+            timestamp={threadTimestamp}
+            onClick={handleThread}
+          />
         </div>
       )}
     </div>

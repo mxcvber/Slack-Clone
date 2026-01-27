@@ -34,7 +34,8 @@ interface MessageProps {
   hideThreadButton?: boolean
   threadCount?: number
   threadImage?: string
-  threadTimestapm?: number
+  threadName?: string
+  threadTimestamp?: number
 }
 
 const Message: React.FC<MessageProps> = ({
@@ -51,7 +52,8 @@ const Message: React.FC<MessageProps> = ({
   hideThreadButton,
   threadCount,
   threadImage,
-  threadTimestapm,
+  threadName,
+  threadTimestamp,
   authorImage,
   isCompact,
   authorName = 'Member',
@@ -63,7 +65,7 @@ const Message: React.FC<MessageProps> = ({
   const { mutate: toggleReaction, isPending: isTogglingReaction } = useToggleReaction()
   const [ConfirmDialog, confirm] = useConfirm(
     'Delete message',
-    'Are you sure you want to delete this message? This cannot be undone.'
+    'Are you sure you want to delete this message? This cannot be undone.',
   )
 
   const isPending = isUpdatingMessage || isRemovingMessage || isTogglingReaction
@@ -75,7 +77,7 @@ const Message: React.FC<MessageProps> = ({
         onError: () => {
           toast.error('Failed to toggle reaction')
         },
-      }
+      },
     )
   }
 
@@ -97,7 +99,7 @@ const Message: React.FC<MessageProps> = ({
         onError: () => {
           toast.error('Failed to delete message')
         },
-      }
+      },
     )
   }
 
@@ -112,7 +114,7 @@ const Message: React.FC<MessageProps> = ({
         onError: () => {
           toast.error('Failed to update message')
         },
-      }
+      },
     )
   }
 
@@ -128,11 +130,16 @@ const Message: React.FC<MessageProps> = ({
         className={cn(
           'flex py-1.5 px-5 hover:bg-gray-100/60 group relative',
           isEditing && 'bg-[#f2c74433] hover:bg-[#f2c74433]',
-          isRemovingMessage && 'bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200'
+          isRemovingMessage && 'bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200',
         )}
       >
         {isCompact ? (
           <CompactMessage
+            handleThread={() => onOpenMessage(id)}
+            threadCount={threadCount}
+            threadImage={threadImage}
+            threadName={threadName}
+            threadTimestamp={threadTimestamp}
             reactions={reactions}
             setEditingId={setEditingId}
             isPending={isPending}
@@ -147,6 +154,11 @@ const Message: React.FC<MessageProps> = ({
           />
         ) : (
           <NonCompactMessage
+            handleThread={() => onOpenMessage(id)}
+            threadCount={threadCount}
+            threadImage={threadImage}
+            threadName={threadName}
+            threadTimestamp={threadTimestamp}
             reactions={reactions}
             setEditingId={setEditingId}
             isPending={isPending}

@@ -5,11 +5,13 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { Doc, Id } from '../../../convex/_generated/dataModel'
 import Reactions from './reactions'
+import ThreadBar from './thread-bar'
 
 const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
 interface CompactMessageProps {
+  handleThread: () => void
   handleReaction: (value: string) => void
   setEditingId: (id: Id<'messages'> | null) => void
   formatFullTime: (date: Date) => string
@@ -26,9 +28,14 @@ interface CompactMessageProps {
       memberIds: Id<'members'>[]
     }
   >
+  threadCount?: number
+  threadImage?: string
+  threadName?: string
+  threadTimestamp?: number
 }
 
 const CompactMessage: React.FC<CompactMessageProps> = ({
+  handleThread,
   handleReaction,
   setEditingId,
   handleUpdate,
@@ -40,6 +47,10 @@ const CompactMessage: React.FC<CompactMessageProps> = ({
   image,
   isEditing,
   reactions,
+  threadCount,
+  threadImage,
+  threadName,
+  threadTimestamp,
 }) => {
   return (
     <div className='flex items-start gap-2'>
@@ -65,6 +76,13 @@ const CompactMessage: React.FC<CompactMessageProps> = ({
           <Thumbnail url={image} />
           {updatedAt ? <span className='text-xs text-muted-foreground'>(edited)</span> : null}
           <Reactions data={reactions} onChange={handleReaction} />
+          <ThreadBar
+            count={threadCount}
+            name={threadName}
+            image={threadImage}
+            timestamp={threadTimestamp}
+            onClick={handleThread}
+          />
         </div>
       )}
     </div>
