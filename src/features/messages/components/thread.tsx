@@ -125,7 +125,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
   if (loadingMessage || status === 'LoadingFirstPage' || loadingCurrentMember) {
     return (
       <div className='h-full flex flex-col'>
-        <ThreadHeader onClose={onClose} />
+        <ThreadHeader title='Thread' onClose={onClose} />
         <Loading />
       </div>
     )
@@ -134,7 +134,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
   if (!message) {
     return (
       <div className='h-full flex flex-col'>
-        <ThreadHeader onClose={onClose} />
+        <ThreadHeader title='Thread' onClose={onClose} />
         <NotFoundComponent label='Message not found' />
       </div>
     )
@@ -142,7 +142,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
 
   return (
     <div className='h-full flex flex-col'>
-      <ThreadHeader onClose={onClose} />
+      <ThreadHeader title='Thread' onClose={onClose} />
 
       <div className='flex-1 flex flex-col-reverse pb-4 overflow-y-auto messages-scrollbar'>
         {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (

@@ -8,15 +8,16 @@ import { usePanel } from '@/hooks/use-panel'
 import { Id } from '../../../../convex/_generated/dataModel'
 import Thread from '@/features/messages/components/thread'
 import Loading from '@/components/loading'
+import Profile from '@/features/members/components/profile'
 
 const WorkspaceLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) => {
-  const { parentMessageId, onClose } = usePanel()
+  const { parentMessageId, profileMemberId, onClose } = usePanel()
 
-  const showPanel = Boolean(parentMessageId)
+  const showPanel = Boolean(parentMessageId) || Boolean(profileMemberId)
 
   return (
     <div className='h-full'>
@@ -38,6 +39,8 @@ const WorkspaceLayout = ({
               <ResizablePanel defaultSize={30} minSize={20}>
                 {parentMessageId ? (
                   <Thread messageId={parentMessageId as Id<'messages'>} onClose={onClose} />
+                ) : profileMemberId ? (
+                  <Profile memberId={profileMemberId as Id<'members'>} onClose={onClose} />
                 ) : (
                   <Loading />
                 )}

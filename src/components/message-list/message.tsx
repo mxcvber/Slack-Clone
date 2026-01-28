@@ -58,7 +58,7 @@ const Message: React.FC<MessageProps> = ({
   isCompact,
   authorName = 'Member',
 }) => {
-  const { parentMessageId, onOpenMessage, onClose } = usePanel()
+  const { parentMessageId, onOpenMessage, onOpenProfile, onClose } = usePanel()
 
   const { mutate: updateMessage, isPending: isUpdatingMessage } = useUpdateMessage()
   const { mutate: removeMessage, isPending: isRemovingMessage } = useRemoveMessage()
@@ -154,6 +154,7 @@ const Message: React.FC<MessageProps> = ({
           />
         ) : (
           <NonCompactMessage
+            onOpenProfile={() => onOpenProfile(memberId)}
             handleThread={() => onOpenMessage(id)}
             threadCount={threadCount}
             threadImage={threadImage}

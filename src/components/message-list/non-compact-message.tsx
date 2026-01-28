@@ -13,6 +13,7 @@ const Renderer = dynamic(() => import('@/components/message-list/renderer'), { s
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
 interface NonCompactMessageProps {
+  onOpenProfile: () => void
   handleThread: () => void
   handleReaction: (value: string) => void
   setEditingId: (id: Id<'messages'> | null) => void
@@ -39,6 +40,7 @@ interface NonCompactMessageProps {
 }
 
 const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
+  onOpenProfile,
   handleThread,
   threadCount,
   threadImage,
@@ -62,10 +64,12 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
 
   return (
     <div className='flex items-start gap-2'>
-      <Avatar>
-        <AvatarImage src={authorImage} />
-        <AvatarFallback>{avatarFallback}</AvatarFallback>
-      </Avatar>
+      <Button className='p-0 bg-transparent hover:bg-transparent cursor-pointer' onClick={onOpenProfile}>
+        <Avatar>
+          <AvatarImage src={authorImage} />
+          <AvatarFallback>{avatarFallback}</AvatarFallback>
+        </Avatar>
+      </Button>
 
       {isEditing ? (
         <div className='w-full h-full'>
@@ -81,8 +85,8 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
         <div className='flex flex-col w-full overflow-hidden'>
           <div className='text-sm'>
             <Button
-              onClick={() => {}}
-              className='h-auto p-0 bg-transparent hover:bg-transparent cursor-pointer font-bold text-primary hover:underline'
+              onClick={onOpenProfile}
+              className='h-auto p-0 bg-transparent hover:bg-transparent font-bold text-primary hover:underline'
             >
               {authorName}
             </Button>
