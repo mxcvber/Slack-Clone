@@ -159,6 +159,10 @@ body,
   @apply left-2! font-[Lato]! text-[#8d8d8d]! not-italic! text-sm! font-normal! truncate!;
 }
 
+.scrollbar {
+  width: 4px;
+}
+
 .ql-editor::-webkit-scrollbar {
   width: 4px;
 }
@@ -177,7 +181,20 @@ body,
   background: #dbdadd;
 }
 
-.messages-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #dcdcdc #f8f8f8;
+.messages-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages-scrollbar::-webkit-scrollbar-track {
+  border-radius: 6px;
+  background: #fff;
+}
+
+.messages-scrollbar::-webkit-scrollbar-thumb {
+  background: #dbdadd;
+  border-radius: 6px;
+}
+
+.messages-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #dbdadd;
 }

@@ -7,6 +7,7 @@ import NotFoundComponent from '@/components/not-found-component'
 import Header from './header'
 import ChatInput from './chat-input'
 import MessageList from '@/components/message-list'
+import { usePanel } from '@/hooks/use-panel'
 
 interface ConversationProps {
   id: Id<'conversations'>
@@ -15,6 +16,7 @@ interface ConversationProps {
 const Conversation: React.FC<ConversationProps> = ({ id }: { id: Id<'conversations'> }) => {
   const memberId = useMemberId()
 
+  const { onOpenProfile } = usePanel()
   const { data: member, isLoading: isMemberLoading } = useGetMember({ id: memberId })
   const { results, loadMore, status } = useGetMessages({ conversationId: id })
 
@@ -28,7 +30,7 @@ const Conversation: React.FC<ConversationProps> = ({ id }: { id: Id<'conversatio
 
   return (
     <div className='flex flex-col h-full'>
-      <Header memberName={member.user.name} memberImage={member.user.image} onClick={() => {}} />
+      <Header memberName={member.user.name} memberImage={member.user.image} onClick={() => onOpenProfile(member._id)} />
       <MessageList
         data={results}
         variant='conversation'
