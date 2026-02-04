@@ -12,7 +12,7 @@ import { defaultFormSchema } from '@/schemas'
 
 const WorkspaceModalForm = () => {
   const { setOpen } = useCreateWorkspaceModal()
-  const { mutate } = useCreateWorkspace()
+  const { mutate, isPending } = useCreateWorkspace()
 
   const router = useRouter()
 
@@ -35,7 +35,7 @@ const WorkspaceModalForm = () => {
             toast.success('Workspace created successfully')
             setOpen(false)
           },
-        }
+        },
       )
     } catch (error: unknown) {
       toast.error('Failed to create workspace.')
@@ -47,14 +47,14 @@ const WorkspaceModalForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormInput
           autoFocus
-          disabled={false}
+          disabled={isPending}
           control={form.control}
           name='name'
           placeholder="Workspace name e.g. 'Work', 'Personal', 'Home'"
         />
 
         <div className='flex justify-end'>
-          <Button type='submit' disabled={false}>
+          <Button type='submit' disabled={isPending}>
             Create
           </Button>
         </div>

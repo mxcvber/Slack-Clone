@@ -3,35 +3,19 @@ import Hint from '../hint'
 import Thumbnail from './thumbnail'
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { Doc, Id } from '../../../convex/_generated/dataModel'
 import Reactions from './reactions'
 import ThreadBar from './thread-bar'
+import { DefaultMessageType } from '@/types'
 
 const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
-interface CompactMessageProps {
+interface CompactMessageProps extends DefaultMessageType {
+  isPending: boolean
   handleThread: () => void
   handleReaction: (value: string) => void
-  setEditingId: (id: Id<'messages'> | null) => void
   formatFullTime: (date: Date) => string
-  createdAt: number
-  updatedAt: number | undefined
-  body: string
-  image: string | null | undefined
-  isEditing: boolean
-  isPending: boolean
   handleUpdate: ({ body }: { body: string }) => void
-  reactions: Array<
-    Omit<Doc<'reactions'>, 'memberId'> & {
-      count: number
-      memberIds: Id<'members'>[]
-    }
-  >
-  threadCount?: number
-  threadImage?: string
-  threadName?: string
-  threadTimestamp?: number
 }
 
 const CompactMessage: React.FC<CompactMessageProps> = ({

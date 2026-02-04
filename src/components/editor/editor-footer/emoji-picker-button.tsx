@@ -10,10 +10,21 @@ interface EmojiPickerButtonProps {
 }
 
 const EmojiPickerButton: React.FC<EmojiPickerButtonProps> = ({ disabled, quillRef }) => {
-  const onEmojiSelect = (emoji: any) => {
+  const onEmojiSelect = (emoji: string) => {
     const quill = quillRef.current
+    if (!quill) return
 
-    quill?.insertText(quill.getSelection()?.index || 0, emoji.native)
+    const selection = quill.getSelection()
+
+    if (selection) {
+      quill.insertText(selection.index, emoji)
+
+      quill.setSelection(selection.index + emoji.length, 0)
+    } else {
+      const length = quill.getLength()
+      quill.insertText(length - 1, emoji)
+      quill.setSelection(length + emoji.length - 1, 0)
+    }
   }
 
   return (

@@ -25,7 +25,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
   return (
     <div className='absolute top-0 right-5 group-hover:opacity-100 opacity-0 transition-opacity border bg-white rounded-md shadow-sm'>
-      <EmojiPopover hint='Add reaction' onEmojiSelect={(emoji) => handleReaction(emoji.native)}>
+      <EmojiPopover hint='Add reaction' onEmojiSelect={(emoji) => handleReaction(emoji)}>
         <Button variant='ghost' size='icon-sm' disabled={isPending}>
           <Smile className='size-4' />
         </Button>

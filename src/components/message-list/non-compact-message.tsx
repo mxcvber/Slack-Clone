@@ -1,42 +1,24 @@
-import { format } from 'date-fns'
-import Hint from '../hint'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Button } from '../ui/button'
 import Thumbnail from './thumbnail'
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { Doc, Id } from '../../../convex/_generated/dataModel'
 import Reactions from './reactions'
 import ThreadBar from './thread-bar'
+import { DefaultMessageType } from '@/types'
+import MessageAvatar from './message-avatar'
+import MessageInfo from './message-info'
 
 const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
-interface NonCompactMessageProps {
+interface NonCompactMessageProps extends DefaultMessageType {
+  isPending: boolean
+  authorImage: string | undefined
+  authorName: string
+  handleUpdate: ({ body }: { body: string }) => void
   onOpenProfile: () => void
   handleThread: () => void
   handleReaction: (value: string) => void
-  setEditingId: (id: Id<'messages'> | null) => void
-  isPending: boolean
-  handleUpdate: ({ body }: { body: string }) => void
-  isEditing: boolean
-  authorImage: string | undefined
-  authorName: string
-  body: string
-  image: string | null | undefined
   formatFullTime: (date: Date) => string
-  createdAt: number
-  updatedAt: number | undefined
-  reactions: Array<
-    Omit<Doc<'reactions'>, 'memberId'> & {
-      count: number
-      memberIds: Id<'members'>[]
-    }
-  >
-  threadCount?: number
-  threadImage?: string
-  threadName?: string
-  threadTimestamp?: number
 }
 
 const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
@@ -60,16 +42,9 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
   setEditingId,
   reactions,
 }) => {
-  const avatarFallback = authorName.charAt(0).toUpperCase()
-
   return (
     <div className='flex items-start gap-2'>
-      <Button className='p-0 bg-transparent hover:bg-transparent cursor-pointer' onClick={onOpenProfile}>
-        <Avatar>
-          <AvatarImage src={authorImage} />
-          <AvatarFallback>{avatarFallback}</AvatarFallback>
-        </Avatar>
-      </Button>
+      <MessageAvatar name={authorName} image={authorImage} onOpenProfile={onOpenProfile} />
 
       {isEditing ? (
         <div className='w-full h-full'>
@@ -83,22 +58,12 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
         </div>
       ) : (
         <div className='flex flex-col w-full overflow-hidden'>
-          <div className='text-sm'>
-            <Button
-              onClick={onOpenProfile}
-              className='h-auto p-0 bg-transparent hover:bg-transparent font-bold text-primary hover:underline'
-            >
-              {authorName}
-            </Button>
-
-            <span>&nbsp;&nbsp;</span>
-
-            <Hint label={formatFullTime(new Date(createdAt))}>
-              <span className='cursor-default text-xs text-muted-foreground hover:underline'>
-                {format(new Date(createdAt), 'h:mm a')}
-              </span>
-            </Hint>
-          </div>
+          <MessageInfo
+            authorName={authorName}
+            createdAt={createdAt}
+            onOpenProfile={onOpenProfile}
+            formatFullTime={formatFullTime}
+          />
 
           <Renderer value={body} />
           <Thumbnail url={image} />

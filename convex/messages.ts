@@ -35,6 +35,7 @@ const populateThread = async (ctx: QueryCtx, messageId: Id<'messages'>) => {
   }
 
   const lastMessage = messages[messages.length - 1]
+
   const lastMessageMember = await populateMember(ctx, lastMessage.memberId)
 
   if (!lastMessageMember) {
@@ -51,7 +52,7 @@ const populateThread = async (ctx: QueryCtx, messageId: Id<'messages'>) => {
   return {
     count: messages.length,
     image: lastMessageUser?.image,
-    timestamp: lastMessageUser?._creationTime,
+    timestamp: lastMessage?._creationTime,
     name: lastMessageUser?.name || 'Member',
   }
 }

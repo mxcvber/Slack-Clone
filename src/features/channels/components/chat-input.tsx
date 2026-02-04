@@ -10,15 +10,15 @@ import { Id } from '../../../../convex/_generated/dataModel'
 
 const Editor = dynamic(() => import('@/components/editor'), { ssr: false })
 
-interface ChatInputProps {
-  placeholder: string
-}
-
 type CreateMessageValues = {
   channelId: Id<'channels'>
   workspaceId: Id<'workspaces'>
   body: string
   image: Id<'_storage'> | undefined
+}
+
+interface ChatInputProps {
+  placeholder: string
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ placeholder }) => {
@@ -80,7 +80,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ placeholder }) => {
   }
 
   return (
-    <div className='px-5 w-full'>
+    <div className='px-5 w-full font-extrabold'>
       <Editor
         key={editorKey}
         placeholder={placeholder}

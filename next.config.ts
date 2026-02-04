@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
         pathname: '/api/storage/**',
       },
     ],
+    qualities: [100, 75],
   },
 }
 

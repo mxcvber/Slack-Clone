@@ -1,14 +1,11 @@
 import { GetMessageReturnType } from '@/features/messages/api/use-get-messages'
-import React, { useState } from 'react'
-import { differenceInMinutes, format, isToday, isYesterday } from 'date-fns'
-import Message from './message'
-import { TIME_TRESHOLD } from '@/constants'
-import ChannelHero from './channel-hero'
-import { Id } from '../../../convex/_generated/dataModel'
-import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
-import { useCurrentMember } from '@/features/members/api/use-current-member'
+import React from 'react'
+import { format } from 'date-fns'
+import ChannelHero from './heros/channel-hero'
 import MessageLoader from './message-loader'
-import ConversationHero from './conversation-hero'
+import ConversationHero from './heros/conversation-hero'
+import DateSeparator from './date-separator'
+import MessageListContent from './message-list-content'
 
 interface MessageListProps {
   data: GetMessageReturnType | undefined
@@ -33,20 +30,6 @@ const MessageList: React.FC<MessageListProps> = ({
   channelName,
   variant,
 }) => {
-  const workspaceId = useWorkspaceId()
-
-  const { data: currentMember } = useCurrentMember({ workspaceId })
-
-  const [editingId, setEditingId] = useState<Id<'messages'> | null>(null)
-
-  const formatDateLabel = (dateStr: string) => {
-    const date = new Date(dateStr)
-
-    if (isToday(date)) return 'Today'
-    if (isYesterday(date)) return 'Yesterday'
-    return format(date, 'EEEE, MMMM d')
-  }
-
   const groupedMessages = data?.reduce(
     (groups, message) => {
       const date = new Date(message._creationTime)
@@ -66,45 +49,9 @@ const MessageList: React.FC<MessageListProps> = ({
     <div className='flex-1 flex flex-col-reverse pb-4 overflow-y-auto messages-scrollbar'>
       {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
         <div key={dateKey}>
-          <div className='text-center my-2 relative'>
-            <hr className='absolute top-1/2 left-0 right-0 border-gray-300' />
-            <span className='relative inline-block bg-white px-4 py-1 rounded-full text-xs border-gray-300 shadow-sm'>
-              {formatDateLabel(dateKey)}
-            </span>
-          </div>
+          <DateSeparator dateKey={dateKey} />
 
-          {messages.map((message, index) => {
-            const prevMessage = messages[index - 1]
-
-            const isCompact =
-              prevMessage &&
-              prevMessage.user._id === message.user._id &&
-              differenceInMinutes(new Date(message._creationTime), new Date(prevMessage._creationTime)) < TIME_TRESHOLD
-
-            return (
-              <Message
-                key={message._id}
-                id={message._id}
-                memberId={message.memberId}
-                authorImage={message.user.image}
-                authorName={message.user.name}
-                isAuthor={message.memberId === currentMember?._id}
-                reactions={message.reactions}
-                body={message.body}
-                image={message.image}
-                updatedAt={message.updatedAt}
-                createdAt={message._creationTime}
-                isEditing={editingId === message._id}
-                setEditingId={setEditingId}
-                isCompact={isCompact}
-                hideThreadButton={variant === 'thread'}
-                threadCount={message.threadCount}
-                threadImage={message.threadImage}
-                threadName={message.threadName}
-                threadTimestamp={message.threadTimestamp}
-              />
-            )
-          })}
+          <MessageListContent messages={messages} variant={variant} />
         </div>
       ))}
 

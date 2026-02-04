@@ -3,20 +3,14 @@
 import Quill, { Delta, Op, type QuillOptions } from 'quill'
 import 'quill/dist/quill.snow.css'
 import React, { RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import EditorFooter from './editor-footer'
-import EditorInfo from './editor-info'
-import { Input } from '../ui/input'
-import UploadImage from './upload-image'
-import { EditorValue } from '@/types'
-import { cn } from '@/lib/utils'
+import EditorContent from './editor-content'
+import { DefaultEditorType } from '@/types'
 
-interface EditorProps {
-  onSubmit: ({ image, body }: EditorValue) => void
-  onCancel?: () => void
+interface EditorProps extends DefaultEditorType {
   placeholder?: string
   defaultValue?: Delta | Op[]
-  disabled?: boolean
   innerRef?: RefObject<Quill | null>
+  disabled?: boolean
   variant?: 'create' | 'update'
 }
 
@@ -30,21 +24,18 @@ const Editor: React.FC<EditorProps> = ({
   variant = 'create',
 }) => {
   const [text, setText] = useState('')
-  const [image, setImage] = useState<File | null>(null)
 
   const submitRef = useRef(onSubmit)
   const placeholderRef = useRef(placeholder)
   const quillRef = useRef<Quill | null>(null)
   const defaultValueRef = useRef(defaultValue)
   const containerRef = useRef<HTMLDivElement>(null)
-  const disabledRef = useRef(disabled)
   const imageElementRef = useRef<HTMLInputElement>(null)
 
   useLayoutEffect(() => {
     submitRef.current = onSubmit
     placeholderRef.current = placeholder
     defaultValueRef.current = defaultValue
-    disabledRef.current = disabled
   })
 
   useEffect(() => {
@@ -68,7 +59,7 @@ const Editor: React.FC<EditorProps> = ({
 
                 const isEmpty = !addedImage && text.replace(/<(.|\n)*?>/g, '').trim().length === 0
 
-                if (!isEmpty) return
+                if (isEmpty) return
 
                 const body = JSON.stringify(quill.getContents())
                 submitRef.current?.({ body, image: addedImage })
@@ -117,38 +108,16 @@ const Editor: React.FC<EditorProps> = ({
   }, [innerRef])
 
   return (
-    <div className='flex flex-col'>
-      <Input
-        type='file'
-        accept='image/*'
-        ref={imageElementRef}
-        onChange={(event) => setImage(event.target.files![0])}
-        className='hidden'
-      />
-      <div
-        className={cn(
-          'flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white',
-          disabled && 'opacity-50',
-        )}
-      >
-        <div ref={containerRef} className='ql-custom' />
-        <UploadImage image={image} setImage={setImage} imageElementRef={imageElementRef} />
-
-        <EditorFooter
-          image={image}
-          quillRef={quillRef}
-          text={text}
-          containerRef={containerRef}
-          imageElementRef={imageElementRef}
-          disabled={disabled}
-          variant={variant}
-          onCancel={onCancel}
-          onSubmit={onSubmit}
-        />
-      </div>
-
-      <EditorInfo variant={variant} />
-    </div>
+    <EditorContent
+      imageElementRef={imageElementRef}
+      containerRef={containerRef}
+      quillRef={quillRef}
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      text={text}
+      variant={variant}
+      disabled={disabled}
+    />
   )
 }
 

@@ -1,2 +1,2 @@
 export const TIME_TRESHOLD = 5
-export const BATCH_SIZE = 2
+export const BATCH_SIZE = 10

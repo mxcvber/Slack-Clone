@@ -4,17 +4,15 @@ import EditorButton from './editor-button'
 import EmojiPickerButton from './emoji-picker-button'
 import FormattingToggleButton from './formatting-toggle-button'
 import ImageUploadButton from './image-upload-button'
-import { EditorValue } from '@/types'
+import { DefaultEditorType } from '@/types'
 
-interface EditorFooterProps {
+interface EditorFooterProps extends DefaultEditorType {
   text: string
   imageElementRef: React.RefObject<HTMLInputElement | null>
   containerRef: RefObject<HTMLDivElement | null>
   quillRef: React.RefObject<Quill | null>
   disabled: boolean
   variant: 'create' | 'update'
-  onCancel: (() => void) | undefined
-  onSubmit: ({ image, body }: EditorValue) => void
   image: File | null
 }
 

@@ -2,16 +2,14 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 import { MdSend } from 'react-icons/md'
 import { Button } from '@/components/ui/button'
-import { EditorValue } from '@/types'
 import Quill from 'quill'
+import { DefaultEditorType } from '@/types'
 
-interface EditorButtonProps {
+interface EditorButtonProps extends DefaultEditorType {
   quillRef: React.RefObject<Quill | null>
   text: string
   variant: 'create' | 'update'
   disabled: boolean
-  onCancel: (() => void) | undefined
-  onSubmit: ({ image, body }: EditorValue) => void
   image: File | null
 }
 
@@ -54,7 +52,7 @@ const EditorButton: React.FC<EditorButtonProps> = ({
       size='icon-sm'
       className={cn(
         'ml-auto',
-        isEmpty ? 'bg-white hover:bg-white text-muted-foreground' : 'bg-[#007a5a] hover:bg-[#007a5a]/80 text-white'
+        isEmpty ? 'bg-white hover:bg-white text-muted-foreground' : 'bg-[#007a5a] hover:bg-[#007a5a]/80 text-white',
       )}
       onClick={handleSubmit}
     >

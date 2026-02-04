@@ -28,6 +28,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ image, setImage, imageElement
             src={URL.createObjectURL(image)}
             alt='Uploaded'
             fill
+            sizes='62px'
             className='rounded-xl overflow-hidden border object-cover'
           />
         </div>

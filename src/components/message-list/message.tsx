@@ -1,41 +1,22 @@
 import React from 'react'
-import { Doc, Id } from '../../../convex/_generated/dataModel'
-import { format, isToday, isYesterday } from 'date-fns'
-import CompactMessage from './compact-message'
-import NonCompactMessage from './non-compact-message'
-import Toolbar from './toolbar'
+import { Id } from '../../../convex/_generated/dataModel'
 import { useUpdateMessage } from '@/features/messages/api/use-update-message'
 import { toast } from 'sonner'
-import { cn } from '@/lib/utils'
 import { useRemoveMessage } from '@/features/messages/api/use-remove-message'
 import useConfirm from '@/hooks/use-confirm'
 import { useToggleReaction } from '@/features/reactions/api/use-toggle-reaction'
 import { usePanel } from '@/hooks/use-panel'
+import { DefaultMessageType } from '@/types'
+import MessageContent from './message-content'
 
-interface MessageProps {
+interface MessageProps extends DefaultMessageType {
   id: Id<'messages'>
   memberId: Id<'members'>
   isAuthor: boolean
-  reactions: Array<
-    Omit<Doc<'reactions'>, 'memberId'> & {
-      count: number
-      memberIds: Id<'members'>[]
-    }
-  >
-  body: Doc<'messages'>['body']
-  image: string | null | undefined
-  createdAt: Doc<'messages'>['_creationTime']
-  updatedAt: Doc<'messages'>['updatedAt']
-  isEditing: boolean
-  setEditingId: (id: Id<'messages'> | null) => void
   isCompact: boolean
   authorImage?: string
   authorName?: string
   hideThreadButton?: boolean
-  threadCount?: number
-  threadImage?: string
-  threadName?: string
-  threadTimestamp?: number
 }
 
 const Message: React.FC<MessageProps> = ({
@@ -58,7 +39,7 @@ const Message: React.FC<MessageProps> = ({
   isCompact,
   authorName = 'Member',
 }) => {
-  const { parentMessageId, onOpenMessage, onOpenProfile, onClose } = usePanel()
+  const { parentMessageId, onClose } = usePanel()
 
   const { mutate: updateMessage, isPending: isUpdatingMessage } = useUpdateMessage()
   const { mutate: removeMessage, isPending: isRemovingMessage } = useRemoveMessage()
@@ -118,76 +99,35 @@ const Message: React.FC<MessageProps> = ({
     )
   }
 
-  const formatFullTime = (date: Date) => {
-    return `${isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : format(date, 'MMM d, yyyy')} at ${format(date, 'h:mm:ss a')}`
-  }
-
   return (
     <>
       <ConfirmDialog />
 
-      <div
-        className={cn(
-          'flex py-1.5 px-5 hover:bg-gray-100/60 group relative',
-          isEditing && 'bg-[#f2c74433] hover:bg-[#f2c74433]',
-          isRemovingMessage && 'bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200',
-        )}
-      >
-        {isCompact ? (
-          <CompactMessage
-            handleThread={() => onOpenMessage(id)}
-            threadCount={threadCount}
-            threadImage={threadImage}
-            threadName={threadName}
-            threadTimestamp={threadTimestamp}
-            reactions={reactions}
-            setEditingId={setEditingId}
-            isPending={isPending}
-            handleUpdate={handleUpdate}
-            body={body}
-            createdAt={createdAt}
-            updatedAt={updatedAt}
-            formatFullTime={formatFullTime}
-            image={image}
-            isEditing={isEditing}
-            handleReaction={handleReaction}
-          />
-        ) : (
-          <NonCompactMessage
-            onOpenProfile={() => onOpenProfile(memberId)}
-            handleThread={() => onOpenMessage(id)}
-            threadCount={threadCount}
-            threadImage={threadImage}
-            threadName={threadName}
-            threadTimestamp={threadTimestamp}
-            reactions={reactions}
-            setEditingId={setEditingId}
-            isPending={isPending}
-            handleUpdate={handleUpdate}
-            isEditing={isEditing}
-            authorImage={authorImage}
-            authorName={authorName}
-            body={body}
-            createdAt={createdAt}
-            formatFullTime={formatFullTime}
-            image={image}
-            updatedAt={updatedAt}
-            handleReaction={handleReaction}
-          />
-        )}
-
-        {!isEditing && (
-          <Toolbar
-            isAuthor={isAuthor}
-            isPending={isPending}
-            handleEdit={() => setEditingId(id)}
-            handleThread={() => onOpenMessage(id)}
-            handleDelete={handleRemove}
-            handleReaction={handleReaction}
-            hideThreadButton={hideThreadButton}
-          />
-        )}
-      </div>
+      <MessageContent
+        isAuthor={isAuthor}
+        authorName={authorName}
+        authorImage={authorImage}
+        memberId={memberId}
+        hideThreadButton={hideThreadButton}
+        handleRemove={handleRemove}
+        handleReaction={handleReaction}
+        handleUpdate={handleUpdate}
+        id={id}
+        isPending={isPending}
+        isCompact={isCompact}
+        isRemovingMessage={isRemovingMessage}
+        body={body}
+        createdAt={createdAt}
+        image={image}
+        isEditing={isEditing}
+        reactions={reactions}
+        setEditingId={setEditingId}
+        updatedAt={updatedAt}
+        threadCount={threadCount}
+        threadImage={threadImage}
+        threadName={threadName}
+        threadTimestamp={threadTimestamp}
+      />
     </>
   )
 }
