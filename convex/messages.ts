@@ -211,7 +211,7 @@ export const get = query({
     const userId = await getAuthUserId(ctx)
 
     if (!userId) {
-      return null
+      return { page: [], isDone: true, continueCursor: '' }
     }
 
     let _conversationId = args.conversationId
@@ -220,7 +220,7 @@ export const get = query({
       const parentMessage = await ctx.db.get(args.parentMessageId)
 
       if (!parentMessage) {
-        return null
+        return { page: [], isDone: true, continueCursor: '' }
       }
 
       _conversationId = parentMessage.conversationId

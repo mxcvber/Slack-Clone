@@ -51,7 +51,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
   const canLoadMore = status === 'CanLoadMore'
   const isLoadingMore = status === 'LoadingMore'
 
-  const groupedMessages = results?.reduce(
+  const groupedMessages: Record<string, Array<any>> | undefined = results?.reduce(
     (groups, message) => {
       const date = new Date(message._creationTime)
       const dateKey = format(date, 'yyyy-MM-dd')

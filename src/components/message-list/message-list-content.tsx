@@ -5,10 +5,9 @@ import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useCurrentMember } from '@/features/members/api/use-current-member'
 import { Id } from '../../../convex/_generated/dataModel'
 import { TIME_TRESHOLD } from '@/constants'
-import { GetMessageReturnType } from '@/features/messages/api/use-get-messages'
 
 interface MessageListContentProps {
-  messages: GetMessageReturnType
+  messages: Array<any>
   variant?: 'channel' | 'thread' | 'conversation'
 }
 

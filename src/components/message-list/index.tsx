@@ -1,4 +1,3 @@
-import { GetMessageReturnType } from '@/features/messages/api/use-get-messages'
 import React from 'react'
 import { format } from 'date-fns'
 import ChannelHero from './heros/channel-hero'
@@ -8,7 +7,7 @@ import DateSeparator from './date-separator'
 import MessageListContent from './message-list-content'
 
 interface MessageListProps {
-  data: GetMessageReturnType | undefined
+  data: Array<any> | undefined
   loadMore: (() => void) | undefined
   isLoadingMore: boolean
   canLoadMore: boolean
@@ -30,7 +29,7 @@ const MessageList: React.FC<MessageListProps> = ({
   channelName,
   variant,
 }) => {
-  const groupedMessages = data?.reduce(
+  const groupedMessages: Record<string, Array<any>> = data?.reduce(
     (groups, message) => {
       const date = new Date(message._creationTime)
       const dateKey = format(date, 'yyyy-MM-dd')
