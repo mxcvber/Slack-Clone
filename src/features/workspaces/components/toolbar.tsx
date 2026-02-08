@@ -13,12 +13,10 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from '@/components/ui/command'
 import { useState } from 'react'
 import { useGetChannels } from '@/features/channels/api/use-get-channels'
 import { useGetMembers } from '@/features/members/api/use-get-members'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Id } from '../../../../convex/_generated/dataModel'
 

@@ -211,7 +211,7 @@ export const get = query({
     const userId = await getAuthUserId(ctx)
 
     if (!userId) {
-      throw new Error('Unauthorized')
+      return null
     }
 
     let _conversationId = args.conversationId
@@ -220,7 +220,7 @@ export const get = query({
       const parentMessage = await ctx.db.get(args.parentMessageId)
 
       if (!parentMessage) {
-        throw new Error('Parent message not found')
+        return null
       }
 
       _conversationId = parentMessage.conversationId
