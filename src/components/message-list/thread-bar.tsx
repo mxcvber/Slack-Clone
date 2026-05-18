@@ -20,7 +20,7 @@ const ThreadBar: React.FC<ThreadBarProps> = ({ count, image, name = 'Member', ti
   return (
     <Button
       onClick={onClick}
-      className='gap-2 bg-transparent h-fit max-w-[600px] p-1 rounded-md hover:bg-white border border-transparent hover:border-border flex items-center justify-start group/thread-bar transition'
+      className='gap-2 bg-transparent h-fit sm:max-w-[600px] p-1 rounded-md hover:bg-white border border-transparent hover:border-border flex items-center justify-start group/thread-bar transition'
     >
       <Avatar className='size-6 shrink-0'>
         <AvatarImage src={image} alt='Avatar' />
@@ -31,7 +31,7 @@ const ThreadBar: React.FC<ThreadBarProps> = ({ count, image, name = 'Member', ti
         {count} {count > 1 ? 'replies' : 'reply'}
       </span>
 
-      <span className='text-xs text-muted-foreground truncate group-hover/thread-bar:hidden block'>
+      <span className='text-xs text-muted-foreground truncate group-hover/thread-bar:hidden hidden sm:block'>
         Last reply {formatDistanceToNow(timestamp, { addSuffix: true })}
       </span>
 

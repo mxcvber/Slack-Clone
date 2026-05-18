@@ -28,7 +28,7 @@ const EmojiPopover: React.FC<EmojiPopoverProps> = ({ children, onEmojiSelect, hi
         </Tooltip>
 
         <PopoverContent className='p-0 w-full border-none shadow-none'>
-          <EmojiPicker onEmojiClick={onSelect} />
+          <EmojiPicker onEmojiClick={onSelect} width='100%' height={400} lazyLoadEmojis searchPlaceHolder='Search...' />
         </PopoverContent>
       </Popover>
     </TooltipProvider>

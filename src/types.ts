@@ -28,3 +28,13 @@ export type DefaultMessageType = {
   threadName?: string
   threadTimestamp?: number
 }
+
+export interface ToolbarProps {
+  isAuthor: boolean
+  isPending: boolean
+  handleEdit: () => void
+  handleThread: () => void
+  handleDelete: () => void
+  handleReaction: (value: string) => void
+  hideThreadButton?: boolean | undefined
+}

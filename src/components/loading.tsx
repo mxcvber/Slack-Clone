@@ -4,7 +4,7 @@ import { Loader } from 'lucide-react'
 const Loading = ({ className }: { className?: string }) => {
   return (
     <div className={cn('h-full flex-1 flex items-center justify-center text-muted-foreground', className)}>
-      <Loader className='animate-spin size-6' />
+      <Loader className='animate-spin size-4 sm:size-6' />
     </div>
   )
 }

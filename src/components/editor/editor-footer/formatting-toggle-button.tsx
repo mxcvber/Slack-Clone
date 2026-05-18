@@ -23,7 +23,7 @@ const FormattingToggleButton: React.FC<FormattingToggleButtonProps> = ({ contain
 
   return (
     <Hint label={isToolbarVisible ? 'Hide formatting' : 'Show formatting'}>
-      <Button disabled={disabled} size='icon-sm' variant='ghost' onClick={toggleToolbar}>
+      <Button disabled={disabled} size='icon-sm' variant='ghost' onClick={toggleToolbar} className='max-sm:w-fit'>
         <PiTextAa className='size-4' />
       </Button>
     </Hint>

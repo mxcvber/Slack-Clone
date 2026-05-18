@@ -15,7 +15,7 @@ const SignUpCard: React.FC<AuthCardProps> = ({
   handleProviderAuth,
 }) => {
   return (
-    <Card className='md:h-auto md:w-[420px] p-8'>
+    <Card className='md:h-auto w-full max-w-[420px] p-8 m-4'>
       <Header title='Sign up to continue' />
       {!!authError && <AuthError error={authError} />}
       <CardContent className='space-y-5 px-0 pb-0'>

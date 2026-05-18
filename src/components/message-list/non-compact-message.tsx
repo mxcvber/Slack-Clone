@@ -43,7 +43,7 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
   reactions,
 }) => {
   return (
-    <div className='flex items-start gap-2'>
+    <div className='sm:flex items-start sm:gap-2 w-full'>
       <MessageAvatar name={authorName} image={authorImage} onOpenProfile={onOpenProfile} />
 
       {isEditing ? (

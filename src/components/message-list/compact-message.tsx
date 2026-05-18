@@ -37,9 +37,9 @@ const CompactMessage: React.FC<CompactMessageProps> = ({
   threadTimestamp,
 }) => {
   return (
-    <div className='flex items-start gap-2'>
+    <div className='sm:flex items-start sm:gap-2 w-full'>
       <Hint label={formatFullTime(new Date(createdAt))}>
-        <span className='cursor-default text-muted-foreground text-xs opacity-0 group-hover:opacity-100 leading-[22px] hover:underline'>
+        <span className='cursor-default text-muted-foreground text-xs lg:opacity-0 group-hover:opacity-100 leading-[22px] hover:underline'>
           {format(new Date(createdAt), 'hh:mm')}
         </span>
       </Hint>

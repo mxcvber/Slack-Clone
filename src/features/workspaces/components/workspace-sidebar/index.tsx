@@ -41,7 +41,7 @@ const WorkspaceSidebar = () => {
     <div className='flex flex-col h-full'>
       <WorkspaceHeader workspace={workspaceData} isAdmin={memberData.role === 'admin'} />
 
-      <div className='flex flex-col px-2 mt-3'>
+      <div className='flex flex-col px-0 sm:px-2 mt-3'>
         <SidebarItem label='Threads' icon={MessageSquareText} id='threads' />
         <SidebarItem label='Drafts & Sent' icon={SendHorizonal} id='drafts' />
       </div>

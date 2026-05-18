@@ -14,7 +14,7 @@ const WorkspaceSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className='size-9 overflow-hidden bg-[#ABABAD] hover:bg-[#ABABAD]/80 text-slate-800 font-semibold text-xl'>
+        <Button className='size-7 max-sm:px-1 sm:size-9 overflow-hidden bg-[#ABABAD] hover:bg-[#ABABAD]/80 text-slate-800 font-semibold text-base sm:text-xl'>
           {isLoading ? <Loader className='size-5 animate-spin shrink-0' /> : data?.name.charAt(0).toUpperCase()}
         </Button>
       </DropdownMenuTrigger>

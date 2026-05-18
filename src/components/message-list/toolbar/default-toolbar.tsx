@@ -1,30 +1,20 @@
-import React from 'react'
-import { Button } from '../ui/button'
+import EmojiPopover from '@/components/emoji-popover'
+import Hint from '@/components/hint'
+import { Button } from '@/components/ui/button'
+import { ToolbarProps } from '@/types'
 import { MessageSquareTextIcon, Pencil, Smile, Trash } from 'lucide-react'
-import Hint from '../hint'
-import EmojiPopover from '../emoji-popover'
 
-interface ToolbarProps {
-  isAuthor: boolean
-  isPending: boolean
-  handleEdit: () => void
-  handleThread: () => void
-  handleDelete: () => void
-  handleReaction: (value: string) => void
-  hideThreadButton?: boolean | undefined
-}
-
-const Toolbar: React.FC<ToolbarProps> = ({
-  handleDelete,
-  handleEdit,
-  handleThread,
-  handleReaction,
-  hideThreadButton,
+const DefaultToolbar: React.FC<ToolbarProps> = ({
   isAuthor,
   isPending,
+  handleEdit,
+  handleThread,
+  handleDelete,
+  handleReaction,
+  hideThreadButton,
 }) => {
   return (
-    <div className='absolute top-0 right-5 group-hover:opacity-100 opacity-0 transition-opacity border bg-white rounded-md shadow-sm'>
+    <div className='hidden lg:block border bg-white rounded-md shadow-sm lg:group-hover:opacity-100 lg:opacity-0 transition-opacity'>
       <EmojiPopover hint='Add reaction' onEmojiSelect={(emoji) => handleReaction(emoji)}>
         <Button variant='ghost' size='icon-sm' disabled={isPending}>
           <Smile className='size-4' />
@@ -58,4 +48,4 @@ const Toolbar: React.FC<ToolbarProps> = ({
   )
 }
 
-export default Toolbar
+export default DefaultToolbar

@@ -29,7 +29,7 @@ const Reactions: React.FC<ReactionsProps> = ({ data, onChange }) => {
   }
 
   return (
-    <div className='flex items-center gap-1 my-1'>
+    <div className='grid grid-cols-3 sm:grid-cols-5 items-center gap-1 my-1 w-fit'>
       {data.map((reaction) => (
         <Hint
           key={reaction._id}

@@ -15,7 +15,7 @@ interface InviteModalProps {
 const InviteModal: React.FC<InviteModalProps> = ({ open, setOpen, joinCode, name }) => {
   const [ConfirmDialog, confirm] = useConfirm(
     'Are you sure?',
-    'This will diactivate the current invite code and generate a new one.'
+    'This will diactivate the current invite code and generate a new one.',
   )
 
   return (
@@ -23,7 +23,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ open, setOpen, joinCode, name
       <ConfirmDialog />
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+        <DialogContent className='max-[400px]:px-1'>
           <Header workspaceName={name} />
 
           <CopyLink joinCode={joinCode} />

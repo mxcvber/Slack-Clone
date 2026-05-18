@@ -7,31 +7,21 @@ const Thumbnail = ({ url }: { url: string | null | undefined }) => {
 
   return (
     <Dialog>
-      <DialogTrigger className='w-fit h-fit'>
-        <div className='relative w-52 h-44 overflow-hidden border rounded-lg cursor-zoom-in'>
-          <Image src={url} alt='Message image' fill sizes='208px' className='rounded-lg object-cover size-full' />
-        </div>
+      <DialogTrigger className='relative aspect-square w-full max-w-30 cursor-zoom-in border rounded-lg'>
+        <Image src={url} alt='Message image' fill sizes='100vw' className='rounded-lg object-cover' />
       </DialogTrigger>
 
       <DialogContent
         showCloseButton={false}
-        className='sm:max-w-fit h-screen border-none p-0 shadow-none bg-black/50 backdrop-blur-xs'
+        className='max-w-screen max-h-screen p-0 w-screen h-screen sm:max-w-screen bg-black/70 backdrop-blur-xs border-none rounded-none flex items-center justify-center'
       >
-        <div className='relative overflow-hidden rounded-lg w-screen h-screen'>
-          <DialogTitle className='absolute w-screen flex justify-end pr-10 pt-5 z-50'>
-            <DialogClose className='cursor-pointer'>
-              <XIcon size={40} color='white' />
-            </DialogClose>
-          </DialogTitle>
+        <DialogTitle />
+        <DialogClose className='cursor-pointer absolute top-5 right-5 z-50'>
+          <XIcon size={34} color='white' />
+        </DialogClose>
 
-          <Image
-            quality={100}
-            src={url}
-            alt='Message image'
-            fill
-            sizes='100vw'
-            className='rounded-lg object-contain size-full z-40'
-          />
+        <div className='relative w-[calc(100vw-2rem)] h-[calc(100vh-8rem)]'>
+          <Image quality={100} src={url} alt='Message image' fill sizes='100vw' className='object-contain' />
         </div>
       </DialogContent>
     </Dialog>

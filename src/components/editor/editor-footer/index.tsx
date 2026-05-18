@@ -28,10 +28,12 @@ const EditorFooter: React.FC<EditorFooterProps> = ({
   image,
 }) => {
   return (
-    <div className='flex px-2 pb-2 z-5'>
-      <FormattingToggleButton containerRef={containerRef} disabled={disabled} />
-      <EmojiPickerButton quillRef={quillRef} disabled={disabled} />
-      <ImageUploadButton imageElementRef={imageElementRef} variant={variant} disabled={disabled} />
+    <div className='flex px-1 sm:px-2 pb-2 z-5'>
+      <div className='flex gap-1'>
+        <FormattingToggleButton containerRef={containerRef} disabled={disabled} />
+        <EmojiPickerButton quillRef={quillRef} disabled={disabled} />
+        <ImageUploadButton imageElementRef={imageElementRef} variant={variant} disabled={disabled} />
+      </div>
 
       <EditorButton
         image={image}

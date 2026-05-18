@@ -43,14 +43,14 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ name, confirm }) => {
         onError: () => {
           toast.error('Failed to delete channel')
         },
-      }
+      },
     )
   }
 
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>
-        <Button variant='ghost' className='text-lg font-semibold px-2 overflow-hidden w-auto' size='sm'>
+        <Button variant='ghost' className='text-base sm:text-lg font-semibold px-2 overflow-hidden w-full' size='sm'>
           <span className='truncate'># {name}</span>
           <FaChevronDown className='size-2.5 ml-2' />
         </Button>

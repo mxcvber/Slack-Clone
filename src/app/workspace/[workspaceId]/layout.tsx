@@ -9,6 +9,7 @@ import { Id } from '../../../../convex/_generated/dataModel'
 import Thread from '@/features/messages/components/thread'
 import Loading from '@/components/loading'
 import Profile from '@/features/members/components/profile'
+import { cn } from '@/lib/utils'
 
 const WorkspaceLayout = ({
   children,
@@ -22,21 +23,21 @@ const WorkspaceLayout = ({
   return (
     <div className='h-full'>
       <Toolbar />
-      <div className='flex h-[calc(100vh-40px)]'>
+      <div className='flex h-[calc(100vh-35px)] sm:h-[calc(100vh-40px)]'>
         <Sidebar />
         <ResizablePanelGroup direction='horizontal'>
           <ResizablePanel defaultSize={20} minSize={15} className='bg-[#5E2C5F]'>
             <WorkspaceSidebar />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={80} minSize={50}>
+          <ResizablePanel className={cn(showPanel && 'hidden lg:block')} defaultSize={80} minSize={50}>
             {children}
           </ResizablePanel>
 
           {showPanel && (
             <>
               <ResizableHandle withHandle />
-              <ResizablePanel defaultSize={30} minSize={20}>
+              <ResizablePanel defaultSize={30} minSize={25}>
                 {parentMessageId ? (
                   <Thread messageId={parentMessageId as Id<'messages'>} onClose={onClose} />
                 ) : profileMemberId ? (

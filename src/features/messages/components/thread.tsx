@@ -139,6 +139,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
       <div className='flex-1 flex flex-col-reverse pb-4 overflow-y-auto messages-scrollbar'>
         {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
           <NewMessages
+            key={dateKey}
             dateKey={dateKey}
             messages={messages}
             currentMember={currentMember}
@@ -167,7 +168,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
         />
       </div>
 
-      <div className='px-4'>
+      <div className='sm:px-4'>
         <Editor
           key={editorKey}
           onSubmit={handleSubmit}

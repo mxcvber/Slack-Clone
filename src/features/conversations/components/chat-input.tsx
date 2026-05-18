@@ -34,7 +34,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ placeholder, conversationId }) =>
   const handleSubmit = async ({ body, image }: { body: string; image: File | null }) => {
     try {
       setIsPending(true)
-      if (!workspaceId) return
+      if (!workspaceId || !conversationId) return
 
       editorRef.current?.enable(false)
 
@@ -79,7 +79,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ placeholder, conversationId }) =>
   }
 
   return (
-    <div className='px-5 w-full'>
+    <div className='px-0 sm:px-5 w-full'>
       <Editor
         key={editorKey}
         placeholder={placeholder}

@@ -18,7 +18,7 @@ const AvatarComponents = () => {
   const avatarFallback = name?.charAt(0).toUpperCase()
 
   return (
-    <Avatar className='size-10 hover:opacity-75 transition'>
+    <Avatar className='size-7 sm:size-9 hover:opacity-75 transition'>
       <AvatarImage alt={name} src={image} />
       <AvatarFallback>{avatarFallback}</AvatarFallback>
     </Avatar>

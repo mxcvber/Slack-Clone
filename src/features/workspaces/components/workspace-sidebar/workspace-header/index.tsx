@@ -20,7 +20,7 @@ const WorkspaceHeader: React.FC<WorkspaceHeaderProps> = ({ workspace, isAdmin })
 
       <PreferencesModal open={preferencesOpen} setOpen={setPreferencesOpen} initialValue={workspace.name} />
 
-      <div className='flex items-center justify-between px-4 h-[49px] gap-0.5'>
+      <div className='flex items-center justify-between px-0 sm:px-4 h-[49px] gap-0.5'>
         <Dropdown
           workspace={workspace}
           isAdmin={isAdmin}
@@ -28,7 +28,7 @@ const WorkspaceHeader: React.FC<WorkspaceHeaderProps> = ({ workspace, isAdmin })
           setInviteOpen={setInviteOpen}
         />
 
-        <Actions />
+        {/* <Actions /> */}
       </div>
     </>
   )

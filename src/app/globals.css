@@ -123,7 +123,7 @@ body,
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 text-sm sm:text-base;
   }
   body {
     @apply bg-background text-foreground;
@@ -134,8 +134,16 @@ body,
   @apply border-none! bg-[#f8f8f8]!;
 }
 
-.ql-toolbar .ql-formats:not(:last-child) {
-  @apply border-r! border-[#dcdcdc]! pr-3!;
+.ql-toolbar .ql-formats {
+  @apply max-sm:m-0! border-r! border-l! border-[#dcdcdc]! sm:px-5!;
+}
+
+.ql-toolbar .ql-formats:first-child {
+  @apply border-none! px-0!;
+}
+
+.ql-toolbar .ql-formats:last-child {
+  @apply border-none! px-0!;
 }
 
 .ql-container {
@@ -151,7 +159,7 @@ body,
 }
 
 .ql-renderer {
-  @apply p-0! max-w-[500px]!;
+  @apply p-0! max-w-[500px]! wrap-anywhere! break-all!;
 }
 
 .ql-editor:before {

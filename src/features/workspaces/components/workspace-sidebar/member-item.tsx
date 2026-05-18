@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { useWorkspaceId } from '../../hooks/use-workspace-id'
 
-const memberItemVariants = cva('flex items-center justify-start gap-1.5 font-normal text-sm h-7 px-4 overflow-hidden', {
+const memberItemVariants = cva('flex items-center justify-start gap-1.5 font-normal text-sm h-7 overflow-hidden', {
   variants: {
     variant: {
       default: 'text-light-gray',
@@ -33,11 +33,11 @@ const MemberItem: React.FC<MemberItemProps> = ({ id, image, label = 'Member', va
   return (
     <Button variant='transparent' className={cn(memberItemVariants({ variant: variant }))} size='sm' asChild>
       <Link href={`/workspace/${workspaceId}/member/${id}`}>
-        <Avatar className='size-5 mr-1'>
+        <Avatar className='size-4.5 sm:size-5 mr-1'>
           <AvatarImage src={image} />
           <AvatarFallback>{avatarFallback}</AvatarFallback>
         </Avatar>
-        <span className='text-sm truncate'>{label}</span>
+        <span className='text-xs sm:text-sm truncate'>{label}</span>
       </Link>
     </Button>
   )

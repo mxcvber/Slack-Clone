@@ -14,12 +14,12 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({ icon: Icon, label, isActi
     <div className='flex flex-col items-center justify-center gap-y-0.5 cursor-pointer group'>
       <Button
         variant='transparent'
-        className={cn('size-9 p-2 group-hover:bg-accent/20 cursor-pointer', isActive && 'bg-accent/20')}
+        className={cn('size-7 sm:size-9 p-2 group-hover:bg-accent/20 cursor-pointer', isActive && 'bg-accent/20')}
       >
-        <Icon className='size-5 text-white group-hover:scale-110 transition-all' />
+        <Icon className='size-4 sm:size-5 text-white group-hover:scale-110 transition-all' />
       </Button>
 
-      <span className='text-[11px] text-white group-hover:text-accent'>{label}</span>
+      <span className='text-[9px] sm:text-[11px] text-white group-hover:text-accent'>{label}</span>
     </div>
   )
 }

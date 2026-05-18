@@ -32,13 +32,13 @@ const EditorButton: React.FC<EditorButtonProps> = ({
   }
 
   return variant === 'update' ? (
-    <div className='ml-auto flex items-center gap-x-2'>
-      <Button variant='outline' size='sm' onClick={onCancel} disabled={disabled}>
+    <div className='ml-auto flex items-center gap-x-1 sm:gap-x-2'>
+      <Button variant='outline' size='sm' onClick={onCancel} disabled={disabled} className='max-sm:p-1 max-sm:h-fit'>
         Cancel
       </Button>
 
       <Button
-        className='bg-[#007a5a] hover:bg-[#007a5a]/80 text-white'
+        className='bg-[#007a5a] hover:bg-[#007a5a]/80 text-white max-sm:p-1 max-sm:h-fit'
         size='sm'
         onClick={handleSubmit}
         disabled={disabled || isEmpty}

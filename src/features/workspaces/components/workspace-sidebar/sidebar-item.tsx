@@ -19,7 +19,7 @@ const sidebarItemVariants = cva(
     defaultVariants: {
       variant: 'default',
     },
-  }
+  },
 )
 
 interface SidebarItemProps {
@@ -35,8 +35,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, icon: Icon, id, varian
   return (
     <Button className={cn(sidebarItemVariants({ variant }))} variant='transparent' size='sm' asChild>
       <Link href={`/workspace/${workspaceId}/channel/${id}`}>
-        <Icon className='size-3.5 mr-1 shrink-0' />
-        <span className='text-sm truncate'>{label}</span>
+        <Icon className='size-3 sm:size-3.5 mr-1 shrink-0' />
+        <span className='text-xs sm:text-sm truncate'>{label}</span>
       </Link>
     </Button>
   )

@@ -21,7 +21,11 @@ const Dropdown: React.FC<DropdownProps> = ({ workspace, isAdmin, setInviteOpen, 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='transparent' className='font-semibold text-lg p-1.5 overflow-hidden shrink' size='sm'>
+        <Button
+          variant='transparent'
+          className=' font-semibold text-base sm:text-lg overflow-hidden shrink has-[>svg]:px-1.5 sm:has-[>svg]:px-2.5'
+          size='sm'
+        >
           <span className='truncate w-full'>{workspace.name}</span>
           <ChevronDown className='size-4 ml-1 shrink-0' />
         </Button>

@@ -40,11 +40,11 @@ const Toolbar = () => {
   }
 
   return (
-    <header className='bg-dark-purple h-10 p-1.5'>
-      <nav aria-label='Workspace navigation' className='flex items-center justify-between'>
+    <header className='bg-dark-purple h-[35px] sm:h-10 p-1.5'>
+      <nav aria-label='Workspace navigation' className='flex items-center justify-between w-full '>
         <div className='flex-1' />
 
-        <div className='min-w-[280px] max-w-[642px] grow-2 shrink-0'>
+        <div className='w-36 max-w-[642px] grow-2 shrink-0'>
           <Button
             onClick={() => setOpen(true)}
             size='sm'

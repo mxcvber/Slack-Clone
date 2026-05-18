@@ -80,7 +80,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ placeholder }) => {
   }
 
   return (
-    <div className='px-5 w-full font-extrabold'>
+    <div className='px-0 sm:px-5 w-full font-extrabold'>
       <Editor
         key={editorKey}
         placeholder={placeholder}

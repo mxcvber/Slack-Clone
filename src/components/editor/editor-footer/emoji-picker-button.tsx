@@ -29,7 +29,7 @@ const EmojiPickerButton: React.FC<EmojiPickerButtonProps> = ({ disabled, quillRe
 
   return (
     <EmojiPopover onEmojiSelect={onEmojiSelect}>
-      <Button disabled={disabled} size='icon-sm' variant='ghost'>
+      <Button disabled={disabled} size='icon-sm' variant='ghost' className='max-sm:w-fit'>
         <Smile className='size-4' />
       </Button>
     </EmojiPopover>
