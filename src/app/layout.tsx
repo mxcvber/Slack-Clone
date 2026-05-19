@@ -33,10 +33,13 @@ export default function RootLayout({
           <meta name='description' content='A simple messaging app built with Convex and Next.js' />
           <meta name='keywords' content='messaging, convex, next.js' />
           <meta property='og:type' content='website' />
-          <meta property='og:url' content='https://messager.com' />
+          {/* <meta property='og:url' content='https://messager.com' /> */}
           <meta property='og:title' content='Messager' />
           <meta property='og:description' content='A simple messaging app built with Convex and Next.js' />
-          <meta property='og:image' content='/og-image.png' />
+          <meta
+            property='og:image'
+            content='https://static.vecteezy.com/system/resources/previews/068/894/567/large_2x/slack-circle-logo-editable-slack-app-for-web-mobile-and-print-projects-free-png.png'
+          />
         </head>
         <body className={`${roboto.className} antialiased`}>
           <ConvexClientProvider>
