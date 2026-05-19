@@ -26,6 +26,18 @@ export default function RootLayout({
   return (
     <ConvexAuthNextjsServerProvider>
       <html lang='en'>
+        <head>
+          <meta charSet='UTF-8' />
+          <meta name='viewport' content='width=device-width, initial-scale=1' />
+          <title>Messager</title>
+          <meta name='description' content='A simple messaging app built with Convex and Next.js' />
+          <meta name='keywords' content='messaging, convex, next.js' />
+          <meta property='og:type' content='website' />
+          <meta property='og:url' content='https://messager.com' />
+          <meta property='og:title' content='Messager' />
+          <meta property='og:description' content='A simple messaging app built with Convex and Next.js' />
+          <meta property='og:image' content='/og-image.png' />
+        </head>
         <body className={`${roboto.className} antialiased`}>
           <ConvexClientProvider>
             <Modals />
