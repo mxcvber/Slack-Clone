@@ -5,6 +5,7 @@ import { ConvexAuthNextjsServerProvider } from '@convex-dev/auth/nextjs/server'
 import Modals from '@/components/modals'
 import { Toaster } from '@/components/ui/sonner'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+// @ts-ignore
 import './globals.css'
 
 const roboto = Roboto({
