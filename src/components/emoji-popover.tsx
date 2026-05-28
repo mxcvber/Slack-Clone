@@ -1,7 +1,14 @@
 import React from 'react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react'
+import dynamic from 'next/dynamic'
+import { type EmojiClickData } from 'emoji-picker-react'
+import { Skeleton } from './ui/skeleton'
+
+const EmojiPicker = dynamic(() => import('emoji-picker-react'), {
+  ssr: false,
+  loading: () => <Skeleton className='w-[300px] h-[400px]' />,
+})
 
 interface EmojiPopoverProps {
   children: React.ReactNode
