@@ -7,8 +7,8 @@ import { api } from '../../../../../../convex/_generated/api'
 
 interface MemberIdPageProps {
   params: Promise<{
-    workspaceId: Id<'workspaces'>
-    memberId: Id<'members'>
+    workspaceId: string
+    memberId: string
   }>
 }
 
@@ -17,13 +17,17 @@ const MemberIdPage: React.FC<MemberIdPageProps> = async ({ params }) => {
   const token = await convexAuthNextjsToken()
 
   try {
-    const conversationId = await fetchMutation(api.conversations.createOrGet, { workspaceId, memberId }, { token })
+    const conversationId = await fetchMutation(
+      api.conversations.createOrGet,
+      { workspaceId: workspaceId as Id<'workspaces'>, memberId: memberId as Id<'members'> },
+      { token },
+    )
 
     if (!conversationId) {
       return <NotFoundComponent label='conversation not found' />
     }
 
-    return <Conversation memberId={memberId} id={conversationId} />
+    return <Conversation memberId={memberId as Id<'members'>} id={conversationId} />
   } catch {
     return <NotFoundComponent label='Failed to create or get conversation' />
   }

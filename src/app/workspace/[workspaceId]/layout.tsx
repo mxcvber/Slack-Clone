@@ -10,17 +10,20 @@ const WorkspaceLayout = async ({
   params,
 }: Readonly<{
   children: React.ReactNode
-  params: Promise<{ workspaceId: Id<'workspaces'> }>
+  params: Promise<{ workspaceId: string }>
 }>) => {
   const { workspaceId } = await params
 
   return (
     <div className='h-full'>
-      <Toolbar workspaceId={workspaceId} />
+      <Toolbar workspaceId={workspaceId as Id<'workspaces'>} />
       <div className='flex h-[calc(100vh-35px)] sm:h-[calc(100vh-40px)]'>
-        <Sidebar workspaceId={workspaceId} />
+        <Sidebar workspaceId={workspaceId as Id<'workspaces'>} />
 
-        <ResizablePanelWrapper loading={<Loading />} workspaceSidebar={<WorkspaceSidebar workspaceId={workspaceId} />}>
+        <ResizablePanelWrapper
+          loading={<Loading />}
+          workspaceSidebar={<WorkspaceSidebar workspaceId={workspaceId as Id<'workspaces'>} />}
+        >
           {children}
         </ResizablePanelWrapper>
       </div>

@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useCreateChannelModal } from '../../store/use-create-channel-modal'
 import CreateChannelForm from '../forms/create-channel-form'
 
-const CreateChannelModal = ({ forceOpen }: { forceOpen: boolean }) => {
+const CreateChannelModal = ({ forceOpen }: { forceOpen?: boolean }) => {
   const { open, setOpen } = useCreateChannelModal()
 
   return (

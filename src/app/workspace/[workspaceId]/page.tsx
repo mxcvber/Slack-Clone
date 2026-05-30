@@ -6,14 +6,14 @@ import { api } from '../../../../convex/_generated/api'
 import { redirect } from 'next/navigation'
 import CreateChannelModal from '@/features/channels/components/modals/create-channel-modal'
 
-const WorkspaceIdPage = async ({ params }: { params: Promise<{ workspaceId: Id<'workspaces'> }> }) => {
+const WorkspaceIdPage = async ({ params }: { params: Promise<{ workspaceId: string }> }) => {
   const { workspaceId } = await params
   const token = await convexAuthNextjsToken()
 
   const [workspace, channels, member] = await Promise.all([
-    fetchQuery(api.workspaces.getById, { id: workspaceId }, { token }),
-    fetchQuery(api.channels.get, { workspaceId }, { token }),
-    fetchQuery(api.members.current, { workspaceId }, { token }),
+    fetchQuery(api.workspaces.getById, { id: workspaceId as Id<'workspaces'> }, { token }),
+    fetchQuery(api.channels.get, { workspaceId: workspaceId as Id<'workspaces'> }, { token }),
+    fetchQuery(api.members.current, { workspaceId: workspaceId as Id<'workspaces'> }, { token }),
   ])
 
   if (!workspace || !member) {
