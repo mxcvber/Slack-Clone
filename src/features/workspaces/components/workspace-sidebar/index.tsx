@@ -1,76 +1,47 @@
-'use client'
-
-import { useCurrentMember } from '@/features/members/api/use-current-member'
-import { useWorkspaceId } from '../../hooks/use-workspace-id'
-import { useGetWorkspace } from '../../api/use-get-workspace'
-import { HashIcon, MessageSquareText, SendHorizonal } from 'lucide-react'
 import WorkspaceHeader from './workspace-header'
 import SidebarItem from './sidebar-item'
-import { useGetChannels } from '@/features/channels/api/use-get-channels'
 import WorkspaceSection from './workspace-section'
-import { useGetMembers } from '@/features/members/api/use-get-members'
 import MemberItem from './member-item'
-import { useCreateChannelModal } from '@/features/channels/store/use-create-channel-modal'
-import { useChannelId } from '@/features/channels/hooks/use-channel-id'
 import NotFoundComponent from '@/components/not-found-component'
-import Loading from '@/components/loading'
-import { useMemberId } from '@/features/members/hooks/use-member-id'
+import { Id } from '../../../../../convex/_generated/dataModel'
+import { convexAuthNextjsToken } from '@convex-dev/auth/nextjs/server'
+import { fetchQuery } from 'convex/nextjs'
+import { api } from '../../../../../convex/_generated/api'
 
-const WorkspaceSidebar = () => {
-  const workspaceId = useWorkspaceId()
-  const channelId = useChannelId()
-  const memberId = useMemberId()
-  const { setOpen } = useCreateChannelModal()
+const WorkspaceSidebar = async ({ workspaceId }: { workspaceId: Id<'workspaces'> }) => {
+  const token = await convexAuthNextjsToken()
 
-  const { data: memberData, isLoading: memberLoading } = useCurrentMember({ workspaceId })
-  const { data: workspaceData, isLoading: workspaceLoading } = useGetWorkspace({ id: workspaceId })
-  const { data: channelsData, isLoading: channelsLoading } = useGetChannels({ workspaceId })
-  const { data: membersData, isLoading: membersLoading } = useGetMembers({ workspaceId })
-
-  const loading = memberLoading || workspaceLoading || channelsLoading || membersLoading
-
-  if (loading) {
-    return <Loading className='text-white' />
-  }
+  const [memberData, workspaceData, channelsData, membersData] = await Promise.all([
+    fetchQuery(api.members.current, { workspaceId }, { token }),
+    fetchQuery(api.workspaces.getById, { id: workspaceId }, { token }),
+    fetchQuery(api.channels.get, { workspaceId }, { token }),
+    fetchQuery(api.members.get, { workspaceId }, { token }),
+  ])
 
   if (!memberData || !workspaceData) {
     return <NotFoundComponent className='text-white' label='Workspace not found' />
   }
 
+  const isAdmin = memberData.role === 'admin'
+
   return (
     <div className='flex flex-col h-full'>
-      <WorkspaceHeader workspace={workspaceData} isAdmin={memberData.role === 'admin'} />
+      <WorkspaceHeader workspace={workspaceData} isAdmin={isAdmin} />
 
       <div className='flex flex-col px-0 sm:px-2 mt-3'>
-        <SidebarItem label='Threads' icon={MessageSquareText} id='threads' />
-        <SidebarItem label='Drafts & Sent' icon={SendHorizonal} id='drafts' />
+        <SidebarItem label='Threads' iconKey='threads' id='threads' />
+        <SidebarItem label='Drafts & Sent' iconKey='drafts' id='drafts' />
       </div>
 
-      <WorkspaceSection
-        label='Channels'
-        hint='New channel'
-        onNew={memberData.role === 'admin' ? () => setOpen(true) : undefined}
-      >
+      <WorkspaceSection label='Channels' hint='New channel' isAdmin={isAdmin}>
         {channelsData?.map((item) => (
-          <SidebarItem
-            variant={channelId === item._id ? 'active' : 'default'}
-            key={item._id}
-            icon={HashIcon}
-            label={item.name}
-            id={item._id}
-          />
+          <SidebarItem key={item._id} iconKey='channel' label={item.name} id={item._id} />
         ))}
       </WorkspaceSection>
 
       <WorkspaceSection label='Direct Messages' hint='New direct message'>
         {membersData?.map((item) => (
-          <MemberItem
-            key={item._id}
-            id={item._id}
-            label={item.user.name}
-            image={item.user.image}
-            variant={item._id === memberId ? 'active' : 'default'}
-          />
+          <MemberItem key={item._id} id={item._id} label={item.user.name} image={item.user.image} />
         ))}
       </WorkspaceSection>
     </div>

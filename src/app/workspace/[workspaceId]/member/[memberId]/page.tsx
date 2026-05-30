@@ -1,47 +1,32 @@
-'use client'
-import Loading from '@/components/loading'
 import NotFoundComponent from '@/components/not-found-component'
-import { useCreateOrGetConversation } from '@/features/conversations/api/use-create-or-get-conversation'
-import { useMemberId } from '@/features/members/hooks/use-member-id'
-import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
-import { useEffect, useState } from 'react'
 import { Id } from '../../../../../../convex/_generated/dataModel'
-import { toast } from 'sonner'
 import Conversation from '@/features/conversations/components/conversation'
+import { convexAuthNextjsToken } from '@convex-dev/auth/nextjs/server'
+import { fetchMutation } from 'convex/nextjs'
+import { api } from '../../../../../../convex/_generated/api'
 
-const MemberIdPage = () => {
-  const workspaceId = useWorkspaceId()
-  const memberId = useMemberId()
+interface MemberIdPageProps {
+  params: Promise<{
+    workspaceId: Id<'workspaces'>
+    memberId: Id<'members'>
+  }>
+}
 
-  const { mutate, isPending } = useCreateOrGetConversation()
+const MemberIdPage: React.FC<MemberIdPageProps> = async ({ params }) => {
+  const { workspaceId, memberId } = await params
+  const token = await convexAuthNextjsToken()
 
-  const [conversationId, setConversationId] = useState<Id<'conversations'> | null>(null)
+  try {
+    const conversationId = await fetchMutation(api.conversations.createOrGet, { workspaceId, memberId }, { token })
 
-  useEffect(() => {
-    if (workspaceId && memberId) {
-      mutate(
-        { workspaceId, memberId },
-        {
-          onSuccess(id) {
-            setConversationId(id)
-          },
-          onError() {
-            toast.error('Failed to create or get conversation')
-          },
-        },
-      )
+    if (!conversationId) {
+      return <NotFoundComponent label='conversation not found' />
     }
-  }, [workspaceId, memberId])
 
-  if (isPending) {
-    return <Loading />
+    return <Conversation memberId={memberId} id={conversationId} />
+  } catch {
+    return <NotFoundComponent label='Failed to create or get conversation' />
   }
-
-  if (!conversationId) {
-    return <NotFoundComponent label='conversation not found' />
-  }
-
-  return <Conversation id={conversationId} />
 }
 
 export default MemberIdPage

@@ -1,10 +1,12 @@
+'use client'
+
 import useConfirm from '@/hooks/use-confirm'
 import ChannelModal from './modals/channel-modal'
 
 const Header = ({ name }: { name: string }) => {
   const [ConfirmDialog, confirm] = useConfirm(
     'Delete this channel?',
-    'You are about to delete this channel. This action is irreversible.'
+    'You are about to delete this channel. This action is irreversible.',
   )
 
   return (

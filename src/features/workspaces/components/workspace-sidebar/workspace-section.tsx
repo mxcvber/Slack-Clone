@@ -1,5 +1,8 @@
+'use client'
+
 import Hint from '@/components/hint'
 import { Button } from '@/components/ui/button'
+import { useCreateChannelModal } from '@/features/channels/store/use-create-channel-modal'
 import { cn } from '@/lib/utils'
 import { PlusIcon } from 'lucide-react'
 import React from 'react'
@@ -10,11 +13,15 @@ interface WorkspaceSectionProps {
   children: React.ReactNode
   label: string
   hint: string
-  onNew?: (() => void) | undefined
+  isAdmin?: boolean
 }
 
-const WorkspaceSection: React.FC<WorkspaceSectionProps> = ({ children, hint, label, onNew }) => {
+const WorkspaceSection: React.FC<WorkspaceSectionProps> = ({ children, hint, label, isAdmin }) => {
   const [on, toggle] = useToggle(true)
+  const { setOpen } = useCreateChannelModal()
+
+  const onNew = isAdmin ? () => setOpen(true) : undefined
+
   return (
     <div className='flex flex-col mt-3 px-0 sm:px-2'>
       <div className='flex items-center sm:px-3.5 group'>

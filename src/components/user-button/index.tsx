@@ -3,10 +3,9 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { LogOut } from 'lucide-react'
 import { useAuthActions } from '@convex-dev/auth/react'
-import AvatarComponents from './avatar-components'
 import { useRouter } from 'next/navigation'
 
-const UserButton = () => {
+const UserButton = ({ children }: { children: React.ReactNode }) => {
   const { signOut } = useAuthActions()
 
   const router = useRouter()
@@ -19,9 +18,7 @@ const UserButton = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className='outline-none relative'>
-        <AvatarComponents />
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger className='outline-none relative'>{children}</DropdownMenuTrigger>
 
       <DropdownMenuContent align='center' side='right' className='w-60'>
         <DropdownMenuItem onClick={handleSignOut} className='h-10'>

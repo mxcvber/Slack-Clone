@@ -1,12 +1,14 @@
+'use client'
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useCreateChannelModal } from '../../store/use-create-channel-modal'
 import CreateChannelForm from '../forms/create-channel-form'
 
-const CreateChannelModal = () => {
+const CreateChannelModal = ({ forceOpen }: { forceOpen: boolean }) => {
   const { open, setOpen } = useCreateChannelModal()
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open || forceOpen} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add a channel</DialogTitle>

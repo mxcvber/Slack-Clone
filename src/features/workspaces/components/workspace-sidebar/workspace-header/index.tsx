@@ -1,9 +1,10 @@
+'use client'
+
 import React, { useState } from 'react'
 import { Doc } from '../../../../../../convex/_generated/dataModel'
 import InviteModal from '../../modals/invite-modal'
 import PreferencesModal from '../../modals/preferences-modal'
 import Dropdown from './dropdown'
-import Actions from './actions'
 
 interface WorkspaceHeaderProps {
   workspace: Doc<'workspaces'>

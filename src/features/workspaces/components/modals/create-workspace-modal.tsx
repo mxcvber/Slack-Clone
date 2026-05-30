@@ -1,8 +1,10 @@
+'use client'
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useCreateWorkspaceModal } from '../../store/use-create-workspace-modal'
 import WorkspaceModalForm from './forms/workspace-modal-form'
 
-const CreateWorkspaceModal = () => {
+const CreateWorkspaceModal = ({ forceOpen }: { forceOpen?: boolean }) => {
   const { open, setOpen } = useCreateWorkspaceModal()
 
   const handleClose = () => {
@@ -10,7 +12,7 @@ const CreateWorkspaceModal = () => {
   }
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog open={forceOpen || open} onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add a workspace</DialogTitle>

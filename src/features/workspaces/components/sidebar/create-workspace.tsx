@@ -1,3 +1,5 @@
+'use client'
+
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { Plus } from 'lucide-react'
 import { useCreateWorkspaceModal } from '../../store/use-create-workspace-modal'

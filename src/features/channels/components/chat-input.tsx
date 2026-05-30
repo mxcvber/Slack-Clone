@@ -1,3 +1,5 @@
+'use client'
+
 import { useCreateMessage } from '@/features/messages/api/use-create-message'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import dynamic from 'next/dynamic'

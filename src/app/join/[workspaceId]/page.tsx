@@ -1,55 +1,22 @@
-'use client'
-
-import Loading from '@/components/loading'
 import NotFoundComponent from '@/components/not-found-component'
-import { useJoin } from '@/features/join/api/use-join'
-import JoinScreen from '@/features/join/components/join-screen'
-import { useGetWorkspaceInfo } from '@/features/workspaces/api/use-get-workspace-info'
-import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
-import { useRouter } from 'next/navigation'
-import { useEffect, useMemo } from 'react'
-import { toast } from 'sonner'
+import { redirect } from 'next/navigation'
+import { Id } from '../../../../convex/_generated/dataModel'
+import { convexAuthNextjsToken } from '@convex-dev/auth/nextjs/server'
+import { fetchQuery } from 'convex/nextjs'
+import { api } from '../../../../convex/_generated/api'
+import JoinClient from '@/features/join/components/join-client'
 
-const JoinPage = () => {
-  const workspaceId = useWorkspaceId()
+const JoinPage = async ({ params }: { params: Promise<{ workspaceId: Id<'workspaces'> }> }) => {
+  const { workspaceId } = await params
+  const token = await convexAuthNextjsToken()
 
-  const { data, isLoading } = useGetWorkspaceInfo({ id: workspaceId })
-  const { mutate, isPending } = useJoin()
-
-  const router = useRouter()
-
-  const isMember = useMemo(() => data?.isMember, [data?.isMember])
-
-  useEffect(() => {
-    if (isMember) {
-      router.push(`/workspace/${workspaceId}`)
-    }
-  }, [isMember, router, workspaceId])
-
-  const handleComplete = (value: string) => {
-    if (!workspaceId) return
-
-    mutate(
-      { workspaceId, joinCode: value },
-      {
-        onSuccess: (id) => {
-          router.replace(`/workspace/${id}`)
-          toast.success('Workspace joined')
-        },
-        onError: () => {
-          toast.error('Failed to join workspace')
-        },
-      }
-    )
-  }
-
-  if (isLoading) {
-    return <Loading />
-  }
+  const data = await fetchQuery(api.workspaces.getInfoById, { id: workspaceId }, { token })
 
   if (!data) return <NotFoundComponent label='Workspace not found' />
 
-  return <JoinScreen handleComplete={handleComplete} loading={isPending} workspaceName={data.name} />
+  if (data.isMember) redirect(`/workspace/${workspaceId}`)
+
+  return <JoinClient workspaceId={workspaceId} workspaceName={data.name} />
 }
 
 export default JoinPage

@@ -1,15 +1,18 @@
+'use client'
+
 import { useRouter } from 'next/navigation'
-import { useGetWorkspaces } from '../../api/use-get-workspaces'
-import { useWorkspaceId } from '../../hooks/use-workspace-id'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
+import { Doc } from '../../../../../convex/_generated/dataModel'
 
-const Workspaces = () => {
-  const workspaceId = useWorkspaceId()
-  const { data } = useGetWorkspaces()
+interface WorkspacesProps {
+  workspaceId: string
+  workspaces: Doc<'workspaces'>[]
+}
 
+const Workspaces: React.FC<WorkspacesProps> = ({ workspaceId, workspaces }) => {
   const router = useRouter()
 
-  const filteredWorkspaces = data?.filter((workspace) => workspace?._id !== workspaceId)
+  const filteredWorkspaces = workspaces?.filter((workspace) => workspace?._id !== workspaceId)
 
   return filteredWorkspaces?.map((workspace) => (
     <DropdownMenuItem

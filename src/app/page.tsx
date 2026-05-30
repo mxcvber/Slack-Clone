@@ -1,25 +1,15 @@
-'use client'
+import { fetchQuery } from 'convex/nextjs'
+import { api } from '../../convex/_generated/api'
+import { redirect } from 'next/navigation'
+import CreateWorkspaceModal from '@/features/workspaces/components/modals/create-workspace-modal'
+import { convexAuthNextjsToken } from '@convex-dev/auth/nextjs/server'
 
-import { useGetWorkspaces } from '@/features/workspaces/api/use-get-workspaces'
-import { useCreateWorkspaceModal } from '@/features/workspaces/store/use-create-workspace-modal'
-import { useRouter } from 'next/navigation'
-import { useEffect, useMemo } from 'react'
+export default async function Home() {
+  const workspaces = await fetchQuery(api.workspaces.get, {}, { token: await convexAuthNextjsToken() })
 
-export default function Home() {
-  const { open, setOpen } = useCreateWorkspaceModal()
-  const { data, isLoading } = useGetWorkspaces()
+  if (workspaces?.[0]?._id) {
+    redirect(`/workspace/${workspaces[0]._id}`)
+  }
 
-  const router = useRouter()
-
-  const workspaceId = useMemo(() => data?.[0]?._id, [data])
-
-  useEffect(() => {
-    if (isLoading) return
-
-    if (workspaceId) {
-      router.replace(`/workspace/${workspaceId}`)
-    } else if (!open) {
-      setOpen(true)
-    }
-  }, [workspaceId, isLoading, open, setOpen, router])
+  return <CreateWorkspaceModal forceOpen />
 }
