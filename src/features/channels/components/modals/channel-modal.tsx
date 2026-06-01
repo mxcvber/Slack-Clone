@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { FaChevronDown } from 'react-icons/fa'
 import RenameChannelForm from '../forms/rename-channel-form'
 import React, { useState } from 'react'
 import { useChannelId } from '../../hooks/use-channel-id'
@@ -10,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import EditModal from '@/components/edit-modal'
 import DeleteButton from '@/components/delete-button'
+import { ChevronDownIcon } from 'lucide-react'
 
 interface ChannelModalProps {
   name: string
@@ -52,7 +52,7 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ name, confirm }) => {
       <DialogTrigger asChild>
         <Button variant='ghost' className='text-base sm:text-lg font-semibold px-2 overflow-hidden w-full' size='sm'>
           <span className='truncate'># {name}</span>
-          <FaChevronDown className='size-2.5 ml-2' />
+          <ChevronDownIcon className='size-4' />
         </Button>
       </DialogTrigger>
 

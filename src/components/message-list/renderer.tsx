@@ -1,44 +1,26 @@
-import Quill from 'quill'
-import { useEffect, useRef, useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Renderer = ({ value }: { value: string }) => {
-  const [isEmpty, setIsEmpty] = useState(false)
-  const rendererRef = useRef<HTMLDivElement>(null)
+  const [html, setHtml] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!rendererRef.current) return
+    import('quill-delta-to-html').then(({ QuillDeltaToHtmlConverter }) => {
+      try {
+        const contents = JSON.parse(value)
+        const converter = new QuillDeltaToHtmlConverter(contents.ops, {})
+        const converted = converter.convert()
 
-    const container = rendererRef.current
-
-    const quill = new Quill(document.createElement('div'), {
-      theme: 'snow',
-    })
-
-    quill.enable(false)
-
-    const contents = JSON.parse(value)
-    quill.setContents(contents)
-
-    const isEmpty =
-      quill
-        .getText()
-        .replace(/<(.|\n)*?>/g, '')
-        .trim().length === 0
-
-    setIsEmpty(isEmpty)
-
-    container.innerHTML = quill.root.innerHTML
-
-    return () => {
-      if (container) {
-        container.innerHTML = ''
+        const isEmpty = converted.replace(/<(.|\n)*?>/g, '').trim().length === 0
+        setHtml(isEmpty ? null : converted)
+      } catch {
+        setHtml(null)
       }
-    }
+    })
   }, [value])
 
-  if (isEmpty) return null
+  if (!html) return null
 
-  return <div ref={rendererRef} className='ql-editor ql-renderer' />
+  return <div className='ql-editor ql-renderer' dangerouslySetInnerHTML={{ __html: html }} />
 }
 
 export default Renderer

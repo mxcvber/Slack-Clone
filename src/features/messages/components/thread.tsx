@@ -8,7 +8,7 @@ import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import { useRef, useState } from 'react'
 import ThreadHeader from './thread-header'
 import dynamic from 'next/dynamic'
-import Quill from 'quill'
+import type Quill from 'quill'
 import { useCreateMessage } from '../api/use-create-message'
 import { useGenerateUploadUrl } from '@/features/upload/api/use-generate-upload-url'
 import { useChannelId } from '@/features/channels/hooks/use-channel-id'
@@ -94,7 +94,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
           body: image,
         })
 
-        if (!result) {
+        if (!result.ok) {
           throw new Error('Failed to upload image')
         }
 
@@ -110,7 +110,7 @@ const Thread: React.FC<ThreadProps> = ({ messageId, onClose }) => {
       toast.error('Failed to send message')
     } finally {
       setIsPending(false)
-      editorRef.current?.enable(false)
+      editorRef.current?.enable(true)
     }
   }
 

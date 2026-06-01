@@ -3,7 +3,7 @@
 import { useCreateMessage } from '@/features/messages/api/use-create-message'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
 import dynamic from 'next/dynamic'
-import Quill from 'quill'
+import type Quill from 'quill'
 import React, { useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { useGenerateUploadUrl } from '@/features/upload/api/use-generate-upload-url'
@@ -60,7 +60,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ placeholder, conversationId }) =>
           body: image,
         })
 
-        if (!result) {
+        if (!result.ok) {
           throw new Error('Failed to upload image')
         }
 
@@ -76,7 +76,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ placeholder, conversationId }) =>
       toast.error('Failed to send message')
     } finally {
       setIsPending(false)
-      editorRef.current?.enable(false)
+      editorRef.current?.enable(true)
     }
   }
 

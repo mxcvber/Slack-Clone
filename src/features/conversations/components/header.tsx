@@ -4,8 +4,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { usePanel } from '@/hooks/use-panel'
 import React from 'react'
-import { FaChevronDown } from 'react-icons/fa'
 import { Id } from '../../../../convex/_generated/dataModel'
+import { ChevronDownIcon } from 'lucide-react'
 
 interface HeaderProps {
   memberName?: string
@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ memberName = 'Member', memberImage, mem
           <AvatarFallback>{avatarFallback}</AvatarFallback>
         </Avatar>
         <span className='truncate'>{memberName}</span>
-        <FaChevronDown className='size-2.5 ml-2' />
+        <ChevronDownIcon className='size-4' />
       </Button>
     </div>
   )

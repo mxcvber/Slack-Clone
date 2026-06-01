@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import UploadImage from './upload-image'
 import EditorFooter from './editor-footer'
 import EditorInfo from './editor-info'
-import Quill from 'quill'
+import type Quill from 'quill'
 import { DefaultEditorType } from '@/types'
 
 interface EditorContentProps extends DefaultEditorType {

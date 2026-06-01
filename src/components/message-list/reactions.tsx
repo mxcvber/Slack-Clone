@@ -6,7 +6,7 @@ import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
 import Hint from '../hint'
 import EmojiPopover from '../emoji-popover'
-import { MdOutlineAddReaction } from 'react-icons/md'
+import { SmilePlusIcon } from 'lucide-react'
 
 interface ReactionsProps {
   data: Array<
@@ -57,7 +57,7 @@ const Reactions: React.FC<ReactionsProps> = ({ data, onChange }) => {
 
       <EmojiPopover hint='Add reaction' onEmojiSelect={(emoji) => onChange(emoji)}>
         <Button className='h-6 px-2 rounded-full bg-slate-200/70 border border-transparent hover:bg-slate-200/70 hover:border-slate-500 text-slate-800 flex items-center gap-x-1'>
-          <MdOutlineAddReaction className='size-4' />
+          <SmilePlusIcon className='size-4' />
         </Button>
       </EmojiPopover>
     </div>

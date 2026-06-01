@@ -1,7 +1,7 @@
 import Hint from '@/components/hint'
 import { Button } from '@/components/ui/button'
+import { CaseSensitiveIcon } from 'lucide-react'
 import React, { RefObject, useState } from 'react'
-import { PiTextAa } from 'react-icons/pi'
 
 interface FormattingToggleButtonProps {
   containerRef: RefObject<HTMLDivElement | null>
@@ -24,7 +24,7 @@ const FormattingToggleButton: React.FC<FormattingToggleButtonProps> = ({ contain
   return (
     <Hint label={isToolbarVisible ? 'Hide formatting' : 'Show formatting'}>
       <Button disabled={disabled} size='icon-sm' variant='ghost' onClick={toggleToolbar} className='max-sm:w-fit'>
-        <PiTextAa className='size-4' />
+        <CaseSensitiveIcon strokeWidth={1.5} className='size-4.5' />
       </Button>
     </Hint>
   )

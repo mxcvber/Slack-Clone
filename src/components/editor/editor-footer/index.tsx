@@ -1,5 +1,5 @@
 import React, { RefObject } from 'react'
-import Quill from 'quill'
+import type Quill from 'quill'
 import EditorButton from './editor-button'
 import EmojiPickerButton from './emoji-picker-button'
 import FormattingToggleButton from './formatting-toggle-button'

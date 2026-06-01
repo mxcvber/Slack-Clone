@@ -4,9 +4,8 @@ import Hint from '@/components/hint'
 import { Button } from '@/components/ui/button'
 import { useCreateChannelModal } from '@/features/channels/store/use-create-channel-modal'
 import { cn } from '@/lib/utils'
-import { PlusIcon } from 'lucide-react'
+import { ChevronDownIcon, PlusIcon } from 'lucide-react'
 import React from 'react'
-import { FaCaretDown } from 'react-icons/fa'
 import { useToggle } from 'react-use'
 
 interface WorkspaceSectionProps {
@@ -26,7 +25,10 @@ const WorkspaceSection: React.FC<WorkspaceSectionProps> = ({ children, hint, lab
     <div className='flex flex-col mt-3 px-0 sm:px-2'>
       <div className='flex items-center sm:px-3.5 group'>
         <Button onClick={toggle} variant='transparent' className='p-0.5 text-sm text-light-gray shrink-0 size-6'>
-          <FaCaretDown className={cn('size-3.5 sm:size-4 transition-transform -rotate-90', on && 'rotate-0')} />
+          <ChevronDownIcon
+            strokeWidth={4}
+            className={cn('size-4.5 sm:size-5 transition-transform -rotate-90', on && 'rotate-0')}
+          />
         </Button>
 
         <Button

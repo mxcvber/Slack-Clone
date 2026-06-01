@@ -1,6 +1,6 @@
 'use client'
 
-import Quill, { Delta, Op, type QuillOptions } from 'quill'
+import Quill, { type Delta, type Op, type QuillOptions } from 'quill'
 import 'quill/dist/quill.snow.css'
 import React, { RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import EditorContent from './editor-content'

@@ -1,7 +1,6 @@
+import { GithubIcon, GoogleIcon } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import React from 'react'
-import { FaGithub } from 'react-icons/fa'
-import { FcGoogle } from 'react-icons/fc'
 
 interface SocialAuthButtonsProps {
   pending: boolean
@@ -18,7 +17,7 @@ const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ pending, handlePr
         size='lg'
         className='w-full relative'
       >
-        <FcGoogle className='size-5 absolute top-1/2 -translate-y-1/2 left-2.5' />
+        <GoogleIcon className='size-5 absolute top-1/2 -translate-y-1/2 left-2.5' />
         Continue with Google
       </Button>
 
@@ -29,7 +28,7 @@ const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({ pending, handlePr
         size='lg'
         className='w-full relative'
       >
-        <FaGithub className='size-5 absolute top-1/2 -translate-y-1/2 left-2.5' />
+        <GithubIcon className='size-5.5 absolute top-1/2 -translate-y-1/2 left-2.5' />
         Continue with GitHub
       </Button>
     </div>

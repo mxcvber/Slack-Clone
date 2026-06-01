@@ -1,7 +1,7 @@
 import EmojiPopover from '@/components/emoji-popover'
 import { Button } from '@/components/ui/button'
 import { Smile } from 'lucide-react'
-import Quill from 'quill'
+import type Quill from 'quill'
 import React from 'react'
 
 interface EmojiPickerButtonProps {

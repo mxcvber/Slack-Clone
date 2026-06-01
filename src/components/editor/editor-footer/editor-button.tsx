@@ -1,9 +1,9 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { MdSend } from 'react-icons/md'
 import { Button } from '@/components/ui/button'
-import Quill from 'quill'
+import type Quill from 'quill'
 import { DefaultEditorType } from '@/types'
+import { SendHorizontalIcon } from 'lucide-react'
 
 interface EditorButtonProps extends DefaultEditorType {
   quillRef: React.RefObject<Quill | null>
@@ -56,7 +56,7 @@ const EditorButton: React.FC<EditorButtonProps> = ({
       )}
       onClick={handleSubmit}
     >
-      <MdSend className='size-4' />
+      <SendHorizontalIcon className='size-4' />
     </Button>
   )
 }
