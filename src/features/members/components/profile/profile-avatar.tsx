@@ -8,7 +8,7 @@ const ProfileAvatar = ({ member }: { member: Member }) => {
     <div className='flex flex-col items-center justify-center p-4'>
       <Avatar className='max-w-64 max-h-64 size-full'>
         <AvatarImage className='aspect-square' src={member.user.image} />
-        <AvatarFallback className='aspect-square text-6xl'>{avatarFallback}</AvatarFallback>
+        <AvatarFallback className='aspect-square text-8xl'>{avatarFallback}</AvatarFallback>
       </Avatar>
     </div>
   )

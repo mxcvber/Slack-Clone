@@ -40,11 +40,11 @@ const EditorContent: React.FC<EditorContentProps> = ({
 
       <div
         className={cn(
-          'flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white',
+          'flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:drop-shadow-sm transition-[filter] bg-white',
           disabled && 'opacity-50',
         )}
       >
-        <div ref={containerRef} className='ql-custom' />
+        <div ref={containerRef} className='ql-custom min-h-[90px]' />
         <UploadImage image={image} setImage={setImage} imageElementRef={imageElementRef} />
         <EditorFooter
           image={image}

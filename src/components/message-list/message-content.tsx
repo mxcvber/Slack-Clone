@@ -57,7 +57,7 @@ const MessageContent: React.FC<MessageContentProps> = ({
   return (
     <div
       className={cn(
-        'flex py-1.5 px-1 sm:px-5 hover:bg-gray-100/60 group relative',
+        'flex py-1.5 px-1 sm:px-5 hover:bg-gray-100/60 group relative min-h-11',
         isEditing && 'bg-[#f2c74433] hover:bg-[#f2c64448] duration-300',
         isRemovingMessage && 'bg-rose-500/50 transform transition-all scale-y-0 origin-bottom duration-200',
       )}

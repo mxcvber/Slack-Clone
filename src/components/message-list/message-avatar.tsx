@@ -12,9 +12,9 @@ const MessageAvatar: React.FC<MessageAvatarProps> = ({ name, image, onOpenProfil
   const avatarFallback = name.charAt(0).toUpperCase()
 
   return (
-    <Button className='p-0 bg-transparent hover:bg-transparent cursor-pointer' onClick={onOpenProfile}>
-      <Avatar>
-        <AvatarImage src={image} />
+    <Button className='p-0 bg-transparent hover:bg-transparent cursor-pointer shrink-0' onClick={onOpenProfile}>
+      <Avatar className='size-8'>
+        <AvatarImage src={image} height={32} width={32} />
         <AvatarFallback>{avatarFallback}</AvatarFallback>
       </Avatar>
     </Button>

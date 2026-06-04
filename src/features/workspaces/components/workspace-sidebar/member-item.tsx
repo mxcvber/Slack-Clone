@@ -42,7 +42,7 @@ const MemberItem: React.FC<MemberItemProps> = ({ id, image, label = 'Member' }) 
     >
       <Link href={`/workspace/${workspaceId}/member/${id}`}>
         <Avatar className='size-4.5 sm:size-5 mr-1'>
-          <AvatarImage src={image} />
+          <AvatarImage width={18} height={18} src={image} />
           <AvatarFallback>{avatarFallback}</AvatarFallback>
         </Avatar>
         <span className='text-xs sm:text-sm truncate'>{label}</span>

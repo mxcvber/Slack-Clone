@@ -9,9 +9,10 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import './globals.css'
 
 const roboto = Roboto({
+  display: 'swap',
   variable: '--font-roboto',
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  weight: ['400', '500', '600', '700', '800'],
 })
 
 export const metadata: Metadata = {

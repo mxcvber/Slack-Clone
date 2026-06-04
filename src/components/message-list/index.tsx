@@ -9,6 +9,7 @@ import DateSeparator from './date-separator'
 import MessageListContent from './message-list-content'
 import { useGetMessages } from '@/features/messages/api/use-get-messages'
 import { Id } from '../../../convex/_generated/dataModel'
+import MessageListSkeleton from './message-list-skeleton'
 
 interface MessageListProps {
   channelId?: Id<'channels'> | null
@@ -34,6 +35,7 @@ const MessageList: React.FC<MessageListProps> = ({
   const groupedMessages: Record<string, Array<any>> = data?.reduce(
     (groups, message) => {
       const date = new Date(message._creationTime)
+
       const dateKey = format(date, 'yyyy-MM-dd')
       if (!groups[dateKey]) {
         groups[dateKey] = []
@@ -48,13 +50,17 @@ const MessageList: React.FC<MessageListProps> = ({
 
   return (
     <div className='flex-1 flex flex-col-reverse pb-4 overflow-y-auto messages-scrollbar'>
-      {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
-        <div key={dateKey}>
-          <DateSeparator dateKey={dateKey} />
+      {status === 'LoadingFirstPage' ? (
+        <MessageListSkeleton />
+      ) : (
+        Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
+          <div key={dateKey}>
+            <DateSeparator dateKey={dateKey} />
 
-          <MessageListContent messages={messages} variant={variant} />
-        </div>
-      ))}
+            <MessageListContent messages={messages} variant={variant} />
+          </div>
+        ))
+      )}
 
       <MessageLoader
         canLoadMore={status === 'CanLoadMore'}

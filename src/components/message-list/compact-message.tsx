@@ -6,8 +6,12 @@ import dynamic from 'next/dynamic'
 import Reactions from './reactions'
 import ThreadBar from './thread-bar'
 import { DefaultMessageType } from '@/types'
+import { Skeleton } from '../ui/skeleton'
 
-const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
+const Renderer = dynamic(() => import('@/components/message-list/renderer'), {
+  ssr: false,
+  loading: () => <Skeleton className='h-5 w-full max-w-[500px] rounded ' />,
+})
 const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
 
 interface CompactMessageProps extends DefaultMessageType {
@@ -37,7 +41,7 @@ const CompactMessage: React.FC<CompactMessageProps> = ({
   threadTimestamp,
 }) => {
   return (
-    <div className='sm:flex items-start sm:gap-2 w-full'>
+    <div className='flex items-start gap-2 w-full'>
       <Hint label={formatFullTime(new Date(createdAt))}>
         <span className='cursor-default text-muted-foreground text-xs lg:opacity-0 group-hover:opacity-100 leading-[22px] hover:underline'>
           {format(new Date(createdAt), 'hh:mm')}
@@ -60,13 +64,15 @@ const CompactMessage: React.FC<CompactMessageProps> = ({
           <Thumbnail url={image} />
           {updatedAt ? <span className='text-xs text-muted-foreground'>(edited)</span> : null}
           <Reactions data={reactions} onChange={handleReaction} />
-          <ThreadBar
-            count={threadCount}
-            name={threadName}
-            image={threadImage}
-            timestamp={threadTimestamp}
-            onClick={handleThread}
-          />
+          <div className='min-h-7 w-full sm:max-w-[600px]'>
+            <ThreadBar
+              count={threadCount}
+              name={threadName}
+              image={threadImage}
+              timestamp={threadTimestamp}
+              onClick={handleThread}
+            />
+          </div>
         </div>
       )}
     </div>

@@ -29,14 +29,16 @@ const MessageLoader: React.FC<MessageLoaderProps> = ({ loadMore, canLoadMore, is
         }}
       />
 
-      {isLoadingMore && (
-        <div className='text-center my-2 relative'>
-          <hr className='absolute top-1/2 left-0 right-0 border-gray-300' />
-          <span className='relative inline-block bg-white px-4 py-1 rounded-full text-xs border-gray-300 shadow-sm'>
-            <Loader className='animate-spin' />
-          </span>
-        </div>
-      )}
+      <div className='h-10 flex items-center justify-center my-2'>
+        {isLoadingMore && (
+          <div className='relative w-full text-center'>
+            <hr className='absolute top-1/2 left-0 right-0 border-gray-300' />
+            <span className='relative inline-block bg-white px-4 py-1 rounded-full text-xs border-gray-300 shadow-sm'>
+              <Loader className='animate-spin' />
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

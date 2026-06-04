@@ -9,8 +9,12 @@ import { useChannelId } from '../hooks/use-channel-id'
 import { toast } from 'sonner'
 import { useGenerateUploadUrl } from '@/features/upload/api/use-generate-upload-url'
 import { Id } from '../../../../convex/_generated/dataModel'
+import { Skeleton } from '@/components/ui/skeleton'
 
-const Editor = dynamic(() => import('@/components/editor'), { ssr: false })
+const Editor = dynamic(() => import('@/components/editor'), {
+  ssr: false,
+  loading: () => <Skeleton className='w-full h-[130px] mb-9 bg-zinc-200' />,
+})
 
 type CreateMessageValues = {
   channelId: Id<'channels'>

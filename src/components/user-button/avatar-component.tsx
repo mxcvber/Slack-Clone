@@ -15,7 +15,7 @@ const AvatarComponent = async () => {
 
   return (
     <Avatar className='size-7 sm:size-9 hover:opacity-75 transition'>
-      <AvatarImage alt={user?.name} src={user?.image} />
+      <AvatarImage width={28} height={28} alt={user?.name} src={user?.image} />
       <AvatarFallback>{avatarFallback}</AvatarFallback>
     </Avatar>
   )

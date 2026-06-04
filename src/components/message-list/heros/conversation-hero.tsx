@@ -13,7 +13,7 @@ const ConversationHero: React.FC<ConversationHeroProps> = ({ name = 'Member', im
     <div className='mt-[88px] mx-5 mb-8'>
       <div className='flex items-center gap-x-1 mb-2'>
         <Avatar className='size-14 mr-2'>
-          <AvatarImage src={image} alt={name} />
+          <AvatarImage width={56} height={56} src={image} alt={name} />
           <AvatarFallback>{avatatFallback}</AvatarFallback>
         </Avatar>
         <p className='text-2xl font-bold'>{name}</p>

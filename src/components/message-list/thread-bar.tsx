@@ -15,15 +15,15 @@ interface ThreadBarProps {
 const ThreadBar: React.FC<ThreadBarProps> = ({ count, image, name = 'Member', timestamp, onClick }) => {
   const avatarFallback = name.charAt(0).toUpperCase()
 
-  if (!count || !timestamp) return null
+  if (!count || !timestamp) return <div className='h-7' />
 
   return (
     <Button
       onClick={onClick}
-      className='gap-2 bg-transparent h-fit sm:max-w-[600px] p-1 rounded-md hover:bg-white border border-transparent hover:border-border flex items-center justify-start group/thread-bar transition'
+      className='gap-2 bg-transparent h-fit w-full sm:max-w-[600px] p-1 rounded-md hover:bg-white border border-transparent hover:border-border flex items-center justify-start group/thread-bar transition'
     >
       <Avatar className='size-6 shrink-0'>
-        <AvatarImage src={image} alt='Avatar' />
+        <AvatarImage width={24} height={24} src={image} alt='Avatar' />
         <AvatarFallback>{avatarFallback}</AvatarFallback>
       </Avatar>
 
@@ -36,7 +36,7 @@ const ThreadBar: React.FC<ThreadBarProps> = ({ count, image, name = 'Member', ti
       </span>
 
       <span className='text-xs text-muted-foreground truncate group-hover/thread-bar:block hidden'>View thread</span>
-      <ChevronRight className='size-4 text-muted-foreground ml-52 hidden group-hover/thread-bar:block transition shrink-0' />
+      <ChevronRight className='size-4 text-muted-foreground hidden group-hover/thread-bar:block transition shrink-0' />
     </Button>
   )
 }

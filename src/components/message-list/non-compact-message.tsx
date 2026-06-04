@@ -6,9 +6,15 @@ import ThreadBar from './thread-bar'
 import { DefaultMessageType } from '@/types'
 import MessageAvatar from './message-avatar'
 import MessageInfo from './message-info'
+import { Skeleton } from '../ui/skeleton'
 
-const Renderer = dynamic(() => import('@/components/message-list/renderer'), { ssr: false })
-const Editor = dynamic(() => import('@/components/editor/index'), { ssr: false })
+const Renderer = dynamic(() => import('@/components/message-list/renderer'), {
+  ssr: false,
+  loading: () => <Skeleton className='h-5 w-full max-w-[500px] rounded ' />,
+})
+const Editor = dynamic(() => import('@/components/editor/index'), {
+  ssr: false,
+})
 
 interface NonCompactMessageProps extends DefaultMessageType {
   isPending: boolean
@@ -43,7 +49,7 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
   reactions,
 }) => {
   return (
-    <div className='sm:flex items-start sm:gap-2 w-full'>
+    <div className='flex items-start gap-2 w-full'>
       <MessageAvatar name={authorName} image={authorImage} onOpenProfile={onOpenProfile} />
 
       {isEditing ? (
@@ -69,13 +75,15 @@ const NonCompactMessage: React.FC<NonCompactMessageProps> = ({
           <Thumbnail url={image} />
           {updatedAt ? <span className='text-xs text-muted-foreground'>(edited)</span> : null}
           <Reactions data={reactions} onChange={handleReaction} />
-          <ThreadBar
-            count={threadCount}
-            image={threadImage}
-            name={threadName}
-            timestamp={threadTimestamp}
-            onClick={handleThread}
-          />
+          <div className='min-h-7 w-full sm:max-w-[600px]'>
+            <ThreadBar
+              count={threadCount}
+              image={threadImage}
+              name={threadName}
+              timestamp={threadTimestamp}
+              onClick={handleThread}
+            />
+          </div>
         </div>
       )}
     </div>
