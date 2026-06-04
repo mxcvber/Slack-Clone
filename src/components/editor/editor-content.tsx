@@ -40,7 +40,7 @@ const EditorContent: React.FC<EditorContentProps> = ({
 
       <div
         className={cn(
-          'flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:drop-shadow-sm transition-[filter] bg-white',
+          'flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:outline focus-within:outline-slate-300 focus-within:drop-shadow-sm transition-[filter] bg-white',
           disabled && 'opacity-50',
         )}
       >
